@@ -7,7 +7,7 @@
 ## Overview
 
 Youdown is a simple osx (atleast for now) application which enables you to download videos from youtube.
-Built using [Electron](http://electron.atom.io/) & [ReactJS](https://facebook.github.io/react).
+Built using [Electron](http://electron.atom.io/) & [React](https://facebook.github.io/react).
 
 **Note:** Youdown is still in its development phase. Please follow the build instructions to run it.
 
