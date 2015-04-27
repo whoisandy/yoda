@@ -14,7 +14,7 @@ export default React.createClass({
   render() {
     return (
       <div className="playlist-header">
-        <h3>{this.handleShortenText(this.props.title, 26)}</h3>
+        <h3>{this.props.title}</h3>
       </div>
     );
   }
