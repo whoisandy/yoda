@@ -11,7 +11,7 @@ var $ = require('gulp-load-plugins')({
 // Paths
 var paths = {
   APP: ['src/index.html', 'src/browser.js'],
-  FONTS: 'src/styles/fonts/**',
+  FONTS: 'src/resources/fonts/**',
   IMAGES: 'src/resources/images/**',
   JS_FILES: ['src/scripts/*.js'],
   CSS_FILES: ['src/styles/**/*.less', 'src/styles/*.less'],
@@ -30,21 +30,21 @@ gulp.task('download', function(cb){
 // Copy task
 gulp.task('copy', function(){
   gulp.src(paths.APP)
-  .pipe(gulp.dest(paths.DIST))
+  .pipe(gulp.dest(paths.BUILD))
   .pipe($.livereload());
 });
 
 // Fonts task
 gulp.task('fonts', function(){
   gulp.src(paths.FONTS)
-  .pipe(gulp.dest(paths.DIST))
+  .pipe(gulp.dest(paths.BUILD))
   .pipe($.livereload());
 });
 
 // Images task
 gulp.task('images', function(){
   gulp.src(paths.IMAGES)
-  .pipe(gulp.dest(paths.DIST))
+  .pipe(gulp.dest(paths.BUILD))
   .pipe($.livereload());
 });
 
@@ -56,7 +56,7 @@ gulp.task('styles', function(){
       this.emit('end');
   }))
   .pipe($.less())
-  .pipe(gulp.dest(paths.DIST))
+  .pipe(gulp.dest(paths.BUILD))
   .pipe($.livereload());
 });
 
@@ -71,7 +71,7 @@ gulp.task('scripts', function(){
     es6module: true
   }))
   .pipe($.babel({ blacklist: ['regenerator']}))
-  .pipe(gulp.dest(paths.DIST))
+  .pipe(gulp.dest(paths.BUILD))
   .pipe($.livereload());
 });
 
