@@ -5,7 +5,12 @@
   "main": "dist/browser.js",
   "scripts": {
     "start": "gulp",
+    "release": "gulp release",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/whoisandie/youdown.git"
   },
   "author": "whoisandie",
   "license": "GNU",
@@ -27,7 +32,8 @@
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
     "lodash": "^3.7.0",
-    "react-tools": "^0.13.2"
+    "react-tools": "^0.13.2",
+    "run-sequence": "^1.1.0"
   },
   "dependencies": {
     "alt": "^0.15.6",
