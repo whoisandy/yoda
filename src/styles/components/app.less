@@ -1,0 +1,93 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: none;
+  -webkit-user-select: none;
+  cursor: default;
+  img {
+    pointer-events: none;
+  }
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: @font-family-base;
+  font-weight: @font-weight-base;
+  font-size: @font-size-base;
+}
+
+
+h1, h2, h3, h4, h5, h6{
+  margin: 0;
+  padding: 0;
+}
+
+p{
+  margin-bottom: 10px;
+}
+
+.app{
+  .fade-in();
+  height: 100vh;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  box-sizing: border-box;
+  .content{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    padding: 0;
+  }
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  .sidebar, .detail{
+    display: flex;
+    position: absolute;
+    bottom: 0;
+  }
+  .sidebar{
+    top: 0;
+    min-width: 220px;
+  }
+  .detail {
+    top: 45px;
+    left: 220px;
+    min-width: 780px;
+    background: #f0f0f0;
+    overflow: hidden;
+  }
+}
+
+.detail-container{
+  width: 780px;
+  position: absolute;
+  flex-direction: column;
+  flex: 1;
+  top: 0;
+  bottom: 0;
+  .detail-content {
+    height: 100%;
+    padding: 20px;
+    overflow: scroll;
+    display: flex;
+    position: relative;
+    flex: 1 auto;
+  }
+}
+
+.detail-content {
+  > div{
+    display: flex;
+    flex-direction: column;
+    flex: 1 100%;
+    h2{
+      font-size: 24px;
+    }
+  }
+}

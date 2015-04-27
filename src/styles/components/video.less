@@ -1,0 +1,68 @@
+.video {
+  width: 185px;
+  height: 190px;
+  margin: 0 0 24px 0;
+  padding: 0 8px;
+  position: relative;
+  float: left;
+  cursor: pointer;
+  &:hover{
+    .video-title{
+      color: @brand-primary;
+    }
+  }
+  &:nth-child(4n+1){
+    margin-left: 0;
+  }
+  .video-detail{
+    color: #333;
+    display: block;
+    cursor: pointer;
+    &:hover, &:focus{
+      color: #333;
+      text-decoration: none;
+    }
+  }
+
+  .video-title{
+    margin: 0 0 4px 0;
+    line-height: 14px;
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  .video-content, .video-stats{
+    font-size: 11px;
+  }
+
+  .video-content{
+    flex-direction: column;
+    span{
+      display: block;
+    }
+  }
+
+  .video-image{
+    margin-bottom: 10px;
+    padding: 0;
+    position: relative;
+    border: 1px #aaa solid;
+    overflow: hidden;
+    span{
+      padding: 2px 4px;
+      background: #222;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-weight: 600;
+      font-size: 11px;
+      color: #ffffff;
+    }
+  }
+
+  .video-thumbnail{
+    width: 100%;
+    height: 94px;
+    transition: all 0.25s ease-in-out;
+  }
+}

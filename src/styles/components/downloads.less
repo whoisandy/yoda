@@ -1,0 +1,32 @@
+.downloads{
+  display: flex;
+}
+
+.download-items{
+  margin: 12px 0 0 0;
+  > tbody > tr{
+    > td{
+      vertical-align: middle;
+      span{
+        &.active{
+          color: #167AC6;
+        }
+        &.done{
+          color: #0BD318;
+        }
+      }
+      &.title{
+        width: 400px;
+      }
+      &.size{
+        width: 120px;
+      }
+      &.status{
+        width: 120px;
+      }
+      &.percent{
+        width: 100px;
+      }
+    }
+  }
+}

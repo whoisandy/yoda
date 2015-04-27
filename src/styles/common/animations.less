@@ -1,0 +1,36 @@
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes rotator {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+
+@-webkit-keyframes colors {
+  0% { stroke: #DE3E35; }
+  100% { stroke: #DE3E35; }
+}
+
+@-webkit-keyframes dash {
+  0% { stroke-dashoffset: @loader-offset; }
+  50% {
+    stroke-dashoffset: @loader-offset/4;
+    transform:rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: @loader-offset;
+    transform:rotate(450deg);
+  }
+}
+
+@-webkit-keyframes downloading {
+  0% { transform: scale(1); }
+  50% { transform: scale(2); }
+  100% { transform: scale(1); }
+}

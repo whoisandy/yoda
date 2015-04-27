@@ -1,0 +1,43 @@
+{
+  "name": "youdown",
+  "version": "0.0.1",
+  "description": "Test iojs project",
+  "main": "dist/browser.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "whoisandie",
+  "license": "GNU",
+  "electron-version": "0.24.0",
+  "devDependencies": {
+    "babel": "^5.1.11",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^5.1.0",
+    "gulp-changed": "^1.2.1",
+    "gulp-cssmin": "^0.1.6",
+    "gulp-download-electron": "0.0.5",
+    "gulp-if": "^1.2.5",
+    "gulp-less": "^3.0.3",
+    "gulp-livereload": "^3.8.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-react": "^3.0.1",
+    "gulp-shell": "^0.4.1",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.4",
+    "react-tools": "^0.13.2"
+  },
+  "dependencies": {
+    "alt": "^0.15.6",
+    "cheerio": "^0.19.0",
+    "immutable": "^3.7.2",
+    "lodash": "^3.7.0",
+    "moment": "^2.10.2",
+    "object-assign": "^2.0.0",
+    "react": "^0.13.2",
+    "react-router": "^0.13.2",
+    "superagent": "^1.2.0",
+    "ytdl-core": "^0.5.1"
+  }
+}

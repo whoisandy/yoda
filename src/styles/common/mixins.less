@@ -1,0 +1,32 @@
+.fade-in() {
+  opacity: 0;
+  -webkit-animation: fadein cubic-bezier(0.175, 0.665, 0.320, 1) 1;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 0.2s;
+}
+
+.downloading() {
+  transform: scale(1);
+  -webkit-animation: downloading cubic-bezier(0.175, 0.665, 0.320, 1) 1;
+  -webkit-animation-duration: 0.2s;
+}
+
+.traffic-light() {
+  box-sizing: border-box;
+  display: inline-block;
+  background: white;
+  margin-right: 7px;
+  height: 12px;
+  width: 12px;
+
+  border-radius: 6px;
+
+  -webkit-app-region: no-drag;
+  &.enabled:hover {
+
+  }
+  &.enabled:hover:active {
+    cursor: default;
+    -webkit-filter: brightness(92%);
+  }
+}
