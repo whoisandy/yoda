@@ -1,5 +1,4 @@
-# Youdown
-> Browse, play, download Youtube in style !
+> Youdown |> Browse, play, download Youtube in style !
 ---
 
 TODO
