@@ -34,7 +34,7 @@ app.on('ready', function () {
   });
 
   mainWindow.webContents.on('did-finish-load', function() {
-    mainWindow.setTitle('Testa');
+    mainWindow.setTitle('Youdown');
     mainWindow.show();
     mainWindow.focus();
   });
