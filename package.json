@@ -1,18 +1,19 @@
 {
   "name": "youdown",
   "version": "1.0.0",
-  "description": "Test iojs project",
+  "author": "whoisandie",
+  "description": "A simple mac app to download youtube videos",
   "main": "./build/browser.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/whoisandie/youdown.git"
+  },
+  "bugs": "https://github.com/whoisandie/youdown/issues",
   "scripts": {
     "start": "gulp",
     "release": "gulp release",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/whoisandie/youdown.git"
-  },
-  "author": "whoisandie",
   "license": "GNU",
   "electron-version": "0.24.0",
   "devDependencies": {
