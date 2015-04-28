@@ -36,14 +36,14 @@ class Actions {
 
   progress(video){
     let self = this;
-      var dataSize = 0;
-      video.stream.on('data', data => {
-        dataSize = dataSize + data.length;
-        let percent = parseInt(Math.ceil((dataSize / video.total) * 100));
-        self.dispatch({
-          id: video.id,
-          progress: percent
-        });
+    var dataSize = 0;
+    video.stream.on('data', data => {
+      dataSize = dataSize + data.length;
+      let percent = parseInt(Math.ceil((dataSize / video.total) * 100));
+      self.dispatch({
+        id: video.id,
+        progress: percent
+      });
     });
 
     video.stream.on('end', () => {

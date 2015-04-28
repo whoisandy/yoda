@@ -6,7 +6,6 @@ import PlaylistVideos from './PlaylistVideos';
 
 export default React.createClass({
   render() {
-    console.log(this.props.playlists);
     var nodes = this.props.playlists.map(item => {
       return (
         <div key={item.id} className="playlist-item">
