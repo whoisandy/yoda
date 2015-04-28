@@ -2,7 +2,7 @@
   "name": "youdown",
   "version": "0.0.1",
   "description": "Test iojs project",
-  "main": "dist/browser.js",
+  "main": "./build/browser.js",
   "scripts": {
     "start": "gulp",
     "release": "gulp release",
