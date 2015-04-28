@@ -5,7 +5,7 @@ Built using [Electron](http://electron.atom.io/) & [React](https://facebook.gith
 
 **Note:** Youdown is still in its development phase. Please follow the build instructions to run it.
 
-=====
+
 
 ## Build Instructions
 Requires gulp to be installed on your machine.
@@ -21,19 +21,19 @@ cd youdown && npm install
 gulp
 ```
 
-=====
+
 
 # Screenshot
 ![Youdown Screenshot](https://s3-us-west-2.amazonaws.com/github.whoisandie.com/youdown-screen.png)
 
-=====
+
 
 ## Todo
 + Update readme first
 + Install instructions
 + Dev instructions
 
-=====
+
 
 ## License
 Copyright &copy; [Whoisandie](http://whoisandie.com)
