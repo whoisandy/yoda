@@ -1,6 +1,6 @@
 {
   "name": "youdown",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Test iojs project",
   "main": "./build/browser.js",
   "scripts": {
