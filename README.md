@@ -1,16 +1,14 @@
 # Youdown
----
+
 Youdown is a simple osx (atleast for now) application which enables you to download videos from youtube.
 Built using [Electron](http://electron.atom.io/) & [React](https://facebook.github.io/react).
 
 **Note:** Youdown is still in its development phase. Please follow the build instructions to run it.
-
+---
 # Screenshot
----
 ![Youdown Screenshot](https://s3-us-west-2.amazonaws.com/github.whoisandie.com/youdown-screen.png)
-
-## Build Instructions
 ---
+## Build Instructions
 Requires gulp to be installed on your machine.
 Clone the repository, install dependencies and run `gulp`
 
@@ -23,12 +21,12 @@ cd youdown && npm install
 # Run gulp to start
 gulp
 ```
-
+---
 ## Todo
 + Update readme first
 + Install instructions
 + Dev instructions
-
+---
 ## License
 
 Copyright &copy; [Whoisandie](http://whoisandie.com)
