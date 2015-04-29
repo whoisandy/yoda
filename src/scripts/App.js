@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
 import {RouteHandler} from 'react-router';
 import AppStore from './AppStore';
 import Titlebar from './Titlebar';
@@ -9,6 +9,16 @@ import Sidebar from './Sidebar';
 export default React.createClass({
   contextTypes: {
     router: React.PropTypes.func
+  },
+
+  childContextTypes: {
+    router: React.PropTypes.func.isRequired
+  },
+
+  getChildContext() {
+    return {
+      router: this.context.router
+    };
   },
 
   getInitialState() {
@@ -38,7 +48,7 @@ export default React.createClass({
           <div className="detail">
             <div className="detail-container">
               <div className="detail-content">
-                <RouteHandler key={name} router={this.context.router} {...this.props} />
+                <RouteHandler key={name} {...this.props} />
               </div>
             </div>
           </div>

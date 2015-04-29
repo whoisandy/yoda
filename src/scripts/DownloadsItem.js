@@ -1,8 +1,7 @@
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
 import Progress from './Progress';
-
 
 export default React.createClass({
   handleShortenText(text, maxLength) {

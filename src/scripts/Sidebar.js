@@ -2,11 +2,10 @@
 
 import React from 'react';
 import {Link} from 'react-router';
-import Actions from './Actions';
 
 export default React.createClass({
   contextTypes: {
-    router: React.PropTypes.func
+    router: React.PropTypes.func.isRequired
   },
 
   render() {

@@ -3,8 +3,8 @@
 import React from 'react';
 import Remote from 'remote';
 import Moment from 'moment';
-import Actions from './Actions';
 import Utils from './Utils';
+import Actions from './Actions';
 
 const Dialog = Remote.require('dialog');
 
