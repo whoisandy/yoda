@@ -1,0 +1,15 @@
+{
+
+  "title": "Youdown",
+
+  "icon": "./src/resources/utils/youdown.icns",
+
+  "background": "./src/resources/utils/youdown.png",
+
+  "icon-size": 60,
+
+  "contents": [
+    { "x": 380, "y": 240, "type": "link", "path": "/Applications" },
+    { "x": 120, "y": 240, "type": "file", "path": "./release/osx/Youdown.app" }
+  ]
+}
