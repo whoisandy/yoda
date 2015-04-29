@@ -4,6 +4,7 @@
 # Ignore build, electron, vendor
 cache
 build
+dist
 src/styles/vendor
 
 # Dependency directory
