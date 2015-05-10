@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import {Navigation, State} from 'react-router';
 import Remote from 'remote';
 
 let Search = React.createClass({
@@ -23,9 +24,7 @@ let Search = React.createClass({
 });
 
 export default React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func
-  },
+  mixins: [Navigation, State],
 
   handleClose() {
     Remote.getCurrentWindow().hide();
@@ -37,7 +36,14 @@ export default React.createClass({
 
   handleGoBack(e) {
     e.preventDefault();
-    this.context.router.goBack();
+    if(this.getParams().channel !== 'popular'){
+      this.goBack();
+    }
+  },
+
+  handleGoForth(e) {
+    e.preventDefault();
+    // Figure out how to go forth
   },
 
   render() {
@@ -53,7 +59,7 @@ export default React.createClass({
         <div className="header-container">
           <div className="history">
             <a href="#" onClick={this.handleGoBack}><span className="icon icon-left"></span></a>
-            <a href="#"><span className="icon icon-right"></span></a>
+            <a href="#" onClick={this.handleGoForth}><span className="icon icon-right"></span></a>
           </div>
           <div className="header">
             <span>Youdown</span>

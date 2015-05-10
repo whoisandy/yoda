@@ -1,32 +1,20 @@
 'use strict';
 
 import React from 'react';
-import {RouteHandler} from 'react-router';
+import {RouteHandler, Navigation, State} from 'react-router';
 import AppStore from './AppStore';
 import Titlebar from './Titlebar';
 import Sidebar from './Sidebar';
 
 export default React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-
-  childContextTypes: {
-    router: React.PropTypes.func.isRequired
-  },
-
-  getChildContext() {
-    return {
-      router: this.context.router
-    };
-  },
+  mixins: [Navigation, State],
 
   getInitialState() {
     return AppStore.getState();
   },
 
   componentDidMount() {
-    this.context.router.transitionTo('/channels/popular');
+    this.transitionTo('/channels/popular');
     AppStore.listen(this.onDownload);
   },
 
@@ -39,7 +27,7 @@ export default React.createClass({
   },
 
   render() {
-    var name = this.context.router.getCurrentPath();
+    var name = this.getParams().channel;
     return (
       <div className="app">
         <Titlebar />
