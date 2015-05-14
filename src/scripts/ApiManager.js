@@ -1,7 +1,7 @@
 'use strict';
 
 import assign from 'object-assign';
-import Request from 'superagent';
+import request from 'superagent';
 import Constants from './Constants';
 
 let Youtube = {
@@ -13,7 +13,7 @@ let Youtube = {
     let params = assign({}, {key: Constants.api.key}, opts);
     let url = this.construct(endpoint);
     return new Promise((resolve, reject) => {
-      Request.get(url).type('application/json').accept('json').query(params).end((err, res) => {
+      request.get(url).type('application/json').accept('json').query(params).end((err, res) => {
         if(err){
           reject(err);
         }
@@ -97,8 +97,6 @@ export default {
 
           return v;
         });
-      }).then(fd => {
-        return fd;
       });
     });
 
