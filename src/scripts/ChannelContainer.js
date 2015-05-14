@@ -46,7 +46,7 @@ export default React.createClass({
     if(this.props.loading){
       fragment = this.renderLoader();
     } else {
-      fragment = this.renderPlaylist(title, playlists[0]);
+      fragment = this.renderPlaylist(title, playlists);
     }
 
     let page = 'channel ' + title;
