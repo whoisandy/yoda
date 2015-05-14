@@ -1,48 +1,46 @@
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
 import {RouteHandler, State} from 'react-router';
 import AppStore from './AppStore';
 import Titlebar from './Titlebar';
 import Sidebar from './Sidebar';
 
-const PureRenderMixin = React.addons.PureRenderMixin;
-
 export default React.createClass({
-  mixins: [PureRenderMixin, State],
+  mixins: [State],
 
   getInitialState() {
     return AppStore.getState();
   },
 
   componentDidMount() {
-    AppStore.listen(this.onChange);
+    AppStore.listen(this.onDownload);
   },
 
   componentWillUnmount() {
-    AppStore.unlisten(this.onChange);
+    AppStore.unlisten(this.onDownload);
   },
 
-  onChange() {
+  onDownload() {
     this.setState(AppStore.getState());
   },
 
   render() {
     var name = this.getParams().channel;
     return (
-      <div className="app-content">
+      <div className="app">
         <Titlebar />
         <div className="content">
-          <Sidebar downloading={this.state.downloading}/>
+          <Sidebar status={this.state.status} />
           <div className="detail">
             <div className="detail-container">
               <div className="detail-content">
-                <RouteHandler key={name} {...this.props} loading={this.state.loading}/>
+                <RouteHandler key={name} {...this.props} loading={this.state.loading} />
               </div>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 });

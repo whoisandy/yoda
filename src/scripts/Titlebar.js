@@ -3,25 +3,26 @@
 import React from 'react';
 import {Navigation, State} from 'react-router';
 import Remote from 'remote';
+import Searchbar from './Searchbar';
 
-let Search = React.createClass({
-  handleSubmit(e) {
-    e.preventDefault();
-    var query = React.findDOMNode(this.refs.searchInput).value.trim();
-    console.log(query);
-  },
+// let Search = React.createClass({
+//   handleSubmit(e) {
+//     e.preventDefault();
+//     var query = React.findDOMNode(this.refs.searchInput).value.trim();
+//     console.log(query);
+//   },
 
-  render() {
-    return (
-      <div className="searchbar">
-        <form className="searchform" onSubmit={this.handleSubmit}>
-          <span className="icon icon-search"></span>
-          <input type="search" ref="searchInput" className="form-control" placeholder="Search youtube videos here" autoComplete="on" onChange={this.handleChange} />
-        </form>
-      </div>
-    );
-  }
-});
+//   render() {
+//     return (
+//       <div className="searchbar">
+//         <form className="searchform" onSubmit={this.handleSubmit}>
+//           <span className="icon icon-search"></span>
+//           <input type="search" ref="searchInput" className="form-control" placeholder="Search youtube videos here" autoComplete="on" onChange={this.handleChange} />
+//         </form>
+//       </div>
+//     );
+//   }
+// });
 
 export default React.createClass({
   mixins: [Navigation, State],
@@ -61,10 +62,8 @@ export default React.createClass({
             <a href="#" onClick={this.handleGoBack}><span className="icon icon-left"></span></a>
             <a href="#" onClick={this.handleGoForth}><span className="icon icon-right"></span></a>
           </div>
-          <div className="header">
-            <span>Youdown</span>
-          </div>
-          <Search />
+          <div className="header"></div>
+          <Searchbar />
         </div>
       </div>
     );

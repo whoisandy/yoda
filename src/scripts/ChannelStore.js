@@ -7,7 +7,6 @@ import Actions from './Actions';
 class ChannelStore {
   constructor() {
     this.errMessage = null;
-    this.loading = true;
     this.playlists = List([]);
 
     this.bindListeners({
@@ -18,7 +17,6 @@ class ChannelStore {
   }
 
   handleFetchPlaylists() {
-    this.loading = true;
     this.playlists = List([]);
   }
 
@@ -28,7 +26,6 @@ class ChannelStore {
 
   handleReceivePlaylists(playlists){
     this.errMessage = null;
-    this.loading = false;
     this.playlists = this.playlists.push(playlists);
   }
 }

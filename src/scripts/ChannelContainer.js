@@ -3,13 +3,13 @@
 import React from 'react/addons';
 import Actions from './Actions';
 import ChannelStore from './ChannelStore';
+import Loader from './Loader';
 import ChannelPlaylist from './ChannelPlaylist';
-import {Render} from './Mixins';
 
 const PureRenderMixin = React.addons.PureRenderMixin;
 
 export default React.createClass({
-  mixins: [PureRenderMixin, Render],
+  mixins: [PureRenderMixin],
 
   getInitialState(){
     return ChannelStore.getState();
@@ -28,6 +28,10 @@ export default React.createClass({
     this.setState(ChannelStore.getState());
   },
 
+  renderLoader() {
+    return <Loader />;
+  },
+
   renderPlaylist(title, playlists) {
     return (
         <ChannelPlaylist playlists={playlists} name={title} />
@@ -37,7 +41,6 @@ export default React.createClass({
   render() {
     var fragment;
     var title = this.props.params.channel;
-    var page = 'channel ' + title;
     var playlists = this.state.playlists.toArray();
 
     if(this.props.loading){
@@ -46,6 +49,7 @@ export default React.createClass({
       fragment = this.renderPlaylist(title, playlists[0]);
     }
 
+    let page = 'channel ' + title;
     return (
       <div className={page}>
         {fragment}

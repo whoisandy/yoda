@@ -2,10 +2,10 @@
 
 import React from 'react';
 import Router from 'react-router';
-import App from './App';
-import Channel from './Channel';
-import Downloads from './Downloads';
-import Preferences from './Preferences';
+import App from './AppContainer';
+import Channel from './ChannelContainer';
+import Downloads from './DownloadsContainer';
+import Preferences from './PreferencesContainer';
 
 let {Route, DefaultRoute} = Router;
 

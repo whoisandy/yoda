@@ -4,7 +4,7 @@ import React from 'react';
 import ChannelPlaylistHeader from './ChannelPlaylistHeader';
 import ChannelPlaylistVideos from './ChannelPlaylistVideos';
 
-const ChannelPlaylistComponent = React.createClass({
+export default React.createClass({
   render() {
     var nodes = this.props.playlists.map(item => {
       return (
@@ -21,5 +21,3 @@ const ChannelPlaylistComponent = React.createClass({
     );
   }
 });
-
-export default ChannelPlaylistComponent;

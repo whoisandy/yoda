@@ -5,17 +5,12 @@ import Remote from 'remote';
 import Moment from 'moment';
 import Utils from './Utils';
 import Actions from './Actions';
+import {Meta} from './Mixins';
 
 const Dialog = Remote.require('dialog');
 
 export default React.createClass({
-  handleShortenText(text, maxLength) {
-    var ret = text;
-    if (ret.length > maxLength) {
-      ret = ret.substr(0, maxLength-3) + '...';
-    }
-    return ret;
-  },
+  mixins: [Meta],
 
   handleDuration(duration) {
     var seconds = 0;

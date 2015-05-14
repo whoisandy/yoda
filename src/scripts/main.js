@@ -25,6 +25,7 @@ function bootstrap(){
     var params = state.params;
     React.render(<Handler params={params} />, mountNode);
   });
+  Router.transitionTo('channels', {channel: 'popular'});
 }
 
 Promise.all([

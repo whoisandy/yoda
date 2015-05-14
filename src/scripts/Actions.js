@@ -4,6 +4,10 @@ import {Map} from 'immutable';
 import {Alt, Api, Ydm} from './Core';
 
 class Actions {
+  loading() {
+    this.dispatch();
+  }
+
   receive(response) {
     this.dispatch(response);
   }
@@ -14,11 +18,18 @@ class Actions {
 
   fetchPlaylists(channel) {
     this.dispatch();
+    this.actions.loading();
     Api.getChannelPlaylistsVideos(channel).then(data => {
       this.actions.receive(data);
+      this.actions.loading();
     }).catch(err => {
       this.actions.fail(err);
+      this.actions.loading();
     });
+  }
+
+  search(query) {
+    console.log(query);
   }
 
   download(video, filename) {

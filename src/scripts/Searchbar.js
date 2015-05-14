@@ -29,7 +29,7 @@ export default React.createClass({
       <div className="searchbar">
         <form className="searchform" onSubmit={this.handleSubmit}>
           <span className="icon icon-search"></span>
-          <input type="search" ref="searchInput" className="form-control" placeholder="Search youtube videos here" autoComplete="on" onChange={this.handleChange} />
+          <input type="search" ref="searchInput" className="form-control" placeholder="Search youtube videos here" autoComplete="on" />
         </form>
       </div>
     );

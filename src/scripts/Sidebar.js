@@ -4,11 +4,8 @@ import React from 'react';
 import {Link} from 'react-router';
 
 export default React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func.isRequired
-  },
-
   render() {
+    var activeDownload = this.props.status ? 'list-group-item downloading' : 'list-group-item';
     return (
       <div className="sidebar">
         <div className="categories">
@@ -41,7 +38,7 @@ export default React.createClass({
             </Link>
           </div>
           <div className="download-btn">
-            <Link className={this.props.status ? 'list-group-item downloading' : 'list-group-item'} to="/downloads">
+            <Link className={activeDownload} to="/downloads">
               <span className="icon icon-download"></span>
             </Link>
           </div>
