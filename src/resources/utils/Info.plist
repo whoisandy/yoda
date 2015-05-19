@@ -9,7 +9,7 @@
   <key>CFBundleIconFile</key>
   <string>atom.icns</string>
   <key>CFBundleIdentifier</key>
-  <string>com.youdown.youdown</string>
+  <string>com.youdown.Youdown</string>
   <key>CFBundleInfoDictionaryVersion</key>
   <string>6.0</string>
   <key>CFBundleName</key>

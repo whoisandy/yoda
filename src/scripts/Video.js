@@ -1,106 +1,59 @@
 'use strict';
 
 import React from 'react';
-import Remote from 'remote';
-import Moment from 'moment';
-import Utils from './Utils';
+import {Navigation} from 'react-router';
 import Actions from './Actions';
-import {Meta} from './Mixins';
-
-const Dialog = Remote.require('dialog');
+import {RenderMixin, MetaMixin} from './Mixins';
+import VideoImage from './VideoImage';
 
 export default React.createClass({
-  mixins: [Meta],
+  mixins: [RenderMixin, MetaMixin, Navigation],
 
-  handleDuration(duration) {
-    var seconds = 0;
-    var matches = duration.match(/[0-9]+[HMS]/g);
-    matches.forEach(function (part) {
-      var unit = part.charAt(part.length-1);
-      var amount = parseInt(part.slice(0, -1));
-      switch (unit) {
-        case 'H':
-          seconds = seconds + amount * 60 * 60;
-          break;
-        case 'M':
-          seconds = seconds + amount * 60;
-          break;
-        case 'S':
-          seconds = seconds + amount;
-          break;
-        default:
-          break;
-      }
-    });
-    return Moment().startOf('day').seconds(seconds).format('H:m:ss');
-  },
-
-  handlePublishedAt(date) {
-    return Moment(date).fromNow();
-  },
-
-  handleViewCount(num) {
-    return parseInt(num).toLocaleString() + ' views';
-  },
-
-  handleTitle(title) {
-    return title.match(/Deleted\s?video/g) === null ? true : false;
-  },
-
-  handleDownload(item) {
-    Dialog.showSaveDialog({
-      defaultPath: Utils.home() + '/Desktop/' + item.snippet.title + '.mp4'
-    }, function(filename){
-      if(filename !== undefined && item){
-        Actions.download(item, filename);
-      } else {
-        console.log('Download cancelled');
-      }
-    });
+  handleVideo(item) {
+    this.transitionTo('videos', {video: item});
   },
 
   renderDelete() {
     return (
-      <a href="#" className="video-detail">
+      <div href="#" className="video-detail">
         <p>Deleted video</p>
-      </a>
+      </div>
     );
   },
 
+  // Duration after image thumbnail
   renderVideo(item) {
     return (
-      <div className="video-detail" onClick={this.handleDownload.bind(null, item)}>
-        <div className="video-image">
-          <img className="image-thumbnail video-thumbnail" src={item.snippet.thumbnails.medium.url} alt={item.snippet.title} />
-          <span className="duration">{this.handleDuration(item.contentDetails.duration)}</span>
-        </div>
+      <div className="video-detail" onClick={this.handleVideo.bind(null, item)}>
+        <VideoImage title={item.snippet.title} image={item.snippet.thumbnails.medium.url} duration={item.contentDetails.duration} />
         <div className="video-title">
-          <span>{this.handleShortenText(item.snippet.title, 40)}</span>
+          <a href="#">{item.snippet.title}</a>
         </div>
         <div className="video-content">
-          <span>{'by ' + this.handleShortenText(item.snippet.channelTitle, 20)}</span>
-          <span>{this.handlePublishedAt(item.snippet.publishedAt)}</span>
-        </div>
-        <div className="video-stats">
-          <span>{this.handleViewCount(item.statistics.viewCount)}</span>
+          <span>{'by ' + item.snippet.channelTitle}</span>
+          <ul>
+            <li>{this.handleViewCount(item.statistics.viewCount)}</li>
+            <li>{this.handlePublishedAt(item.snippet.publishedAt)}</li>
+          </ul>
         </div>
       </div>
     );
   },
 
   render() {
-    var video = this.props.video, fragment;
+    var fragment;
+    var video = this.props.video;
     var title = video.snippet.title;
+    var page = this.handleClassNames({
+      'video': true
+    });
+
     if(!this.handleTitle(title)) {
       fragment = this.renderDelete();
     } else {
       fragment = this.renderVideo(video);
     }
 
-    return (
-      <div className="video">
-        {fragment}
-      </div>
-    );
+    return this.renderFragment(page, fragment);
   }
 });

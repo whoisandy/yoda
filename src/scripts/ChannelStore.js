@@ -16,21 +16,21 @@ class ChannelStore {
     this.playlists = List(Map({}));
 
     this.bindListeners({
-      handleFailPlaylists: Actions.fail,
-      handleReceivePlaylists: Actions.receive,
-      handleFetchPlaylists: Actions.fetchPlaylists
+      handleFailChannelPlaylists: Actions.failChannelPlaylists,
+      handleReceiveChannelPlaylists: Actions.receiveChannelPlaylists,
+      handleFetchChannelPlaylists: Actions.fetchChannelPlaylists
     });
   }
 
-  handleFetchPlaylists() {
+  handleFetchChannelPlaylists() {
     this.playlists = List([]);
   }
 
-  handleFailPlaylists(err) {
+  handleFailChannelPlaylists(err) {
     this.errMessage = err;
   }
 
-  handleReceivePlaylists(playlists){
+  handleReceiveChannelPlaylists(playlists){
     this.errMessage = null;
     playlists.forEach(playlist =>{
       this.playlists = this.playlists.push(new Playlist({
@@ -38,7 +38,7 @@ class ChannelStore {
         title: playlist.title,
         videos: playlist.videos
       }));
-    })
+    });
   }
 }
 

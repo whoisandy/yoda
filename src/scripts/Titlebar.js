@@ -1,31 +1,12 @@
 'use strict';
 
 import React from 'react';
-import {Navigation, State} from 'react-router';
+import {State} from 'react-router';
 import Remote from 'remote';
 import Searchbar from './Searchbar';
 
-// let Search = React.createClass({
-//   handleSubmit(e) {
-//     e.preventDefault();
-//     var query = React.findDOMNode(this.refs.searchInput).value.trim();
-//     console.log(query);
-//   },
-
-//   render() {
-//     return (
-//       <div className="searchbar">
-//         <form className="searchform" onSubmit={this.handleSubmit}>
-//           <span className="icon icon-search"></span>
-//           <input type="search" ref="searchInput" className="form-control" placeholder="Search youtube videos here" autoComplete="on" onChange={this.handleChange} />
-//         </form>
-//       </div>
-//     );
-//   }
-// });
-
 export default React.createClass({
-  mixins: [Navigation, State],
+  mixins: [State],
 
   handleClose() {
     Remote.getCurrentWindow().hide();

@@ -3,13 +3,13 @@
 import React from 'react/addons';
 import Actions from './Actions';
 import ChannelStore from './ChannelStore';
-import Loader from './Loader';
 import ChannelPlaylist from './ChannelPlaylist';
+import {RenderMixin, MetaMixin} from './Mixins';
 
 const PureRenderMixin = React.addons.PureRenderMixin;
 
 export default React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [PureRenderMixin, RenderMixin, MetaMixin],
 
   getInitialState(){
     return ChannelStore.getState();
@@ -17,7 +17,7 @@ export default React.createClass({
 
   componentDidMount() {
     ChannelStore.listen(this.onChange);
-    Actions.fetchPlaylists(this.props.params.channel);
+    Actions.fetchChannelPlaylists(this.props.params.channel);
   },
 
   componentWillUnmount() {
@@ -26,10 +26,6 @@ export default React.createClass({
 
   onChange() {
     this.setState(ChannelStore.getState());
-  },
-
-  renderLoader() {
-    return <Loader />;
   },
 
   renderPlaylist(title, playlists) {
@@ -41,19 +37,16 @@ export default React.createClass({
   render() {
     var fragment;
     var title = this.props.params.channel;
-    var playlists = this.state.playlists.toArray();
+    var page = this.handleClassNames([{
+      'channel': true
+    }, title]);
 
     if(this.props.loading){
       fragment = this.renderLoader();
     } else {
-      fragment = this.renderPlaylist(title, playlists);
+      fragment = this.renderPlaylist(title, this.state.playlists.toArray());
     }
 
-    let page = 'channel ' + title;
-    return (
-      <div className={page}>
-        {fragment}
-      </div>
-    );
+    return this.renderFragment(page, fragment);
   }
 });

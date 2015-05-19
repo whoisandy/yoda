@@ -1,20 +1,6 @@
 'use strict'
 
 export default {
-  menuTemplate: function(){
-    return [
-      {
-        label: 'Testa',
-        submenu: [
-          {
-            label: 'About Testa',
-            selector: 'orderFrontStandardAboutPanel:'
-          }
-        ]
-      }
-    ]
-  },
-
   home: function(){
     return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
   },

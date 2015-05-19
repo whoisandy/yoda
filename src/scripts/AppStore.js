@@ -12,7 +12,8 @@ class AppStore {
 
     this.bindListeners({
       handleLoading: Actions.loading,
-      handleStatus: Actions.status
+      handleStatus: Actions.status,
+      handleDone: Actions.done
     });
   }
 
@@ -37,6 +38,11 @@ class AppStore {
     } else {
       this.status = false;
     }
+  }
+
+
+  handleDone() {
+    // TODO: Do something when downloads done
   }
 }
 

@@ -1,6 +1,5 @@
 'use strict';
 
-import {Map} from 'immutable';
 import {Alt, Api, Ydm} from './Core';
 
 class Actions {
@@ -8,28 +7,29 @@ class Actions {
     this.dispatch();
   }
 
-  receive(response) {
+  receiveChannelPlaylists(response) {
     this.dispatch(response);
   }
 
-  fail(err) {
+  failChannelPlaylists(err) {
     this.dispatch(err);
   }
 
-  fetchPlaylists(channel) {
+  fetchChannelPlaylists(channel) {
     this.dispatch();
     this.actions.loading();
-    Api.getChannelPlaylistsVideos(channel).then(data => {
-      this.actions.receive(data);
+    Api.getChannelPlaylistVideos(channel).then(data => {
+      this.actions.receiveChannelPlaylists(data);
       this.actions.loading();
     }).catch(err => {
-      this.actions.fail(err);
+      this.actions.failChannelPlaylists(err);
       this.actions.loading();
     });
   }
 
   search(query) {
     console.log(query);
+    this.dispatch();
   }
 
   download(video, filename) {
@@ -64,6 +64,7 @@ class Actions {
 
   status() {
     this.dispatch();
+    this.actions.done();
   }
 
   finish(id) {

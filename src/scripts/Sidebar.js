@@ -2,13 +2,20 @@
 
 import React from 'react';
 import {Link} from 'react-router';
+import {MetaMixin} from './Mixins';
 
 export default React.createClass({
+  mixins: [MetaMixin],
+
   render() {
-    var activeDownload = this.props.status ? 'list-group-item downloading' : 'list-group-item';
+    var status = this.handleClassNames({
+      'list-group-item': true,
+      'downloading': this.props.status
+    });
+
     return (
       <div className="sidebar">
-        <div className="categories">
+        <div className="sidebar-categories">
           <h4>Best of youtube</h4>
           <div className="list-group">
             <Link className="list-group-item" to="/channels/popular">
@@ -31,14 +38,14 @@ export default React.createClass({
             </Link>
           </div>
         </div>
-        <div className="settings-download">
+        <div className="sidebar-buttons">
           <div className="settings-btn">
             <Link to="/preferences">
               <span className="icon icon-settings"></span>
             </Link>
           </div>
           <div className="download-btn">
-            <Link className={activeDownload} to="/downloads">
+            <Link className={status} to="/downloads">
               <span className="icon icon-download"></span>
             </Link>
           </div>

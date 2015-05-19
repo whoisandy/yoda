@@ -2,10 +2,10 @@
 
 import AltManager from './AltManager';
 import ApiManager from './ApiManager';
-import DownloadManager from './DownloadManager';
+import YdmManager from './YdmManager';
 
 export default {
   Alt: AltManager,
   Api: ApiManager,
-  Ydm: DownloadManager
+  Ydm: YdmManager
 };

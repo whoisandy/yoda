@@ -4,23 +4,23 @@
   flex-direction: row;
   background: #202020;
   border-right: 1px darken(#202020, 8%) solid;
-  .categories, .settings-download{
+  .sidebar-categories, .sidebar-buttons{
     display: flex;
   }
-  .categories{
+  .sidebar-categories{
     flex: 1 auto;
   }
-  .settings-download{
+  .sidebar-buttons{
     flex: 1 40px;
   }
 }
 
-.categories {
+.sidebar-categories {
   flex-direction: column;
   h4{
     margin: 0 0 16px 12px;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 12px;
     color: #f0f0f0;
   }
@@ -30,6 +30,7 @@
     transition: all 0.25s ease;
     background: none;
     border: none;
+    border-color: darken(#E33E32, 18%);
     outline: none;
     cursor: default;
     font-size: @font-family-base;
@@ -46,24 +47,25 @@
     }
     &.active{
       background: darken(#E33E32, 12%);
+      border-left: 6px darken(#E33E32, 24%) solid;
       color: #fefefe;
     }
   }
 }
 
-.settings-download {
+.sidebar-buttons {
   height: 40px;
   margin: 0;
   padding: 12px 0;
-  /*background: darken(#292929, 2%);*/
   position: absolute;
+  background: lighten(#202020, 2%);
   display: flex;
   flex-direction: row;
   left: 0px;
   right: 0px;
   bottom: 0px;
   .settings-btn, .download-btn {
-    padding: 8px 18px;
+    padding: 8px 12px;
     text-decoration: none;
     display: flex;
     align-items: center;

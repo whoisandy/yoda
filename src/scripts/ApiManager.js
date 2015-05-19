@@ -1,7 +1,7 @@
 'use strict';
 
 import assign from 'object-assign';
-import request from 'superagent';
+import axios from 'axios';
 import Constants from './Constants';
 
 let Youtube = {
@@ -12,20 +12,14 @@ let Youtube = {
   request: function(endpoint, opts){
     let params = assign({}, {key: Constants.api.key}, opts);
     let url = this.construct(endpoint);
-    return new Promise((resolve, reject) => {
-      request.get(url).type('application/json').accept('json').query(params).end((err, res) => {
-        if(err){
-          reject(err);
-        }
-        resolve(res);
-      });
-    });
+    return axios.get(url, {params: params});
   }
 };
 
 export default {
   getChannelPlaylists(channel, opts) {
     let params = {
+      fields: 'items',
       part: 'snippet',
       id: Constants.api.channels[channel].join(',')
     };
@@ -33,73 +27,73 @@ export default {
     return Youtube.request('playlists', payload);
   },
 
-  getPlaylistVideos(id, opts) {
+  getPlaylistItems(id, opts) {
     let params = {
-      part: 'snippet',
-      playlistId: id,
-      maxResults: 48
+      fields: 'items',
+      part: 'contentDetails',
+      playlistId: id
     };
     let payload = assign({}, params, opts);
     return Youtube.request('playlistItems', payload);
   },
 
-
-  getVideoStats(videoIds, opts) {
+  getVideos(ids, opts) {
     let params = {
-      part: 'contentDetails, statistics',
-      id: videoIds.join(',')
+      fields: 'items',
+      part: 'snippet, contentDetails, statistics',
+      id: ids.join(',')
     };
     let payload = assign({}, params, opts);
     return Youtube.request('videos', payload);
   },
 
-  getChannelPlaylistsVideos(channel) {
+  getPlaylistVideos(playlistId, opts) {
+
+  },
+
+  getSearchVideos(query, opts){
+
+  },
+
+  getChannelPlaylistVideos(channel){
     var self = this;
-    var videoStats = [];
-    var playlistVideos = [];
-    var playlists = self.getChannelPlaylists(channel).then(data => {
-      var ids = data.body.items.map(playlist => {
+    var playlistPromiseStack = [];
+    var playlistVideoPromiseStack = [];
+    return this.getChannelPlaylists(channel).then(res => {
+      var playlists = res.data.items.map(item => {
         return {
-          id: playlist.id,
-          title: playlist.snippet.title
+          id: item.id,
+          title: item.snippet.title
         };
       });
 
-      ids.forEach(playlist => {
-        playlistVideos.push(self.getPlaylistVideos(playlist.id, {maxResults: 4}));
+      playlists.forEach(playlist => {
+        playlistPromiseStack.push(self.getPlaylistItems(playlist.id, {maxResults: 4}));
       });
 
-      return Promise.all(playlistVideos).then(data => {
-        var vids = data.map(video => {
-          var v = [];
-          video.body.items.map(item => {
-            v.push(item.snippet.resourceId.videoId);
+      return axios.all(playlistPromiseStack).then(res => {
+        var videoIdList = res.map(playlistItem => {
+          var v = []
+          playlistItem.data.items.map(playlist => {
+            v.push(playlist.contentDetails.videoId);
           });
           return v;
         });
 
-        vids.forEach(videos => {
-          videoStats.push(self.getVideoStats(videos, {}));
+        videoIdList.forEach(list => {
+          playlistVideoPromiseStack.push(self.getVideos(list));
         });
 
-        return Promise.all(videoStats).then(stats => {
-          var v = data.map((videos, idx) => {
-            var vids = videos.body.items.map((video, i) => {
-              return assign({}, stats[idx].body.items[i], video);
-            });
-
+        return axios.all(playlistVideoPromiseStack).then(res => {
+          return res.map((videoList, idx) => {
             return {
-              id: ids[idx].id,
-              title: ids[idx].title,
-              videos: vids
+              id: playlists[idx].id,
+              title: playlists[idx].title,
+              videos: videoList.data.items
             };
           });
-
-          return v;
         });
       });
     });
-
-    return playlists;
   }
 };

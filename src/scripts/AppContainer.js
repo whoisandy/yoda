@@ -1,13 +1,15 @@
 'use strict';
 
-import React from 'react';
-import {RouteHandler, State} from 'react-router';
+import React from 'react/addons';
+import {RouteHandler} from 'react-router';
 import AppStore from './AppStore';
 import Titlebar from './Titlebar';
 import Sidebar from './Sidebar';
 
+const PureRenderMixin = React.addons.PureRenderMixin;
+
 export default React.createClass({
-  mixins: [State],
+  mixins: [PureRenderMixin],
 
   getInitialState() {
     return AppStore.getState();
@@ -26,7 +28,7 @@ export default React.createClass({
   },
 
   render() {
-    var name = this.getParams().channel;
+    var name = this.props.params.channel;
     return (
       <div className="app">
         <Titlebar />

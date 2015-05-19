@@ -1,11 +1,12 @@
 'use strict';
 
 import fs from 'fs';
+import path from 'path';
 import ytdl from 'ytdl-core';
 
-let DownloadManager = {
-  download: function(video, filename) {
-    let id = video.snippet.resourceId.videoId;
+export default {
+  download(video, filename) {
+    let id = video.id;
     let title = video.snippet.title;
     let url = 'http://youtube.com/watch?v=' + id;
     let writeStream = fs.createWriteStream(filename);
@@ -27,7 +28,9 @@ let DownloadManager = {
         resolve(download);
       });
     });
+  },
+
+  notify() {
+    // TODO: Ding a sound when done with downloads
   }
 };
-
-export default DownloadManager;

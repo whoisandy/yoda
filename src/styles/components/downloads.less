@@ -2,6 +2,20 @@
   display: flex;
 }
 
+.downloads-header{
+  display: flex;
+  flex-direction: row;
+  .downloads-title, .downloads-switch{
+    display: flex;
+  }
+  .downloads-title{
+    flex: 1 auto;
+  }
+  .downloads-switch{
+    flex: 0 auto;
+  }
+}
+
 .download-items{
   margin: 12px 0 0 0;
   > tbody > tr{

@@ -1,24 +1,10 @@
 'use strict';
 
 import React from 'react';
-import Progress from './Progress';
+import {RenderMixin, MetaMixin} from './Mixins';
 
 export default React.createClass({
-  handleShortenText(text, maxLength) {
-    var ret = text;
-    if (ret.length > maxLength) {
-      ret = ret.substr(0, maxLength-3) + '...';
-    }
-    return ret;
-  },
-
-  handleSize(bytes){
-    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    if (bytes == 0) return 'n/a';
-    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-    if (i == 0) return bytes + ' ' + sizes[i];
-    return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
-  },
+  mixins: [RenderMixin, MetaMixin],
 
   renderHash(done){
     if(!done){
@@ -42,7 +28,7 @@ export default React.createClass({
           <span>{this.props.item.get('done') ? 'Done' : 'Downloading'}</span>
         </td>
         <td className="percent">
-          <Progress height={14} completed={this.props.item.get('progress')} />
+          {this.renderProgress({height: 14, completed: this.props.item.get('progress')})}
         </td>
       </tr>
     );

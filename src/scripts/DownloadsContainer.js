@@ -1,13 +1,15 @@
 'use strict';
 
 import React from 'react/addons';
+import {RenderMixin, MetaMixin} from './Mixins';
 import DownloadsStore from './DownloadsStore';
+import DownloadsHeader from './DownloadsHeader';
 import DownloadsItem from './DownloadsItem';
 
 const PureRendererMixin = React.addons.PureRendererMixin;
 
 export default React.createClass({
-  mixins: [PureRendererMixin],
+  mixins: [PureRendererMixin, RenderMixin, MetaMixin],
 
   getInitialState() {
     return DownloadsStore.getState();
@@ -25,9 +27,16 @@ export default React.createClass({
     this.setState(DownloadsStore.getState());
   },
 
+  renderDownloadsHeader() {
+    return (<DownloadsHeader title="Downloads" />);
+  },
+
   renderNoDownloads() {
     return (
-      <p>Currently no downloads</p>
+      <div className="downloads-content">
+        {this.renderDownloadsHeader()}
+        <div className="download-no-items">Currently no downloads</div>
+      </div>
     );
   },
 
@@ -37,35 +46,37 @@ export default React.createClass({
     });
 
     return (
-      <table className="table table-condensed download-items">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Video</th>
-            <th>Size</th>
-            <th>Status</th>
-            <th>Progress</th>
-          </tr>
-        </thead>
-        <tbody>{downloads}</tbody>
-      </table>
+      <div className="downloads-content">
+        {this.renderDownloadsHeader()}
+        <table className="download-items table table-condensed ">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Video</th>
+              <th>Size</th>
+              <th>Status</th>
+              <th>Progress</th>
+            </tr>
+          </thead>
+          <tbody>{downloads}</tbody>
+        </table>
+      </div>
     );
   },
 
   render() {
     var fragment;
     var videos = this.state.downloads;
+    var page = this.handleClassNames({
+      'downloads': true
+    });
+
     if(videos.count()){
       fragment = this.renderDownloads(videos.toArray());
     } else {
       fragment = this.renderNoDownloads();
     }
 
-    return (
-      <div className="downloads">
-        <h2>Downloads</h2>
-        {fragment}
-      </div>
-    );
+    return this.renderFragment(page, fragment);
   }
 });

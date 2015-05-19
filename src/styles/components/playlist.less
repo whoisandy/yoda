@@ -27,21 +27,25 @@
 }
 
 .playlist-header{
-  margin: 0 0 8px 0;
+  margin: 0 0 4px 0;
   padding: 0 8px;
   h3, button {
     display: flex;
   }
   h3{
     flex: 1 auto;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     > a{
       margin: 0;
       padding: 0;
       text-shadow: 0 1px 0 #ffffff;
-      font-weight: 400;
-      font-size: 18px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
       color: #454545;
+      &:hover{
+        color: @brand-primary;
+      }
     }
   }
   button{

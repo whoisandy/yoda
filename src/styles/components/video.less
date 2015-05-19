@@ -1,7 +1,7 @@
 .video {
   width: 185px;
   height: 190px;
-  margin: 0 0 24px 0;
+  margin: 0 0 12px 0;
   padding: 0 8px;
   position: relative;
   float: left;
@@ -21,24 +21,57 @@
     &:hover, &:focus{
       color: #333;
       text-decoration: none;
+      .video-title > a{
+        color: @brand-primary;
+      }
     }
   }
 
   .video-title{
     margin: 0 0 4px 0;
-    line-height: 14px;
-    font-weight: 600;
-    font-size: 12px;
-  }
-
-  .video-content, .video-stats{
-    font-size: 11px;
+    line-height: 1.4;
+    overflow: hidden;
+    > a{
+      max-height: 34px;
+      position: relative;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      white-space: normal;
+      word-wrap: break-word;
+      display: -webkit-box;
+      font-weight: 600;
+      font-size: 12px;
+      color: #333;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      &:after{
+        content:"\00200c";
+        position:static;
+        visibility:hidden;
+      }
+    }
   }
 
   .video-content{
     flex-direction: column;
+    font-size: 11px;
     span{
-      display: block;
+      display: inline-block;
+    }
+    ul, li{
+      margin: 0;
+      padding: 0;
+      list-style: none
+    }
+    ul > li{
+      display: inline-block;
+      &:last-child{
+        &:before{
+          content: "\002022";
+          margin: 0 4px;
+          display: inline;
+        }
+      }
     }
   }
 
