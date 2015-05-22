@@ -32,21 +32,22 @@ var paths = {
   JS_FILES: ['src/scripts/*.js'],
   CSS_FILES: ['src/styles/**/*.less', 'src/styles/*.less'],
   BUILD: './build',
-  TMP: './.tmp'
+  TMP: './.tmp',
+  RELEASE: './release'
 };
 
 // Clean build task
 gulp.task('clean:build', function(cb){
   del([
-    './build'
+    paths.BUILD
   ], cb);
 });
 
 // Clean Release task
 gulp.task('clean:release', function(cb){
   del([
-    './.tmp',
-    './release'
+    paths.TMP,
+    paths.RELEASE
   ], cb);
 });
 
