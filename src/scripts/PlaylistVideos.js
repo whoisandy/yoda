@@ -1,12 +1,16 @@
 'use strict';
 
 import React from 'react';
-import Video from './Video';
+import PlaylistVideo from './PlaylistVideo';
 
 export default React.createClass({
+  propTypes: {
+    videos: React.PropTypes.array.isRequired
+  },
+
   render() {
     var videos = this.props.videos.map(item => {
-      return <Video key={item.id} video={item} />;
+      return <PlaylistVideo key={item.id} video={item} />;
     });
 
     return (

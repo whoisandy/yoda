@@ -1,12 +1,21 @@
 'use strict';
 
-import assign from 'object-assign';
 import axios from 'axios';
+import cheerio from 'cheerio';
+import assign from 'object-assign';
 import Constants from './Constants';
 
-let Youtube = {
-  construct: function(endpoint){
+const Youtube = {
+  construct: function(endpoint, scrape){
+    if(scrape){
+      return Constants.api.youtubeUrl + endpoint;
+    }
     return Constants.api.baseUrl + endpoint;
+  },
+
+  scrape(endpoint) {
+    let url = this.construct(endpoint, true);
+    return axios.get(url);
   },
 
   request: function(endpoint, opts){
@@ -17,11 +26,46 @@ let Youtube = {
 };
 
 export default {
+  getChannels() {
+    var playlistPromises = [];
+    var channels = Constants.api.channels;
+
+    var playlistPromises = Object.keys(channels).map(k => {
+      var pids = [];
+      return Youtube.scrape(channels[k]).then(res => {
+        var $ = cheerio.load(res.data);
+        var playlistIdHref = $('h2.branded-page-module-title > a');
+        var ids = playlistIdHref.map((idx, el) => {
+          var id = $(el).attr('href');
+          if(id.match(/playlist\?list=/)){
+            pids.push(id.split('=')[1]);
+          }
+        });
+
+        return pids;
+      });
+    });
+
+    return Promise.all(playlistPromises).then(data => {
+      var playlists = {};
+      data.forEach((val, idx) => {
+        playlists[Object.keys(channels)[idx]] = val;
+      });
+      return playlists;
+    }).then(playlists => {
+      localStorage.setItem('playlists', JSON.stringify(playlists));
+      return playlists;
+    }).catch(err => {
+      return err;
+    });
+  },
+
   getChannelPlaylists(channel, opts) {
+    var pls = JSON.parse(localStorage.getItem('playlists'));
     let params = {
       fields: 'items',
       part: 'snippet',
-      id: Constants.api.channels[channel].join(',')
+      id: pls[channel].join(',')
     };
     let payload = assign({}, params, opts);
     return Youtube.request('playlists', payload);
@@ -86,11 +130,12 @@ export default {
 
         return axios.all(playlistVideoPromiseStack).then(res => {
           return res.map((videoList, idx) => {
-            return {
+            var videos = {
               id: playlists[idx].id,
               title: playlists[idx].title,
               videos: videoList.data.items
             };
+            return videos;
           });
         });
       });

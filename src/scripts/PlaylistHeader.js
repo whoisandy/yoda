@@ -1,10 +1,11 @@
 'use strict';
 
 import React from 'react';
-import {Meta} from './Mixins';
 
 export default React.createClass({
-  mixins: [Meta],
+  propTypes: {
+    title: React.PropTypes.string.isRequired
+  },
 
   render() {
     return (

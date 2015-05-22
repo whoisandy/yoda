@@ -61,6 +61,19 @@ p{
     min-width: 780px;
     background: #f0f0f0;
     overflow: hidden;
+    z-index: 999;
+    transition: all 0.5 ease;
+  }
+}
+
+.detail{
+  &.setup{
+    top: 0;
+    left: 0;
+    min-width: 1000px;
+    .detail-container{
+      width: 1000px;
+    }
   }
 }
 
@@ -89,5 +102,43 @@ p{
     h2{
       font-size: 24px;
     }
+  }
+}
+
+.video-container{
+  display: flex;
+  flex-direction: row;
+  .video-frame{
+    display: flex;
+    flex: 1 auto;
+    max-height: 440px;
+    > iframe{
+      width: 100%;
+    }
+  }
+  .video-info{
+    background: white;
+    margin-top: 18px;
+    padding: 20px;
+  }
+}
+
+.video-frame{
+  position: relative;
+  > iframe{
+    &.frame{
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    &.frame-loaded{
+      opacity: 1;
+    }
+  }
+}
+
+.video-info{
+  h2{
+    font-size: 24px;
   }
 }

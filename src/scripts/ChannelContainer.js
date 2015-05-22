@@ -1,15 +1,16 @@
 'use strict';
 
 import React from 'react/addons';
+import Join from 'react/lib/joinClasses';
 import Actions from './Actions';
 import ChannelStore from './ChannelStore';
 import ChannelPlaylist from './ChannelPlaylist';
-import {RenderMixin, MetaMixin} from './Mixins';
+import {RenderMixin} from './Mixins';
 
 const PureRenderMixin = React.addons.PureRenderMixin;
 
 export default React.createClass({
-  mixins: [PureRenderMixin, RenderMixin, MetaMixin],
+  mixins: [PureRenderMixin, RenderMixin],
 
   getInitialState(){
     return ChannelStore.getState();
@@ -37,12 +38,10 @@ export default React.createClass({
   render() {
     var fragment;
     var title = this.props.params.channel;
-    var page = this.handleClassNames([{
-      'channel': true
-    }, title]);
+    var page = Join('channel', title);
 
     if(this.props.loading){
-      fragment = this.renderLoader();
+      fragment = this.renderLoader({message: 'Loading channel playlists...'});
     } else {
       fragment = this.renderPlaylist(title, this.state.playlists.toArray());
     }

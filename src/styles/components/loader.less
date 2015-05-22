@@ -10,17 +10,33 @@
   justify-content: center;
   flex: 1;
 
-  .status{
+  .spinner-container {
+    display: flex;
     flex: 0 auto;
-    padding-top: 12px;
   }
+}
 
-  .spinner {
-    -webkit-animation: rotator @loader-duration cubic-bezier(0.175, 0.665, 0.320, 1) infinite;
+.spinner-container{
+  align-items: center;
+  justify-content: center;
+  &.row{
+    > span{
+      margin-left: 8px;
+    }
+    flex-direction: row;
+  }
+  &.col{
+    > span{
+      margin-top: 8px;
+    }
+    flex-direction: column;
   }
 }
 
 .spinner {
+  display: flex;
+  flex: 0 auto;
+  -webkit-animation: rotator @loader-duration cubic-bezier(0.175, 0.665, 0.320, 1) infinite;
   .path {
     stroke-dasharray: @loader-offset;
     stroke-dashoffset: 0;

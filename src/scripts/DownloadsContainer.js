@@ -67,9 +67,6 @@ export default React.createClass({
   render() {
     var fragment;
     var videos = this.state.downloads;
-    var page = this.handleClassNames({
-      'downloads': true
-    });
 
     if(videos.count()){
       fragment = this.renderDownloads(videos.toArray());
@@ -77,6 +74,6 @@ export default React.createClass({
       fragment = this.renderNoDownloads();
     }
 
-    return this.renderFragment(page, fragment);
+    return this.renderFragment('downloads', fragment);
   }
 });

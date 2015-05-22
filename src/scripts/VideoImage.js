@@ -1,17 +1,38 @@
 'use strict';
 
 import React from 'react';
-import {MetaMixin} from './Mixins';
+import Join from 'react/lib/joinClasses';
+import VideoDuration from './VideoDuration';
 
 export default React.createClass({
-  mixins: [MetaMixin],
+  getInitialState() {
+    return {
+      loaded: false
+    };
+  },
+
+  componentDidMount() {
+    var imgTag = React.findDOMNode(this.refs.image);
+    var imgSrc = imgTag.getAttribute('src');
+
+    var img = new window.Image();
+    img.onload = this.onImageLoad;
+    img.src = imgSrc;
+  },
+
+  onImageLoad() {
+    if(this.isMounted()){
+      this.setState({loaded: true});
+    }
+  },
 
   render() {
+    var imgClasses = 'video-thumbnail image-thumbnail';
+    if (this.state.loaded) {
+      imgClasses = Join(imgClasses, 'video-thumbnail-loaded');
+    }
     return (
-        <div className="video-image">
-          <img className="video-thumbnail image-thumbnail" src={this.props.image} alt={this.props.title} />
-          <span className="video-duration">{this.handleDuration(this.props.duration)}</span>
-        </div>
+      <img ref="image" className={imgClasses} {...this.props} />
     );
   }
 });

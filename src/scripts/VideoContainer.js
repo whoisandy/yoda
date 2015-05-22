@@ -1,13 +1,20 @@
 'use strict';
 
 import React from 'react';
+import {State} from 'react-router';
+import VideoFrame from './VideoFrame';
+import VideoInfo from './VideoInfo';
 
 export default React.createClass({
+  mixins: [State],
+
   render() {
+    var props = this.getQuery();
+    console.log(props);
     return (
       <div className="video-container">
-        <h4>Video page here</h4>
-        <p>{this.props.params.video.id}</p>
+        <VideoFrame video={this.props.params.video} />
+        <VideoInfo {...props} />
       </div>
     );
   }

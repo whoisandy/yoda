@@ -21,11 +21,10 @@ function bootstrap(){
   Utils.disableGlobalBackspace();
 
   let mountNode = document.querySelector('.app-container');
-  Router.run((Handler, state) => {
+  Router.run((Root, state) => {
     var params = state.params;
-    React.render(<Handler params={params} />, mountNode);
+    React.render(<Root params={params} />, mountNode);
   });
-  Router.transitionTo('channels', {channel: 'popular'});
 }
 
 Promise.all([

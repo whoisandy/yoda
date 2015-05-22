@@ -35,8 +35,15 @@ var paths = {
   TMP: './.tmp'
 };
 
-// Clean task
-gulp.task('clean', function(cb){
+// Clean build task
+gulp.task('clean:build', function(cb){
+  del([
+    './build'
+  ], cb);
+});
+
+// Clean Release task
+gulp.task('clean:release', function(cb){
   del([
     './.tmp',
     './release'
@@ -44,7 +51,7 @@ gulp.task('clean', function(cb){
 });
 
 // Download task
-gulp.task('download', function(cb){
+gulp.task('download', ['clean:build'], function(cb){
   $.electron({
     version: packageJson['electron-version'],
     outputDir: 'cache'
@@ -157,7 +164,7 @@ gulp.task('build', function(){
 
 // Release task
 gulp.task('release', function(cb){
-  sequence('compile', 'build', 'dmg', 'clean', cb);
+  sequence('compile', 'build', 'dmg', 'clean:release', cb);
 });
 
 // Build a disk image file

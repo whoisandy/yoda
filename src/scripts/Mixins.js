@@ -2,7 +2,6 @@
 
 import React from 'react';
 import ReactIntl from 'react-intl';
-import Cnames from 'classnames'
 import Loader from './Loader';
 import Progress from './Progress';
 
@@ -10,12 +9,12 @@ const FormattedRelative = ReactIntl.FormattedRelative;
 const FormattedMessage = ReactIntl.FormattedMessage;
 
 const Render = {
-  renderLoader() {
-    return (<Loader />);
+  renderLoader(props) {
+    return (<Loader {...props} />);
   },
 
   renderProgress(props) {
-    return (<Progress height={props.height} completed={props.completed} />);
+    return (<Progress {...props} />);
   },
 
   renderFragment(page, fragment) {
@@ -36,10 +35,6 @@ const Render = {
 };
 
 const Meta = {
-  handleClassNames(classes) {
-    return Cnames(classes);
-  },
-
   handleShortenText(text, maxLength) {
     var ret = text;
     if (ret.length > maxLength) {
@@ -52,7 +47,7 @@ const Meta = {
     var arr = ['0', '0', '0'];
     var matches = duration.match(/[0-9]+[HMS]/g);
     const pad = function(num){
-      return (parseInt(num) < 9 ? '0' + num : num);
+      return (parseInt(num) < 10 ? '0' + num : num);
     };
 
     var parsed = matches.map((val, idx) => {
@@ -72,7 +67,7 @@ const Meta = {
         return val.match(/\d+/);
     });
 
-    if(!parseInt(arr[0])){
+    if(parseInt(arr[0]) === 0){
       arr.shift();
       arr[1] = pad(arr[1]);
     } else {

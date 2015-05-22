@@ -81,7 +81,7 @@
     position: relative;
     border: 1px #aaa solid;
     overflow: hidden;
-    span{
+    > span{
       padding: 2px 4px;
       background: #222;
       position: absolute;
@@ -91,11 +91,18 @@
       font-size: 11px;
       color: #ffffff;
     }
+    > img {
+      width: 100%;
+      height: 94px;
+    }
   }
+}
 
-  .video-thumbnail{
-    width: 100%;
-    height: 94px;
-    transition: all 0.25s ease-in-out;
-  }
+.video-thumbnail{
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.video-thumbnail-loaded{
+  opacity: 1;
 }

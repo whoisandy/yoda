@@ -7,12 +7,19 @@ class Actions {
     this.dispatch();
   }
 
+  fetchChannels() {
+    this.dispatch();
+    return Api.getChannels();
+  }
+
   receiveChannelPlaylists(response) {
     this.dispatch(response);
+    this.actions.loading();
   }
 
   failChannelPlaylists(err) {
     this.dispatch(err);
+    this.actions.loading();
   }
 
   fetchChannelPlaylists(channel) {
@@ -20,10 +27,8 @@ class Actions {
     this.actions.loading();
     Api.getChannelPlaylistVideos(channel).then(data => {
       this.actions.receiveChannelPlaylists(data);
-      this.actions.loading();
     }).catch(err => {
       this.actions.failChannelPlaylists(err);
-      this.actions.loading();
     });
   }
 

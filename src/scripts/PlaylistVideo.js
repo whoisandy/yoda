@@ -1,21 +1,41 @@
 'use strict';
 
+import Remote from 'remote';
 import React from 'react';
 import {Navigation} from 'react-router';
 import Actions from './Actions';
+import Utils from './Utils';
 import {RenderMixin, MetaMixin} from './Mixins';
 import VideoImage from './VideoImage';
+import VideoDuration from './VideoDuration';
+
+const Dialog = Remote.require('dialog');
 
 export default React.createClass({
   mixins: [RenderMixin, MetaMixin, Navigation],
 
   handleVideo(item) {
-    this.transitionTo('videos', {video: item});
+    console.log(item);
+    this.transitionTo('videos', {
+      video: item.id
+    }, {
+      title: item.snippet.title,
+      viewCount: item.statistics.viewCount
+    });
+    // Dialog.showSaveDialog({
+    //   defaultPath: Utils.home() + '/Desktop/' + item.snippet.title + '.mp4'
+    // }, function(filename){
+    //   if(filename !== undefined && item){
+    //     Actions.download(item, filename);
+    //   } else {
+    //     console.log('Download cancelled');
+    //   }
+    // });
   },
 
   renderDelete() {
     return (
-      <div href="#" className="video-detail">
+      <div className="video-detail">
         <p>Deleted video</p>
       </div>
     );
@@ -25,7 +45,10 @@ export default React.createClass({
   renderVideo(item) {
     return (
       <div className="video-detail" onClick={this.handleVideo.bind(null, item)}>
-        <VideoImage title={item.snippet.title} image={item.snippet.thumbnails.medium.url} duration={item.contentDetails.duration} />
+        <div className="video-image">
+          <VideoImage title={item.snippet.title} src={item.snippet.thumbnails.medium.url} />
+          <VideoDuration duration={item.contentDetails.duration} />
+        </div>
         <div className="video-title">
           <a href="#">{item.snippet.title}</a>
         </div>
@@ -44,9 +67,6 @@ export default React.createClass({
     var fragment;
     var video = this.props.video;
     var title = video.snippet.title;
-    var page = this.handleClassNames({
-      'video': true
-    });
 
     if(!this.handleTitle(title)) {
       fragment = this.renderDelete();
@@ -54,6 +74,6 @@ export default React.createClass({
       fragment = this.renderVideo(video);
     }
 
-    return this.renderFragment(page, fragment);
+    return this.renderFragment('video', fragment);
   }
 });

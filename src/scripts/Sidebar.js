@@ -1,17 +1,13 @@
 'use strict';
 
 import React from 'react';
+import Join from 'react/lib/joinClasses';
 import {Link} from 'react-router';
-import {MetaMixin} from './Mixins';
 
 export default React.createClass({
-  mixins: [MetaMixin],
-
   render() {
-    var status = this.handleClassNames({
-      'list-group-item': true,
-      'downloading': this.props.status
-    });
+    var downloading = this.props.status ? 'downloading' : '';
+    var statusClass = Join('list-group-item', downloading);
 
     return (
       <div className="sidebar">

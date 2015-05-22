@@ -1,12 +1,12 @@
 'use strict';
 
 import React from 'react';
-import {State} from 'react-router';
+import {Navigation, State} from 'react-router';
 import Remote from 'remote';
 import Searchbar from './Searchbar';
 
 export default React.createClass({
-  mixins: [State],
+  mixins: [Navigation, State],
 
   handleClose() {
     Remote.getCurrentWindow().hide();
