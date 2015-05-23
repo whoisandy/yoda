@@ -17,11 +17,7 @@ app.on('ready', function(){
     'resizable': false,
     'fullscreen': false,
     'frame': false,
-    'show': true,
-    'web-preferences': {
-      'web-security': false,
-      'overlay-fullscreen-video': true
-    }
+    'show': true
   });
 
   mainWindow.loadUrl(path.normalize('file://' + path.join(__dirname, 'index.html')));
