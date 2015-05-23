@@ -30,7 +30,7 @@ export default React.createClass({
   },
 
   handleFrameUrl(videoId) {
-    return `http://youtube.com/embed/${videoId}?&autoplay=0&modestbranding=1&showinfo=0`;
+    return `http://youtube.com/embed/${videoId}?&autoplay=1&modestbranding=1&showinfo=0`;
   },
 
   render() {

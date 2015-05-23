@@ -1,7 +1,7 @@
 'use strict';
 
-import Remote from 'remote';
 import React from 'react';
+import ReactIntl from 'react-intl';
 import {Navigation} from 'react-router';
 import Actions from './Actions';
 import Utils from './Utils';
@@ -9,10 +9,10 @@ import {RenderMixin, MetaMixin} from './Mixins';
 import VideoImage from './VideoImage';
 import VideoDuration from './VideoDuration';
 
-const Dialog = Remote.require('dialog');
+const IntlMixin = React.IntlMixin;
 
 export default React.createClass({
-  mixins: [RenderMixin, MetaMixin, Navigation],
+  mixins: [RenderMixin, IntlMixin, MetaMixin, Navigation],
 
   handleVideo(item) {
     console.log(item);
@@ -22,15 +22,6 @@ export default React.createClass({
       title: item.snippet.title,
       viewCount: item.statistics.viewCount
     });
-    // Dialog.showSaveDialog({
-    //   defaultPath: Utils.home() + '/Desktop/' + item.snippet.title + '.mp4'
-    // }, function(filename){
-    //   if(filename !== undefined && item){
-    //     Actions.download(item, filename);
-    //   } else {
-    //     console.log('Download cancelled');
-    //   }
-    // });
   },
 
   renderDelete() {

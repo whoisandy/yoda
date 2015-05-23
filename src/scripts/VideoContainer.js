@@ -10,7 +10,6 @@ export default React.createClass({
 
   render() {
     var props = this.getQuery();
-    console.log(props);
     return (
       <div className="video-container">
         <VideoFrame video={this.props.params.video} />
