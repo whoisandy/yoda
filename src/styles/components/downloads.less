@@ -1,10 +1,17 @@
 .downloads{
   display: flex;
+  .downloads-content{
+    display: flex;
+    flex: 1 auto;
+    flex-direction: column;
+  }
 }
 
 .downloads-header{
   display: flex;
   flex-direction: row;
+  min-height: 30px;
+  flex: 0 30px;
   .downloads-title, .downloads-switch{
     display: flex;
   }
@@ -22,11 +29,24 @@
     &, &:focus{
       outline: none;
     }
+    > span{
+      margin-right: 8px;
+    }
   }
 }
 
 .download-items{
+  height: 100vh;
   margin: 12px 0 0 0;
+  position: relative;
+  display: flex;
+  flex: 1 auto;
+}
+
+.download-items-table{
+  > tbody{
+    border-collapse: collapse;
+  }
   > tbody > tr{
     > td{
       vertical-align: middle;
@@ -38,16 +58,24 @@
           color: #0BD318;
         }
       }
-      &.title{
-        width: 400px;
+      &.download-title{
+        clear: both;
+        > span{
+          &:first-child{
+            float: left
+          }
+          &:last-child{
+            float: right;
+          }
+        }
       }
-      &.size{
+      &.download-size{
         width: 120px;
       }
-      &.status{
+      &.download-status{
         width: 120px;
       }
-      &.percent{
+      &.download-progresss{
         width: 100px;
       }
     }

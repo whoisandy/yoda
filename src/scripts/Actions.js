@@ -1,45 +1,88 @@
 'use strict';
 
-import {Alt, Api, Ydm} from './Core';
+import Core from './Core';
 
 class Actions {
-  loading() {
+  loadingChannels() {
+    this.dispatch();
+  }
+
+  loadingPlaylist() {
+    this.dispatch();
+  }
+
+  loadingResults() {
     this.dispatch();
   }
 
   fetchChannels() {
     this.dispatch();
-    return Api.getChannels();
+    return Core.Api.getChannels();
   }
 
   receiveChannelPlaylists(response) {
     this.dispatch(response);
-    this.actions.loading();
+    this.actions.loadingChannels();
   }
 
   failChannelPlaylists(err) {
     this.dispatch(err);
-    this.actions.loading();
+    this.actions.loadingChannels();
   }
 
   fetchChannelPlaylists(channel) {
     this.dispatch();
-    this.actions.loading();
-    Api.getChannelPlaylistVideos(channel).then(data => {
+    this.actions.loadingChannels();
+    Core.Api.getChannelPlaylistVideos(channel).then(data => {
       this.actions.receiveChannelPlaylists(data);
     }).catch(err => {
       this.actions.failChannelPlaylists(err);
     });
   }
 
-  search(query) {
-    console.log(query);
+  receiveSearchResults(response){
+    this.dispatch(response);
+    this.actions.loadingResults();
+  }
+
+  failSearchResults(err){
+    this.dispatch(err);
+    this.actions.loadingResults();
+  }
+
+  fetchPlaylist(playlist) {
     this.dispatch();
+    this.actions.loadingPlaylist();
+    Core.Api.getPlaylistVideos(playlist).then(data => {
+      this.actions.receivePlaylist(data);
+    }).catch(err => {
+      this.actions.failPlaylist(err);
+    });
+  }
+
+  receivePlaylist(response) {
+    this.dispatch(response);
+    this.actions.loadingPlaylist();
+  }
+
+  failPlaylist(err){
+    this.dispatch(err);
+    this.actions.loadingPlaylist();
+  }
+
+  fetchSearchResults(query) {
+    this.dispatch();
+    this.actions.loadingResults();
+    Core.Api.getSearchResultsVideos(query).then(data => {
+      this.actions.receiveSearchResults(data);
+    }).catch(err => {
+      this.actions.failSearchResults(err);
+    });
   }
 
   download(video, filename) {
     let self = this;
-    Ydm.download(video, filename).then(download => {
+    Core.Ydm.download(video, filename).then(download => {
       self.dispatch({
         id: download.id,
         title: download.title,
@@ -69,17 +112,26 @@ class Actions {
 
   status() {
     this.dispatch();
-    this.actions.done();
   }
 
   finish(id) {
     this.dispatch(id);
     this.actions.status();
+    this.actions.done();
   }
 
   done() {
+    let state;
+    state = this.alt.takeSnapshot('DownloadsStore');
+    Core.Ydm.save('downloads', state);
+  }
+
+  boot() {
+    let state;
     this.dispatch();
+    state = Core.Ydm.load('downloads');
+    if(state !== null) this.alt.bootstrap(state);
   }
 }
 
-export default Alt.createActions(Actions);
+export default Core.Alt.createActions(Actions);

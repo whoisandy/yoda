@@ -4,7 +4,7 @@ import {Record, List, Map} from 'immutable';
 import {Alt} from './Core';
 import Actions from './Actions';
 
-const Playlist = new Record({
+const Channel = new Record({
   id: null,
   title: null,
   videos: []
@@ -23,7 +23,7 @@ class ChannelStore {
   }
 
   handleFetchChannelPlaylists() {
-    this.playlists = List([]);
+    this.playlists = List(Map({}));
   }
 
   handleFailChannelPlaylists(err) {
@@ -33,7 +33,7 @@ class ChannelStore {
   handleReceiveChannelPlaylists(playlists){
     this.errMessage = null;
     playlists.forEach(playlist =>{
-      this.playlists = this.playlists.push(new Playlist({
+      this.playlists = this.playlists.push(new Channel({
         id: playlist.id,
         title: playlist.title,
         videos: playlist.videos

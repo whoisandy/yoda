@@ -22,7 +22,9 @@ export default React.createClass({
 
   onImageLoad() {
     if(this.isMounted()){
-      this.setState({loaded: true});
+      return new Promise(resolve => {
+        resolve(this.setState({loaded: true}));
+      });
     }
   },
 

@@ -4,8 +4,8 @@ import React from 'react/addons';
 import Join from 'react/lib/joinClasses';
 import Actions from './Actions';
 import ChannelStore from './ChannelStore';
-import ChannelPlaylist from './ChannelPlaylist';
 import {RenderMixin} from './Mixins';
+import Channel from './Channel';
 
 const PureRenderMixin = React.addons.PureRenderMixin;
 
@@ -29,9 +29,9 @@ export default React.createClass({
     this.setState(ChannelStore.getState());
   },
 
-  renderPlaylist(title, playlists) {
+  renderChannel(title, playlists, current) {
     return (
-        <ChannelPlaylist playlists={playlists} name={title} />
+        <Channel playlists={playlists} name={title} />
     );
   },
 
@@ -43,7 +43,7 @@ export default React.createClass({
     if(this.props.loading){
       fragment = this.renderLoader({message: 'Loading channel playlists...'});
     } else {
-      fragment = this.renderPlaylist(title, this.state.playlists.toArray());
+      fragment = this.renderChannel(title, this.state.playlists.toArray());
     }
 
     return this.renderFragment(page, fragment);

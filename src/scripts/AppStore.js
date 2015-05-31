@@ -3,6 +3,8 @@
 import {Alt} from './Core';
 import Actions from './Actions';
 import ChannelStore from './ChannelStore';
+import PlaylistStore from './PlaylistStore';
+import SearchStore from './SearchStore';
 import DownloadsStore from './DownloadsStore';
 
 class AppStore {
@@ -11,16 +13,37 @@ class AppStore {
     this.status = false;
 
     this.bindListeners({
-      handleLoading: Actions.loading,
-      handleStatus: Actions.status,
-      handleDone: Actions.done
+      handleLoadingChannels: Actions.loadingChannels,
+      handleLoadingPlaylist: Actions.loadingPlaylist,
+      handleLoadingResults: Actions.loadingResults,
+      handleStatus: Actions.status
     });
   }
 
-  handleLoading() {
+  handleLoadingChannels() {
     this.waitFor(ChannelStore);
-    var playlists = ChannelStore.getState().playlists;
+    let playlists = ChannelStore.getState().playlists;
     if(playlists.size > 0){
+      this.loading = false;
+    } else {
+      this.loading = true;
+    }
+  }
+
+  handleLoadingPlaylist() {
+    this.waitFor(PlaylistStore);
+    let videos = PlaylistStore.getState().playlistVideos;
+    if(videos.size > 0){
+      this.loading = false;
+    } else {
+      this.loading = true;
+    }
+  }
+
+  handleLoadingResults() {
+    this.waitFor(SearchStore);
+    let results = SearchStore.getState().results;
+    if(results.size > 0){
       this.loading = false;
     } else {
       this.loading = true;
@@ -29,8 +52,8 @@ class AppStore {
 
   handleStatus() {
     this.waitFor(DownloadsStore);
-    var downloads = DownloadsStore.getState().downloads;
-    var isActive = downloads.toArray().every(item => {
+    let downloads = DownloadsStore.getState().downloads;
+    let isActive = downloads.toArray().every(item => {
       return item.get('done') === true;
     });
     if(!isActive){
@@ -38,11 +61,6 @@ class AppStore {
     } else {
       this.status = false;
     }
-  }
-
-
-  handleDone() {
-    // TODO: Do something when downloads done
   }
 }
 

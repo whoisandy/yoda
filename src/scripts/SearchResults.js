@@ -5,16 +5,16 @@ import Video from './Video';
 
 export default React.createClass({
   propTypes: {
-    videos: React.PropTypes.array.isRequired
+    results: React.PropTypes.array.isRequired
   },
 
   render() {
-    let nodes = this.props.videos.map(item => {
-      return <Video key={item.id} video={item} />;
+    let nodes = this.props.results.map(result => {
+      return (<Video key={result.id} video={result} />);
     });
 
     return (
-      <div className="playlist-videos">
+      <div className="search-results-videos">
         {nodes}
       </div>
     );

@@ -1,6 +1,6 @@
 'use strict';
 
-import {Record, Map, List} from 'immutable';
+import Immutable, {Record, Map, List} from 'immutable';
 import {Alt} from './Core';
 import Actions from './Actions';
 
@@ -15,6 +15,27 @@ const Download = new Record({
 class DownloadsStore {
   constructor() {
     this.downloads = List(Map({}));
+    this.complete = List(Map({}));
+
+    this.on('serialize', () => {
+      return {
+        complete: this.complete.toJS()
+      };
+    });
+
+    this.on('deserialize', (data) => {
+      data.complete.forEach(complete => {
+        let record = this.complete.find(item => {
+          return item.get('id') === complete.id;
+        });
+
+        if(!record){
+          this.complete = this.complete.push(Immutable.fromJS(complete));
+        }
+      });
+
+      return this.complete;
+    });
 
     this.bindListeners({
       handleDownload: Actions.download,
@@ -34,7 +55,7 @@ class DownloadsStore {
   }
 
   handleProgress(video) {
-    var idx = this.downloads.findIndex(item => {
+    let idx = this.downloads.findIndex(item => {
       return item.get('id') === video.id;
     });
 
@@ -44,14 +65,21 @@ class DownloadsStore {
   }
 
   handleFinish(id){
-    var idx = this.downloads.findIndex(item => {
+    let idx = this.downloads.findIndex(item => {
       return item.get('id') === id;
     });
 
     this.downloads = this.downloads.update(idx, item => {
       return item.set('done', true);
     });
+
+    let item = this.downloads.find(item => {
+      return item.get('id') == id;
+    });
+
+    this.complete = this.complete.push(item);
+    this.downloads = this.downloads.delete(idx);
   }
 }
 
-export default Alt.createStore(DownloadsStore);
+export default Alt.createStore(DownloadsStore, 'DownloadsStore');

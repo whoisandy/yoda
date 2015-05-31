@@ -2,13 +2,12 @@
 
 import fs from 'fs';
 import path from 'path';
+import sfx from 'sfx';
 import ytdl from 'ytdl-core';
 
 export default {
   download(video, filename) {
-    let id = video.id;
-    let title = video.snippet.title;
-    let url = 'http://youtube.com/watch?v=' + id;
+    let url = `http://youtube.com/watch?v=${video.id}`;
     let writeStream = fs.createWriteStream(filename);
     let readStream = ytdl(url, {});
     readStream.pipe(writeStream);
@@ -19,8 +18,8 @@ export default {
       });
       readStream.on('info', (info, format) => {
         let download = {
-          id: id,
-          title: title,
+          id: video.id,
+          title: video.snippet.title,
           total: format.size,
           stream: readStream
         };
@@ -30,7 +29,12 @@ export default {
     });
   },
 
-  notify() {
-    // TODO: Ding a sound when done with downloads
+  save(store, state) {
+    sfx.glass();
+    localStorage.setItem(store, state);
+  },
+
+  load(store) {
+    return localStorage.getItem(store);
   }
 };

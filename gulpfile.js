@@ -105,9 +105,6 @@ gulp.task('scripts', function(){
       this.emit('end');
   }))
   .pipe($.if(options.dev, $.changed(paths.BUILD)))
-  .pipe($.react({
-    es6module: true
-  }))
   .pipe($.babel({ blacklist: ['regenerator']}))
   .pipe(gulp.dest(options.dev ? paths.BUILD : paths.TMP))
   .pipe($.if(options.dev, $.livereload()));

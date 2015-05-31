@@ -1,17 +1,17 @@
 .sidebar{
   margin: 0;
   padding-top: 66px;
-  flex-direction: row;
+  position: relative;
+  flex-direction: column;
   background: #202020;
-  border-right: 1px darken(#202020, 8%) solid;
   .sidebar-categories, .sidebar-buttons{
     display: flex;
   }
   .sidebar-categories{
     flex: 1 auto;
   }
-  .sidebar-buttons{
-    flex: 1 40px;
+  .sidebar-download{
+    flex: 1 auto;
   }
 }
 
@@ -24,7 +24,7 @@
     font-size: 12px;
     color: #f0f0f0;
   }
-  .list-group-item{
+  .link{
     padding-top: 8px;
     padding-bottom: 8px;
     transition: all 0.25s ease;
@@ -33,7 +33,7 @@
     border-color: darken(#E33E32, 18%);
     outline: none;
     cursor: default;
-    font-size: @font-family-base;
+    font-size: @font-size-base;
     color: @sidebar-link-color;
     > span{
       margin-right: 8px;
@@ -53,10 +53,9 @@
   }
 }
 
-.sidebar-buttons {
-  height: 40px;
+.sidebar-download {
   margin: 0;
-  padding: 12px 0;
+  padding: 0;
   position: absolute;
   background: lighten(#202020, 2%);
   display: flex;
@@ -64,36 +63,54 @@
   left: 0px;
   right: 0px;
   bottom: 0px;
-  .settings-btn, .download-btn {
-    padding: 8px 12px;
+  &.downloading{
+    background: lighten(#202020, 6%);
+    .list-group-item{
+      .downloading();
+      height: 50px;
+      color: #ffffff;
+      > .sidebar-btn-badge{
+        background: seagreen;
+        color: #ffffff;
+      }
+    }
+  }
+  .sidebar-download-btn-wrapper{
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex: 1 auto;
+  }
+  .sidebar-download-btn {
+    height: 40px;
+    margin: 0;
+    padding: 4px 0 4px 12px;
+    background: none;
+    border: none;
+    border-radius: 0px;
+    outline: none;
     text-decoration: none;
     display: flex;
     align-items: center;
     flex: 1 auto;
-    a{
-      margin: 0;
-      padding: 0px;
+    font-size: @font-size-base;
+    color: @sidebar-link-color;
+    &:hover, &.active{
+      text-shadow: none;
       background: none;
-      border: none;
-      outline: none;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 20px;
-      color: @sidebar-link-color;
-      &.active{
-        background: none;
-        color: #ffffff;
-      }
-      &.downloading{
-        .downloading();
-        color: lighten(#E33E32, 2%);
-      }
+      color: #ffffff;
     }
-  }
-  .settings-btn{
-    justify-content: flex-start;
-  }
-  .download-btn{
-    justify-content: flex-end;
+    > .sidebar-btn-title{
+      > span{
+        margin-right: 8px;
+      }
+      flex-direction: row;
+      flex: 1 auto;
+    }
+    > .sidebar-btn-badge{
+      margin-right: 8px;
+      flex: 0 30px;
+      font-weight: normal;
+    }
   }
 }

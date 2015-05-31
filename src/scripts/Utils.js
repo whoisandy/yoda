@@ -1,11 +1,15 @@
 'use strict'
 
 export default {
-  home: function(){
+  home() {
     return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
   },
 
-  addLiveReload: function(){
+  filepath(filename) {
+    return this.home() + '/Desktop/' + filename + '.mp4';
+  },
+
+  addLiveReload() {
     if (process.env.NODE_ENV === 'development') {
       var head = document.getElementsByTagName('head')[0];
       var script = document.createElement('script');
@@ -15,7 +19,7 @@ export default {
     }
   },
 
-  disableGlobalBackspace: function () {
+  disableGlobalBackspace() {
     document.onkeydown = function (e) {
       e = e || window.event;
       var doPrevent;

@@ -1,0 +1,131 @@
+.detail > .detail-container{
+  width: 780px;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  flex: 1;
+  top: 0;
+  bottom: 0;
+}
+
+.detail-container{
+
+  .detail-header, .detail-content {
+    display: flex;
+  }
+  .detail-header{
+    margin: 0;
+    padding: 0 12px;
+    min-height: 45px;
+    flex: 1 45px;
+    flex-direction: row;
+    align-items: center;
+  }
+  .detail-content {
+    height: 100%;
+    padding: 20px;
+    overflow: scroll;
+    display: flex;
+    position: relative;
+    flex: 1 auto;
+  }
+}
+
+.detail-header{
+  background: #fefefe -webkit-linear-gradient(top, #f3f3f3, darken(#f3f3f3, 16%));
+  border-bottom: 1px darken(#ccc, 12%) solid;
+  .history, .searchbar {
+    display: flex;
+  }
+  .history {
+    flex: 1 60px;
+  }
+  .searchbar{
+    margin: 0;
+    flex: 0 300px;
+  }
+}
+
+.history{
+  flex-direction: row;
+  a{
+    margin: 0 16px 0 0;
+    padding: 0;
+    display: inline-block;
+    text-decoration: none;
+    cursor: default;
+    color: #333;
+    &:hover{
+      text-decoration: none;
+    }
+    span {
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+}
+
+.searchbar{
+  margin: 0;
+  align-items: center;
+  .searchform{
+    display: flex;
+    flex: 1 auto;
+  }
+}
+
+.searchform{
+  height: 30px;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  span, input{
+    position: absolute;
+  }
+  span{
+    top: 8px;
+    font-size: 14px;
+    z-index: 1;
+    &.icon-search{
+      left: 8px;
+    }
+    &.icon-cancel{
+      right: 8px;
+      cursor: pointer;
+      visibility: hidden;
+    }
+    &.icon-cancel.icon-show{
+      visibility: visible;
+    }
+  }
+  input{
+    height: 30px;
+    padding: 4px 8px 4px 26px;
+    border: 1px darken(#ccc, 8%) solid;
+    border-radius: 60px;
+    background: #ffffff;
+    outline: none;
+    box-shadow: none;
+    font-size: 12px;
+    &:focus {
+      border: 1px darken(#ccc, 24%) solid;
+      box-shadow: none;
+    }
+    &::-webkit-input-placeholder {
+      color: #9c9c9c;
+      font-weight: 400;
+    }
+  }
+}
+
+
+.detail-content {
+  > div{
+    display: flex;
+    flex-direction: column;
+    flex: 1 100%;
+    h2{
+      font-size: 24px;
+    }
+  }
+}

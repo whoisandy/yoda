@@ -1,7 +1,9 @@
 'use strict';
 
-import React from 'react';
+import Ipc from 'ipc';
 import Remote from 'remote';
+import React from 'react';
+
 
 import Utils from './Utils';
 import Router from './Router';
@@ -19,6 +21,10 @@ function bootstrap(){
   // Debugging purpose
   Utils.addLiveReload();
   Utils.disableGlobalBackspace();
+
+  Ipc.on('youdown:quitting', () => {
+    localStorage.removeItem('channels');
+  });
 
   let mountNode = document.querySelector('.app-container');
   Router.run((Root, state) => {

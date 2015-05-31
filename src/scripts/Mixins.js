@@ -1,12 +1,9 @@
 'use strict';
 
 import React from 'react';
-import ReactIntl from 'react-intl';
+import Moment from 'moment';
 import Loader from './Loader';
 import Progress from './Progress';
-
-const FormattedRelative = ReactIntl.FormattedRelative;
-const FormattedMessage = ReactIntl.FormattedMessage;
 
 const Render = {
   renderLoader(props) {
@@ -79,16 +76,15 @@ const Meta = {
   },
 
   handlePublishedAt(date) {
-    return (<FormattedRelative value={date} style="numeric" />);
+    return Moment(date).fromNow();
   },
 
   handleViewCount(num) {
-    var msg = `{count, plural, =0 {no views} =1 {one view} other {# views}}`;
-    return (<FormattedMessage message={msg} count={num} />);
-  },
-
-  handleTitle(title) {
-    return (title.match(/Deleted\s?video/g) === null ? true : false);
+    var viewCount = parseInt(num / Math.pow(10, 6));
+    if(viewCount > 0){
+      return viewCount + 'M views';
+    }
+    return parseInt(num).toLocaleString() + ' views';
   },
 
   handleSize(bytes){

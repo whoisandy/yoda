@@ -7,11 +7,10 @@ export default React.createClass({
     title: React.PropTypes.string.isRequired
   },
 
-  render() {
+  render (){
     return (
-      <div className="video-info">
-        <p className="title">{this.props.title}</p>
-        <p className="views">{this.props.viewCount}</p>
+      <div className="video-title">
+        <a href="#">{this.props.title}</a>
       </div>
     );
   }

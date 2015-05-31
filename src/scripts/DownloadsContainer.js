@@ -1,15 +1,17 @@
 'use strict';
 
 import React from 'react/addons';
-import {RenderMixin, MetaMixin} from './Mixins';
+import Join from 'react/lib/joinClasses';
+import {RouteHandler, Navigation, State} from 'react-router';
+import Actions from './Actions';
 import DownloadsStore from './DownloadsStore';
-import DownloadsHeader from './DownloadsHeader';
-import DownloadsItem from './DownloadsItem';
+import {RenderMixin} from './Mixins';
+import Downloads from './Downloads';
 
-const PureRendererMixin = React.addons.PureRendererMixin;
+const PureRenderMixin = React.addons.PureRenderMixin;
 
 export default React.createClass({
-  mixins: [PureRendererMixin, RenderMixin, MetaMixin],
+  mixins: [PureRenderMixin, RenderMixin, Navigation, State],
 
   getInitialState() {
     return DownloadsStore.getState();
@@ -17,6 +19,7 @@ export default React.createClass({
 
   componentDidMount() {
     DownloadsStore.listen(this.onProgress);
+    Actions.boot();
   },
 
   componentWillUnmount() {
@@ -27,53 +30,20 @@ export default React.createClass({
     this.setState(DownloadsStore.getState());
   },
 
-  renderDownloadsHeader() {
-    return (<DownloadsHeader title="Downloads" />);
-  },
-
-  renderNoDownloads() {
-    return (
-      <div className="downloads-content">
-        {this.renderDownloadsHeader()}
-        <div className="download-no-items">Currently no downloads</div>
-      </div>
-    );
-  },
-
-  renderDownloads(videos) {
-    var downloads = videos.map(item => {
-      return (<DownloadsItem key={Math.random()} item={item} />);
-    });
-
-    return (
-      <div className="downloads-content">
-        {this.renderDownloadsHeader()}
-        <table className="download-items table table-condensed ">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Video</th>
-              <th>Size</th>
-              <th>Status</th>
-              <th>Progress</th>
-            </tr>
-          </thead>
-          <tbody>{downloads}</tbody>
-        </table>
-      </div>
-    );
+  renderDownloads(group, downloads) {
+    return (<Downloads group={group} downloads={downloads} />)
   },
 
   render() {
-    var fragment;
-    var videos = this.state.downloads;
-
-    if(videos.count()){
-      fragment = this.renderDownloads(videos.toArray());
+    let fragment;
+    let page = Join('downloads-container');
+    let group = this.getParams().group;
+    if(group === 'active'){
+      fragment = this.renderDownloads(group, this.state.downloads.toArray());
     } else {
-      fragment = this.renderNoDownloads();
+      fragment = this.renderDownloads(group, this.state.complete.toArray());
     }
 
-    return this.renderFragment('downloads', fragment);
+    return this.renderFragment(page, fragment);
   }
 });

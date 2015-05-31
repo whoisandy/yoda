@@ -15,7 +15,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "GNU",
-  "electron-version": "0.24.0",
+  "electron-version": "0.27.0",
   "devDependencies": {
     "appdmg": "^0.3.1",
     "babel": "^5.1.11",
@@ -44,10 +44,11 @@
     "axios": "^0.5.4",
     "cheerio": "^0.19.0",
     "immutable": "^3.7.2",
+    "moment": "^2.10.3",
     "object-assign": "^2.0.0",
     "react": "^0.13.2",
-    "react-intl": "^1.2.0",
     "react-router": "^0.13.3",
+    "sfx": "^0.1.1",
     "ytdl-core": "^0.5.1"
   }
 }
