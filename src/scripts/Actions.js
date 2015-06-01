@@ -117,10 +117,15 @@ class Actions {
   finish(id) {
     this.dispatch(id);
     this.actions.status();
-    this.actions.done();
+    this.actions.snapshot();
+    this.actions.notify();
   }
 
-  done() {
+  notify() {
+    Core.Ydm.notify();
+  }
+
+  snapshot() {
     let state;
     state = this.alt.takeSnapshot('DownloadsStore');
     Core.Ydm.save('downloads', state);

@@ -30,11 +30,14 @@ export default {
   },
 
   save(store, state) {
-    sfx.glass();
     localStorage.setItem(store, state);
   },
 
   load(store) {
     return localStorage.getItem(store);
+  },
+
+  notify() {
+    sfx.glass();
   }
 };
