@@ -13,7 +13,7 @@ export default React.createClass({
     return (
       <div className="sidebar">
         <SidebarCategories />
-        <SidebarDownload status={this.props.status} />
+        <SidebarDownload status={this.props.status} count={this.props.count} />
       </div>
     );
   }

@@ -6,13 +6,25 @@ import {Link, State} from 'react-router'
 
 export default React.createClass({
   propTypes: {
-    status: React.PropTypes.bool
+    status: React.PropTypes.bool,
+    count: React.PropTypes.number
   },
 
   mixins: [State],
 
   componentWillUpdate(prevProps) {
-      return this.props.status !== prevProps.status;
+      return (
+        (this.props.status !== prevProps.status) || (this.props.count !== prevProps.count)
+      );
+  },
+
+  renderCount(count) {
+    if(count > 0) {
+      return (
+        <span className="sidebar-btn-badge badge">{count}</span>
+      );
+    }
+    return null;
   },
 
   render() {
@@ -35,7 +47,7 @@ export default React.createClass({
             <div className="sidebar-btn-title">
               <span className="icon icon-download"></span>Downloads
             </div>
-            <span className="sidebar-btn-badge badge">1</span>
+            {this.renderCount(this.props.count)}
           </Link>
         </div>
       </div>

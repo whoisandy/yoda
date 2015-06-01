@@ -11,6 +11,7 @@ class AppStore {
   constructor() {
     this.loading = true;
     this.status = false;
+    this.count = 0;
 
     this.bindListeners({
       handleLoadingChannels: Actions.loadingChannels,
@@ -56,6 +57,7 @@ class AppStore {
     let isActive = downloads.toArray().every(item => {
       return item.get('done') === true;
     });
+    this.count = downloads.count();
     if(!isActive){
       this.status = true;
     } else {
