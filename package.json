@@ -1,14 +1,14 @@
 {
-  "name": "youdown",
+  "name": "yoda",
   "version": "1.0.0",
   "author": "whoisandie",
   "description": "A simple mac app to download youtube videos",
   "main": "./build/browser.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/whoisandie/youdown.git"
+    "url": "https://github.com/whoisandie/yoda.git"
   },
-  "bugs": "https://github.com/whoisandie/youdown/issues",
+  "bugs": "https://github.com/whoisandie/yoda/issues",
   "scripts": {
     "start": "gulp",
     "release": "gulp release",

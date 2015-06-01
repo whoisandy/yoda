@@ -1,9 +1,9 @@
-# Youdown
+# Yoda
 
-Youdown is a simple osx (atleast for now) application which enables you to download videos from youtube.
+Yoda is a simple osx (atleast for now) application which enables you to download videos from youtube.
 Built using [Electron](http://electron.atom.io/) & [React](https://facebook.github.io/react).
 
-**Note:** Youdown is still in its development phase. Please follow the build instructions to run it.
+**Note:** Yoda is still in its development phase. Please follow the build instructions to run it.
 
 
 
@@ -24,7 +24,7 @@ gulp
 
 
 ## Screenshot
-![Youdown Screenshot](https://s3-us-west-2.amazonaws.com/github.whoisandie.com/youdown-screen.png)
+![Yoda Screenshot](https://s3-us-west-2.amazonaws.com/github.whoisandie.com/youdown-screen.png)
 
 
 

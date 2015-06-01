@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
   <key>CFBundleDisplayName</key>
-  <string>Youdown</string>
+  <string>Yoda</string>
   <key>CFBundleExecutable</key>
   <string>Atom</string>
   <key>CFBundleIconFile</key>
   <string>atom.icns</string>
   <key>CFBundleIdentifier</key>
-  <string>com.youdown.Youdown</string>
+  <string>com.whoisandie.yoda</string>
   <key>CFBundleInfoDictionaryVersion</key>
   <string>6.0</string>
   <key>CFBundleName</key>

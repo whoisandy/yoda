@@ -16,12 +16,12 @@ var dependencies = Object.keys(packageJson.dependencies);
 // App options
 var options = {
   dev: process.argv.indexOf('release') === -1,
-  app: 'Youdown.app',
-  dmg: 'Youdown-1.0.0.dmg',
-  name: 'Youdown',
-  icon: './src/resources/utils/youdown.icns',
+  app: 'Yoda.app',
+  dmg: 'Yoda-1.0.0.dmg',
+  name: 'Yoda',
+  icon: './src/resources/utils/yoda.icns',
   plist: './src/resources/utils/Info.plist',
-  bundle: 'com.youdown.youdown'
+  bundle: 'com.whoisandie.yoda'
 };
 
 // Paths

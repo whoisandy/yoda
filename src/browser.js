@@ -40,7 +40,7 @@ app.on('ready', function(){
   });
 
   mainWindow.webContents.on('did-finish-load', function() {
-    mainWindow.setTitle('Youdown');
+    mainWindow.setTitle('Yoda');
     mainWindow.show();
     mainWindow.focus();
   });
