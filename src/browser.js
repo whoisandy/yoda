@@ -32,7 +32,7 @@ app.on('ready', function(){
   });
 
   app.on('before-quit', function() {
-    mainWindow.webContents.send('youdown:quitting');
+    mainWindow.webContents.send('yoda:quitting');
   });
 
   mainWindow.webContents.on('new-window', function (e) {

@@ -22,7 +22,7 @@ function bootstrap(){
   Utils.addLiveReload();
   Utils.disableGlobalBackspace();
 
-  Ipc.on('youdown:quitting', () => {
+  Ipc.on('yoda:quitting', () => {
     localStorage.removeItem('channels');
   });
 
