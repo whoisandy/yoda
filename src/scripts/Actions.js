@@ -1,6 +1,6 @@
 'use strict';
 
-import Core from './Core';
+import {Alt, Api, Ydm} from './Core';
 
 class Actions {
   loadingChannels() {
@@ -17,7 +17,7 @@ class Actions {
 
   fetchChannels() {
     this.dispatch();
-    return Core.Api.getChannels();
+    return Api.getChannels();
   }
 
   receiveChannelPlaylists(response) {
@@ -33,7 +33,7 @@ class Actions {
   fetchChannelPlaylists(channel) {
     this.dispatch();
     this.actions.loadingChannels();
-    Core.Api.getChannelPlaylistVideos(channel).then(data => {
+    Api.getChannelPlaylistVideos(channel).then(data => {
       this.actions.receiveChannelPlaylists(data);
     }).catch(err => {
       this.actions.failChannelPlaylists(err);
@@ -53,7 +53,7 @@ class Actions {
   fetchPlaylist(playlist) {
     this.dispatch();
     this.actions.loadingPlaylist();
-    Core.Api.getPlaylistVideos(playlist).then(data => {
+    Api.getPlaylistVideos(playlist).then(data => {
       this.actions.receivePlaylist(data);
     }).catch(err => {
       this.actions.failPlaylist(err);
@@ -73,7 +73,7 @@ class Actions {
   fetchSearchResults(query) {
     this.dispatch();
     this.actions.loadingResults();
-    Core.Api.getSearchResultsVideos(query).then(data => {
+    Api.getSearchResultVideos(query).then(data => {
       this.actions.receiveSearchResults(data);
     }).catch(err => {
       this.actions.failSearchResults(err);
@@ -82,7 +82,7 @@ class Actions {
 
   download(video, filename) {
     let self = this;
-    Core.Ydm.download(video, filename).then(download => {
+    Ydm.download(video, filename).then(download => {
       self.dispatch({
         id: download.id,
         title: download.title,
@@ -122,21 +122,22 @@ class Actions {
   }
 
   notify() {
-    Core.Ydm.notify();
+    Ydm.notify();
   }
 
   snapshot() {
-    let state;
-    state = this.alt.takeSnapshot('DownloadsStore');
-    Core.Ydm.save('downloads', state);
+    this.dispatch();
+    let state = this.alt.takeSnapshot('DownloadsStore');
+    Ydm.save('downloads', state);
   }
 
   boot() {
-    let state;
     this.dispatch();
-    state = Core.Ydm.load('downloads');
-    if(state !== null) this.alt.bootstrap(state);
+    let state = Ydm.load('downloads');
+    if(state !== null) {
+      this.alt.bootstrap(state);
+    }
   }
 }
 
-export default Core.Alt.createActions(Actions);
+export default Alt.createActions(Actions);

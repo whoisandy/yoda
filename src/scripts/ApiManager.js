@@ -26,6 +26,57 @@ const Youtube = {
 };
 
 export default {
+  _playlists(channel, opts) {
+    let pls = JSON.parse(localStorage.getItem('channels'));
+    let params = {
+      fields: 'items',
+      part: 'snippet',
+      id: pls[channel].join(',')
+    };
+    let payload = assign({}, params, opts);
+    return Youtube.request('playlists', payload);
+  },
+
+  _playlistItems(id, opts) {
+    let params = {
+      fields: 'items',
+      part: 'snippet, contentDetails',
+      playlistId: id
+    };
+    let payload = assign({}, params, opts);
+    return Youtube.request('playlistItems', payload);
+  },
+
+  _videos(ids, opts) {
+    let params = {
+      fields: 'items',
+      part: 'snippet, contentDetails, statistics',
+      id: ids.join(',')
+    };
+    let payload = assign({}, params, opts);
+    return Youtube.request('videos', payload);
+  },
+
+  _playlist(playlistId, opts) {
+    let params = {
+      fields: 'items',
+      part: 'snippet',
+      id: playlistId
+    };
+    let payload = assign({}, params, payload);
+    return Youtube.request('playlists', payload);
+  },
+
+  _search(query, opts){
+    let params = {
+      fields: 'items',
+      part: 'snippet',
+      q: query
+    };
+    let payload = assign({}, params, opts);
+    return Youtube.request('search', payload);
+  },
+
   getChannels() {
     let playlistPromises = [];
     let channels = Constants.api.channels;
@@ -62,101 +113,11 @@ export default {
     });
   },
 
-  getChannelPlaylists(channel, opts) {
-    let pls = JSON.parse(localStorage.getItem('channels'));
-    let params = {
-      fields: 'items',
-      part: 'snippet',
-      id: pls[channel].join(',')
-    };
-    let payload = assign({}, params, opts);
-    return Youtube.request('playlists', payload);
-  },
-
-  getPlaylistItems(id, opts) {
-    let params = {
-      fields: 'items',
-      part: 'snippet, contentDetails',
-      playlistId: id
-    };
-    let payload = assign({}, params, opts);
-    return Youtube.request('playlistItems', payload);
-  },
-
-  getVideos(ids, opts) {
-    let params = {
-      fields: 'items',
-      part: 'snippet, contentDetails, statistics',
-      id: ids.join(',')
-    };
-    let payload = assign({}, params, opts);
-    return Youtube.request('videos', payload);
-  },
-
-  getPlaylist(playlistId, opts) {
-    let params = {
-      fields: 'items',
-      part: 'snippet',
-      id: playlistId
-    };
-    let payload = assign({}, params, payload);
-    return Youtube.request('playlists', payload);
-  },
-
-  getPlaylistVideos(playlistId) {
-    let self = this;
-    return this.getPlaylist(playlistId).then(res => {
-      let playlist = res.data.items.map(item => {
-        return {
-          id: item.id,
-          title: item.snippet.title
-        };
-      }).pop();
-
-      return self.getPlaylistItems(playlist.id, {maxResults: 50}).then(res => {
-        let videoIds = res.data.items.map(item => {
-          return item.contentDetails.videoId;
-        });
-
-        return self.getVideos(videoIds).then(res => {
-          return {
-            id: playlist.id,
-            title: playlist.title,
-            videos: res.data.items.splice(0,24)
-          }
-        });
-      });
-    });
-  },
-
-  getSearchResults(query, opts){
-    let params = {
-      fields: 'items',
-      part: 'snippet',
-      q: query
-    };
-    let payload = assign({}, params, opts);
-    return Youtube.request('search', payload);
-  },
-
-  getSearchResultsVideos(query) {
-    let self = this;
-    return this.getSearchResults(query, {maxResults: 50}).then(res => {
-      let results = res.data.items.map(item => {
-        return item.id.videoId;
-      });
-
-      return self.getVideos(results).then(res => {
-        return res.data.items.splice(0,24);
-      });
-    });
-  },
-
   getChannelPlaylistVideos(channel){
     let self = this;
     let playlistPromiseStack = [];
     let playlistVideoPromiseStack = [];
-    return this.getChannelPlaylists(channel).then(res => {
+    return this._playlists(channel).then(res => {
       let playlists = res.data.items.map(item => {
         return {
           id: item.id,
@@ -165,7 +126,7 @@ export default {
       });
 
       playlists.forEach(playlist => {
-        playlistPromiseStack.push(self.getPlaylistItems(playlist.id, {maxResults: 8}));
+        playlistPromiseStack.push(self._playlistItems(playlist.id, {maxResults: 8}));
       });
 
       return axios.all(playlistPromiseStack).then(res => {
@@ -179,7 +140,7 @@ export default {
 
 
         videoIdList.forEach(list => {
-          playlistVideoPromiseStack.push(self.getVideos(list));
+          playlistVideoPromiseStack.push(self._videos(list));
         });
 
         return axios.all(playlistVideoPromiseStack).then(res => {
@@ -192,6 +153,45 @@ export default {
             return videos;
           });
         });
+      });
+    });
+  },
+
+  getPlaylistVideos(playlistId) {
+    let self = this;
+    return this._playlist(playlistId).then(res => {
+      let playlist = res.data.items.map(item => {
+        return {
+          id: item.id,
+          title: item.snippet.title
+        };
+      }).pop();
+
+      return self._playlistItems(playlist.id, {maxResults: 50}).then(res => {
+        let videoIds = res.data.items.map(item => {
+          return item.contentDetails.videoId;
+        });
+
+        return self._videos(videoIds).then(res => {
+          return {
+            id: playlist.id,
+            title: playlist.title,
+            videos: res.data.items.splice(0,24)
+          }
+        });
+      });
+    });
+  },
+
+  getSearchResultVideos(query) {
+    let self = this;
+    return this._search(query, {maxResults: 50}).then(res => {
+      let results = res.data.items.map(item => {
+        return item.id.videoId;
+      });
+
+      return self._videos(results).then(res => {
+        return res.data.items.splice(0,24);
       });
     });
   }
