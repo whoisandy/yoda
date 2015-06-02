@@ -7,8 +7,10 @@ import Actions from './Actions';
 const Download = new Record({
   id: null,
   title: null,
-  total: null,
+  path: null,
+  total: 0,
   progress: 0,
+  start: true,
   done: false
 });
 
@@ -48,9 +50,7 @@ class DownloadsStore {
     this.downloads = this.downloads.push(new Download({
       id: video.id,
       title: video.title,
-      total: video.total,
-      progress: 0,
-      done: false
+      path: video.path
     }));
   }
 
@@ -60,7 +60,9 @@ class DownloadsStore {
     });
 
     this.downloads = this.downloads.update(idx, item => {
-      return item.set('progress', video.progress);
+      return item.set('start', video.start)
+              .set('total', video.total)
+              .set('progress', video.progress);
     });
   }
 
@@ -70,7 +72,7 @@ class DownloadsStore {
     });
 
     this.downloads = this.downloads.update(idx, item => {
-      return item.set('done', true);
+      return item.set('start', false).set('done', true);
     });
 
     let item = this.downloads.find(item => {

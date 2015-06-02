@@ -6,17 +6,20 @@ import {RenderMixin} from './Mixins';
 import DownloadsHeader from './DownloadsHeader';
 import DownloadsTable from './DownloadsTable';
 
+const PureRenderMixin = React.addons.PureRenderMixin;
+
 export default React.createClass({
   propTypes: {
+    title: React.PropTypes.string.isRequired,
     downloads: React.PropTypes.array.isRequired
   },
 
-  mixins: [RenderMixin],
+  mixins: [PureRenderMixin, RenderMixin],
 
   renderDownloadItems(group, downloads) {
     return (
       <div className="downloads-content">
-        <DownloadsHeader title="Downloads" />
+        <DownloadsHeader title={this.props.title} />
         <DownloadsTable group={group} downloads={downloads} />
       </div>
     );

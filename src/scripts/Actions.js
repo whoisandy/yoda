@@ -86,7 +86,7 @@ class Actions {
       self.dispatch({
         id: download.id,
         title: download.title,
-        total: download.total
+        path: download.path
       });
       self.actions.status();
       self.actions.progress(download);
@@ -96,12 +96,17 @@ class Actions {
   progress(video){
     let self = this;
     var dataSize = 0;
-    video.stream.on('data', data => {
-      dataSize = dataSize + data.length;
-      let percent = parseInt(Math.ceil((dataSize / video.total) * 100));
-      self.dispatch({
-        id: video.id,
-        progress: percent
+    video.stream.on('info', (info, format) => {
+      let total = format.size;
+      video.stream.on('data', data => {
+        dataSize = dataSize + data.length;
+        let percent = parseInt(Math.ceil((dataSize / total) * 100));
+        self.dispatch({
+          id: video.id,
+          total: total,
+          progress: percent,
+          start: false
+        });
       });
     });
 

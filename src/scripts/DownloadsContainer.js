@@ -2,7 +2,7 @@
 
 import React from 'react/addons';
 import Join from 'react/lib/joinClasses';
-import {RouteHandler, Navigation, State} from 'react-router';
+import {RouteHandler} from 'react-router';
 import Actions from './Actions';
 import DownloadsStore from './DownloadsStore';
 import {RenderMixin} from './Mixins';
@@ -11,7 +11,7 @@ import Downloads from './Downloads';
 const PureRenderMixin = React.addons.PureRenderMixin;
 
 export default React.createClass({
-  mixins: [PureRenderMixin, RenderMixin, Navigation, State],
+  mixins: [PureRenderMixin, RenderMixin],
 
   getInitialState() {
     return DownloadsStore.getState();
@@ -31,13 +31,13 @@ export default React.createClass({
   },
 
   renderDownloads(group, downloads) {
-    return (<Downloads group={group} downloads={downloads} />)
+    return (<Downloads title="Downloads" group={group} downloads={downloads} />);
   },
 
   render() {
     let fragment;
     let page = Join('downloads-container');
-    let group = this.getParams().group;
+    let group = this.props.params.group;
     if(group === 'active'){
       fragment = this.renderDownloads(group, this.state.downloads.toArray());
     } else {

@@ -4,28 +4,32 @@ import React from 'react/addons';
 import {RenderMixin} from './Mixins';
 import DownloadsTableRow from './DownloadsTableRow';
 
+const PureRenderMixin = React.addons.PureRenderMixin;
+
 export default React.createClass({
   propTypes: {
     group: React.PropTypes.string.isRequired,
     downloads: React.PropTypes.array.isRequired
   },
 
-  mixins: [RenderMixin],
+  mixins: [PureRenderMixin, RenderMixin],
 
   renderNoDownloads(group) {
+    let fragment;
     if(group === 'active'){
-      return (
-        <div className="no-results">
-          <p>Currently no active downloads</p>
-        </div>
+      fragment = (
+        <p>Currently no active downloads</p>
       );
     } else {
-      return (
-        <div className="no-results">
-          <p>No downloads to show</p>
-        </div>
+      fragment = (
+        <p>No downloads to show</p>
       );
     }
+    return (
+      <div className="no-results">
+        {fragment}
+      </div>
+    );
   },
 
   renderDownloadsTable(group, downloads) {
@@ -37,7 +41,7 @@ export default React.createClass({
       <table className="download-items-table table table-bordered table-striped">
         <thead>
           <tr>
-            <th className="hash">#</th>
+            <th className="download-hash">#</th>
             <th className="download-title">Video</th>
             <th className="download-size">Size</th>
             <th className="download-status">Status</th>

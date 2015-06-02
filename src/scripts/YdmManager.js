@@ -12,20 +12,19 @@ export default {
     let readStream = ytdl(url, {});
     readStream.pipe(writeStream);
 
+    let download = {
+      id: video.id,
+      title: video.snippet.title,
+      path: filename,
+      stream: readStream
+    };
+
     return new Promise((resolve, reject) => {
       readStream.on('error', err => {
         reject(err);
       });
-      readStream.on('info', (info, format) => {
-        let download = {
-          id: video.id,
-          title: video.snippet.title,
-          total: format.size,
-          stream: readStream
-        };
 
-        resolve(download);
-      });
+      resolve(download);
     });
   },
 

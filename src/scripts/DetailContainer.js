@@ -1,18 +1,20 @@
 'use strict';
 
 import React from 'react/addons';
-import {RouteHandler, State} from 'react-router';
+import {RouteHandler} from 'react-router';
 import DetailHeader from './DetailHeader';
 
+const PureRenderMixin = React.addons.PureRenderMixin;
+
 export default React.createClass({
-  mixins: [State],
+  mixins: [PureRenderMixin],
 
   componentWillUpdate(prevProps) {
     return ((this.props.status !== prevProps.status));
   },
 
   render() {
-    var name = this.getParams().channel;
+    var name = this.props.params.channel;
     return (
       <div className="detail">
         <div className="detail-container">
