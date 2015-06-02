@@ -1,11 +1,10 @@
 # Ignore .DS_Store files on mac
 .DS_Store
 
-# Ignore build, electron, vendor
+# Ignore electron, build, dist
 cache
 build
 dist
-src/styles/vendor
 
 # Dependency directory
 # Commenting this out is preferred by some people, see

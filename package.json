@@ -19,6 +19,7 @@
   "devDependencies": {
     "appdmg": "^0.3.1",
     "babel": "^5.1.11",
+    "bootstrap": "^3.3.4",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-babel": "^5.1.0",
