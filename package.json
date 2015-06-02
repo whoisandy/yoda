@@ -14,7 +14,7 @@
     "release": "gulp release",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "GNU",
+  "license": "MIT",
   "electron-version": "0.27.0",
   "devDependencies": {
     "appdmg": "^0.3.1",
@@ -31,11 +31,9 @@
     "gulp-livereload": "^3.8.0",
     "gulp-load-plugins": "^0.10.0",
     "gulp-plumber": "^1.0.0",
-    "gulp-react": "^3.0.1",
     "gulp-shell": "^0.4.1",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
-    "lodash": "^3.7.0",
     "react-tools": "^0.13.2",
     "run-sequence": "^1.1.0"
   },
@@ -46,8 +44,8 @@
     "immutable": "^3.7.2",
     "moment": "^2.10.3",
     "object-assign": "^2.0.0",
-    "react": "^0.13.2",
-    "react-router": "^0.13.3",
+    "react": "^0.13.1",
+    "react-router": "^0.13.2",
     "sfx": "^0.1.1",
     "ytdl-core": "^0.5.1"
   }

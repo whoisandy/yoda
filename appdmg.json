@@ -1,12 +1,10 @@
 {
 
-  "title": "Yoda",
-
-  "icon": "./src/resources/utils/yoda.icns",
+  "title": "Yoda Installer",
 
   "background": "./src/resources/utils/yoda.png",
 
-  "icon-size": 60,
+  "icon-size": 80,
 
   "contents": [
     { "x": 380, "y": 240, "type": "link", "path": "/Applications" },

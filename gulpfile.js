@@ -16,9 +16,9 @@ var dependencies = Object.keys(packageJson.dependencies);
 // App options
 var options = {
   dev: process.argv.indexOf('release') === -1,
-  app: 'Yoda.app',
-  dmg: 'Yoda-1.0.0.dmg',
   name: 'Yoda',
+  app: 'Yoda.app',
+  dmg: 'yoda-installer-1.0.0.dmg',
   icon: './src/resources/utils/yoda.icns',
   plist: './src/resources/utils/Info.plist',
   bundle: 'com.whoisandie.yoda'
