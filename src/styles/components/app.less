@@ -36,26 +36,30 @@ p{
   flex: 1;
   flex-direction: column;
   box-sizing: border-box;
+}
+
+.content-container{
   .content{
     display: flex;
     flex: 1;
     flex-direction: row;
     padding: 0;
   }
+  &.no-sidebar{
+    .titlebar-header, .sidebar{
+      visibility: hidden;
+    }
+  }
 }
 
 .content{
   display: flex;
   flex-direction: column;
-  &.no-sidebar > .sidebar{
-    visibility: hidden;
-  }
   .sidebar, .detail {
     position: absolute;
     bottom: 0;
   }
   .sidebar{
-    .fade-in();
     min-width: 220px;
     flex: 0 220px;
     top: 0;
