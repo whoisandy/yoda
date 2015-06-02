@@ -2,17 +2,19 @@
   min-width: 100%;
   min-height: 45px;
   position: absolute;
+  opacity: 1;
   display: flex;
   flex-direction: row;
+  transition: opacity 0.3s ease;
   -webapp-user-select: none;
   -webkit-app-region: drag;
   &.no-drag {
     -webkit-app-region: no-drag;
   }
-  .titlebar-buttons, .titlebar-header{
+  .buttons, .header{
     display: flex;
   }
-  .titlebar-buttons{
+  .buttons{
     position: relative;
     display: flex;
     flex-direction: row;
@@ -20,42 +22,34 @@
     align-items: center;
     -webkit-app-region: drag;
   }
-  .titlebar-header{
+  .header{
     flex: 1 auto;
   }
 }
 
-.buttons {
+.lights {
   display: inline-block;
   position: relative;
   left: 12px;
   z-index: 1000;
   -webkit-app-region: drag;
   &:hover{
-    .button-minimize.enabled {
+    .light-yellow.enabled {
       .at2x('minimize.png', 10px, 10px);
     }
-    .button-close.enabled {
+    .light-red.enabled {
       .at2x('close.png', 10px, 10px);
     }
   }
-  .button {
+  .light {
     .traffic-light();
-    &.button-close {
+    &.light-red {
       background-color: @traffic-light-red;
       border-color: @traffic-light-red-border;
     }
-    &.button-minimize {
+    &.light-yellow {
       background-color: @traffic-light-yellow;
       border-color: @traffic-light-yellow-border;
-    }
-    &.button-fullscreen {
-      background-color: @traffic-light-green;
-      border-color: @traffic-light-green-border;
-    }
-    &.button-fullscreenclose {
-      background-color: @traffic-light-green;
-      border-color: @traffic-light-green-border;
     }
     &.disabled {
       background-color: @traffic-light-gray;
@@ -64,7 +58,7 @@
   }
 }
 
-.titlebar-header{
+.header{
   margin: 0;
   padding: 0 12px;
   background: #fefefe -webkit-linear-gradient(top, #f3f3f3, darken(#f3f3f3, 16%));

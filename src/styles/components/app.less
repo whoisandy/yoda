@@ -38,31 +38,27 @@ p{
   box-sizing: border-box;
 }
 
-.content-container{
-  .content{
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-    padding: 0;
-  }
-  &.no-sidebar{
-    .titlebar-header, .sidebar{
-      visibility: hidden;
-    }
+.app-loading{
+  .titlebar > .header, .content > .sidebar {
+    opacity: 0;
   }
 }
 
 .content{
+  padding: 0;
   display: flex;
+  flex: 1;
   flex-direction: column;
   .sidebar, .detail {
     position: absolute;
     bottom: 0;
   }
   .sidebar{
+    opacity: 1;
     min-width: 220px;
     flex: 0 220px;
     top: 0;
+    transition: opacity 0.3s ease;
   }
   .detail{
     flex-direction: row;
