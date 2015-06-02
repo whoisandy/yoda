@@ -30,19 +30,17 @@ export default React.createClass({
 
   render() {
     let name = this.getPathname();
-    let contentClass = Join('content-container');
+    let loadingClass = Join('app');
     if(name == '/'){
-      contentClass = Join(contentClass, 'no-sidebar');
+      loadingClass = Join(loadingClass, 'app-loading');
     }
 
     return (
-      <div className="app">
-        <div className={contentClass}>
-          <Titlebar />
-          <div className="content">
-            <Sidebar status={this.state.status} count={this.state.count} />
-            <RouteHandler key={name} loading={this.state.loading} />
-          </div>
+      <div className={loadingClass}>
+        <Titlebar />
+        <div className="content">
+          <Sidebar status={this.state.status} count={this.state.count} />
+          <RouteHandler key={name} loading={this.state.loading} />
         </div>
       </div>
     );

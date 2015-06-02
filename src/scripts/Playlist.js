@@ -10,16 +10,18 @@ export default React.createClass({
   },
 
   render() {
+    let nodes = this.props.playlist.map(playlist => {
+      return (
+        <div key={playlist.id} className="playlist-items">
+          <PlaylistHeader title={playlist.get('title')} playlist={playlist.get('id')} />
+          <PlaylistVideos videos={playlist.get('videos')} />
+        </div>
+      );
+    });
+
     return (
       <div className="playlist">
-        {this.props.playlist.map(playlist => {
-          return (
-            <div key={playlist.id} className="playlist-items">
-              <PlaylistHeader title={playlist.get('title')} playlist={playlist.get('id')} />
-              <PlaylistVideos {...this.props} videos={playlist.get('videos')} />
-            </div>
-          );
-        })}
+        {nodes}
       </div>
     );
   }

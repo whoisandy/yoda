@@ -9,16 +9,17 @@ export default React.createClass({
     playlists: React.PropTypes.array.isRequired
   },
 
-  render() {
-    let nodes = this.props.playlists.map(item => {
-      return (
-        <div key={item.get('id')} className="channel-playlist-item">
-          <PlaylistHeader title={item.get('title')} playlist={item.get('id')} />
-          <PlaylistVideos videos={item.get('videos')} />
-        </div>
-      );
-    });
+  renderPlaylists(playlist) {
+    return (
+      <div key={playlist.get('id')} className="channel-playlist-item">
+        <PlaylistHeader title={playlist.get('title')} playlist={playlist.get('id')} />
+        <PlaylistVideos videos={playlist.get('videos')} />
+      </div>
+    );
+  },
 
+  render() {
+    let nodes = this.props.playlists.map(this.renderPlaylists);
     return (
       <div className="channel-playlist-container">
         {nodes}

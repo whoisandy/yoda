@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Router from 'react-router';
+import Router, {Route, DefaultRoute} from 'react-router';
 import App from './AppContainer';
 import Setup from './SetupContainer';
 import Search from './SearchContainer';
@@ -10,9 +10,7 @@ import Channel from './ChannelContainer';
 import Playlist from './PlaylistContainer';
 import Downloads from './DownloadsContainer';
 
-let {Route, DefaultRoute} = Router;
-
-let routes = (
+const routes = (
   <Route name="app" path="/" handler={App}>
     <Route ignoreScrollBehavior={true} name="detail" handler={Detail}>
       <Route name="channels" path="/channels/:channel" handler={Channel} />

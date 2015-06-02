@@ -8,11 +8,14 @@ export default React.createClass({
     results: React.PropTypes.array.isRequired
   },
 
-  render() {
-    let nodes = this.props.results.map(result => {
-      return (<Video key={result.id} video={result} />);
-    });
+  renderResult(result) {
+    return (
+      <Video key={result.id} video={result} />
+    );
+  },
 
+  render() {
+    let nodes = this.props.results.map(this.renderResult);
     return (
       <div className="search-results-videos">
         {nodes}

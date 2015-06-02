@@ -4,7 +4,6 @@ import Ipc from 'ipc';
 import Remote from 'remote';
 import React from 'react';
 
-
 import Utils from './Utils';
 import Router from './Router';
 

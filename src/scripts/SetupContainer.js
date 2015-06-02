@@ -9,9 +9,8 @@ export default React.createClass({
   mixins: [RenderMixin, Navigation],
 
   componentDidMount() {
-    var self = this;
     Actions.fetchChannels().then(data => {
-      self.transitionTo('channels', {channel: 'popular'});
+      this.transitionTo('channels', {channel: 'popular'});
     });
   },
 

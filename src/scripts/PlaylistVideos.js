@@ -8,11 +8,14 @@ export default React.createClass({
     videos: React.PropTypes.array.isRequired
   },
 
-  render() {
-    let nodes = this.props.videos.map(item => {
-      return <Video key={item.id} video={item} />;
-    });
+  renderVideos(video) {
+    return (
+      <Video key={video.id} video={video} />
+    );
+  },
 
+  render() {
+    let nodes = this.props.videos.map(this.renderVideos);
     return (
       <div className="playlist-videos">
         {nodes}
