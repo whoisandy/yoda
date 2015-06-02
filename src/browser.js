@@ -32,7 +32,7 @@ app.on('ready', function(){
   });
 
   app.on('before-quit', function() {
-    mainWindow.webContents.send('yoda:quitting');
+    mainWindow.webContents.send('yoda:quit');
   });
 
   mainWindow.webContents.on('new-window', function (e) {
@@ -45,8 +45,7 @@ app.on('ready', function(){
     mainWindow.focus();
   });
 });
-
-app.on('window-all-closed', function() {
-  if (process.platform != 'darwin')
-    app.quit();
-});
+// app.on('window-all-closed', function() {
+//   if (process.platform != 'darwin')
+//     app.quit();
+// });

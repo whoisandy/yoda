@@ -1,9 +1,7 @@
 'use strict';
 
-import Ipc from 'ipc';
-import Remote from 'remote';
+import ipc from 'ipc';
 import React from 'react';
-
 import Utils from './Utils';
 import Router from './Router';
 
@@ -21,7 +19,7 @@ function bootstrap(){
   Utils.addLiveReload();
   Utils.disableGlobalBackspace();
 
-  Ipc.on('yoda:quitting', () => {
+  ipc.on('yoda:quit', () => {
     localStorage.removeItem('channels');
   });
 
