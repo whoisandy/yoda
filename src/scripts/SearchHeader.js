@@ -4,7 +4,7 @@ import React from 'react';
 
 export default React.createClass({
   propTypes: {
-    query: React.PropTypes.string.isRequired,
+    query: React.PropTypes.string.isRequired
   },
 
   render() {

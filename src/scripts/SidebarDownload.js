@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Join from 'react/lib/joinClasses';
-import {Link, State} from 'react-router'
+import {Link, State} from 'react-router';
 
 export default React.createClass({
   propTypes: {
@@ -13,8 +13,8 @@ export default React.createClass({
   mixins: [State],
 
   componentWillUpdate(prevProps) {
-      return (
-        (this.props.status !== prevProps.status) || (this.props.count !== prevProps.count)
+    return (
+      (this.props.status !== prevProps.status) || (this.props.count !== prevProps.count)
       );
   },
 
@@ -22,7 +22,7 @@ export default React.createClass({
     if(count > 0) {
       return (
         <span className="sidebar-btn-badge badge">{count}</span>
-      );
+        );
     }
     return null;
   },
@@ -42,15 +42,15 @@ export default React.createClass({
 
     return (
       <div className={statusClass}>
-        <div className="sidebar-download-btn-wrapper list-group">
-          <Link className={activeClass} to="/downloads/active">
-            <div className="sidebar-btn-title">
-              <span className="icon icon-download"></span>Downloads
-            </div>
-            {this.renderCount(this.props.count)}
-          </Link>
-        </div>
+      <div className="sidebar-download-btn-wrapper list-group">
+      <Link className={activeClass} to="/downloads/active">
+      <div className="sidebar-btn-title">
+      <span className="icon icon-download"></span>Downloads
       </div>
-    );
+      {this.renderCount(this.props.count)}
+      </Link>
+      </div>
+      </div>
+      );
   }
 });

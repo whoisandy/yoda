@@ -1,0 +1,18 @@
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# editorconfig.org
+root = true
+
+[*]
+
+# Change for personal preference
+indent_size = 4
+
+# Do not change
+indent_style = tab
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false

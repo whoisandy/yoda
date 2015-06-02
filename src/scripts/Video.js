@@ -1,6 +1,6 @@
 'use strict';
 
-import Remote from 'remote'
+import Remote from 'remote';
 import React from 'react';
 import {Navigation} from 'react-router';
 import Actions from './Actions';
