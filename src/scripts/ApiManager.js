@@ -126,7 +126,7 @@ export default {
       });
 
       playlists.forEach(playlist => {
-        playlistPromiseStack.push(self._playlistItems(playlist.id, {maxResults: 8}));
+        playlistPromiseStack.push(self._playlistItems(playlist.id, {maxResults: 4}));
       });
 
       return axios.all(playlistPromiseStack).then(res => {
@@ -148,7 +148,7 @@ export default {
             let videos = {
               id: playlists[idx].id,
               title: playlists[idx].title,
-              videos: videoList.data.items.splice(0,4)
+              videos: videoList.data.items
             };
             return videos;
           });
@@ -167,7 +167,7 @@ export default {
         };
       }).pop();
 
-      return self._playlistItems(playlist.id, {maxResults: 50}).then(res => {
+      return self._playlistItems(playlist.id, {maxResults: 24}).then(res => {
         let videoIds = res.data.items.map(item => {
           return item.contentDetails.videoId;
         });
@@ -176,7 +176,7 @@ export default {
           return {
             id: playlist.id,
             title: playlist.title,
-            videos: res.data.items.splice(0,24)
+            videos: res.data.items
           }
         });
       });
@@ -185,13 +185,13 @@ export default {
 
   getSearchResultVideos(query) {
     let self = this;
-    return this._search(query, {maxResults: 50}).then(res => {
+    return this._search(query, {maxResults: 24}).then(res => {
       let results = res.data.items.map(item => {
         return item.id.videoId;
       });
 
       return self._videos(results).then(res => {
-        return res.data.items.splice(0,24);
+        return res.data.items;
       });
     });
   }

@@ -9,7 +9,6 @@
 }
 
 .detail-container{
-
   .detail-header, .detail-content {
     display: flex;
   }
@@ -17,7 +16,7 @@
     margin: 0;
     padding: 0 12px;
     min-height: 45px;
-    flex: 1 45px;
+    flex: 0 45px;
     flex-direction: row;
     align-items: center;
     -webkit-app-region: drag;
@@ -37,7 +36,6 @@
   border-bottom: 1px darken(#ccc, 12%) solid;
   .history, .searchbar {
     display: flex;
-    -webkit-app-region: no-drag;
   }
   .history {
     flex: 1 60px;
@@ -57,6 +55,7 @@
     text-decoration: none;
     cursor: default;
     color: #333;
+    -webkit-app-region: no-drag;
     &:hover{
       text-decoration: none;
     }
@@ -73,6 +72,7 @@
   .searchform{
     display: flex;
     flex: 1 auto;
+    -webkit-app-region: no-drag;
   }
 }
 

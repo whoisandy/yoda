@@ -47,8 +47,11 @@ export default React.createClass({
     });
   },
 
-  handleVideo(item) {
+  handleVideo(e) {
+    e.preventDefault();
+    let item = this.props.video;
     console.log(item);
+
     if(this.isLiveVideo(item)){
       this.handleLive(item);
     } else {
@@ -66,7 +69,7 @@ export default React.createClass({
 
   renderVideo(item) {
     return (
-      <div className="video-detail" onClick={this.handleVideo.bind(null, item)}>
+      <div className="video-detail" onClick={this.handleVideo}>
         <div className="video-image">
           <VideoImage title={item.snippet.title} src={item.snippet.thumbnails.medium.url} />
           <VideoDuration duration={item.contentDetails.duration} />
