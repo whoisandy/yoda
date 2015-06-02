@@ -10,6 +10,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
+      query: '',
       hasQuery: false
     };
   },

@@ -9,13 +9,19 @@
   &.no-drag {
     -webkit-app-region: no-drag;
   }
-  .buttons-container{
+  .titlebar-buttons, .titlebar-header{
+    display: flex;
+  }
+  .titlebar-buttons{
     position: relative;
     display: flex;
     flex-direction: row;
     flex: 0 220px;
     align-items: center;
     -webkit-app-region: drag;
+  }
+  .titlebar-header{
+    flex: 1 auto;
   }
 }
 
@@ -54,6 +60,99 @@
     &.disabled {
       background-color: @traffic-light-gray;
       border-color: @traffic-light-gray-border;
+    }
+  }
+}
+
+.titlebar-header{
+  margin: 0;
+  padding: 0 12px;
+  background: #fefefe -webkit-linear-gradient(top, #f3f3f3, darken(#f3f3f3, 16%));
+  border-bottom: 1px darken(#ccc, 12%) solid;
+  -webkit-app-region: drag;
+  .history, .searchbar {
+    display: flex;
+    align-items: center;
+  }
+  .history {
+    flex: 1 60px;
+  }
+  .searchbar{
+    margin: 0;
+    flex: 0 240px;
+  }
+}
+
+.history{
+  flex-direction: row;
+  a{
+    margin: 0 16px 0 0;
+    padding: 0;
+    display: inline-block;
+    text-decoration: none;
+    cursor: default;
+    color: #333;
+    -webkit-app-region: no-drag;
+    &:hover{
+      text-decoration: none;
+    }
+    span {
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+}
+
+.searchbar{
+  margin: 0;
+  align-items: center;
+  .searchform{
+    display: flex;
+    flex: 1 auto;
+    -webkit-app-region: no-drag;
+  }
+}
+
+.searchform{
+  height: 30px;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  span, input{
+    position: absolute;
+  }
+  span{
+    top: 8px;
+    font-size: 14px;
+    z-index: 1;
+    &.icon-search{
+      left: 8px;
+    }
+    &.icon-cancel{
+      right: 8px;
+      cursor: pointer;
+      visibility: hidden;
+    }
+    &.icon-cancel.icon-show{
+      visibility: visible;
+    }
+  }
+  input{
+    height: 30px;
+    padding: 4px 8px 4px 26px;
+    border: 1px darken(#ccc, 8%) solid;
+    border-radius: 60px;
+    background: #ffffff;
+    outline: none;
+    box-shadow: none;
+    font-size: 12px;
+    &:focus {
+      border: 1px darken(#ccc, 24%) solid;
+      box-shadow: none;
+    }
+    &::-webkit-input-placeholder {
+      color: #9c9c9c;
+      font-weight: 400;
     }
   }
 }

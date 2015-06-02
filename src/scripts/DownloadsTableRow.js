@@ -1,10 +1,9 @@
 'use strict';
 
-import Remote from 'remote';
 import React from 'react/addons';
+import Actions from './Actions';
 import {RenderMixin, MetaMixin} from './Mixins';
 
-const Shell = Remote.require('shell');
 const PureRenderMixin = React.addons.PureRenderMixin;
 
 export default React.createClass({
@@ -16,8 +15,8 @@ export default React.createClass({
 
   handleOpenInFinder(e){
     e.preventDefault();
-    let fullpath = this.props.download.get('path');
-    Shell.showItemInFolder(fullpath);
+    let filepath = this.props.download.get('path');
+    Actions.show(filepath);
   },
 
   renderStatus() {
@@ -44,7 +43,7 @@ export default React.createClass({
         <td className="download-hash">{this.renderHash(this.props.download.get('done'))}</td>
         <td className="download-title">
           <span>{this.handleShortenText(this.props.download.get('title'), 46)}</span>
-          <span className="icon icon-search" onClick={this.handleOpenInFinder}></span>
+          <span className="icon icon-open" onClick={this.handleOpenInFinder}></span>
         </td>
         <td className="download-size">
           <span>{this.handleSize(this.props.download.get('total'))}</span>

@@ -111,7 +111,9 @@ class Actions {
     });
 
     video.stream.on('end', () => {
-      self.actions.finish(video.id);
+      setTimeout(() => {
+        self.actions.finish(video.id);
+      }, 600);
     });
   }
 
@@ -124,6 +126,14 @@ class Actions {
     this.actions.status();
     this.actions.snapshot();
     this.actions.notify();
+  }
+
+  show(filepath) {
+    Ydm.show(filepath);
+  }
+
+  live(id) {
+    Ydm.live(id);
   }
 
   notify() {

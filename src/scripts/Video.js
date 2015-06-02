@@ -34,17 +34,8 @@ export default React.createClass({
     });
   },
 
-  handleLive(item) {
-    Dialog.showMessageBox({
-      type: 'warning',
-      buttons: ['Watch on youtube', 'Cancel'],
-      title: 'Live broadcast content',
-      message: 'Live or Upcoming videos cannot be downloaded.'
-    }, function(res){
-      if(res === 0){
-        Shell.openExternal('http://youtube.com/watch?v=' + item.id);
-      }
-    });
+  handleLive(id) {
+    Actions.live(id);
   },
 
   handleVideo(e) {
@@ -53,7 +44,7 @@ export default React.createClass({
     console.log(item);
 
     if(this.isLiveVideo(item)){
-      this.handleLive(item);
+      this.handleLive(item.id);
     } else {
       this.handleDownload(item);
     }
@@ -84,9 +75,7 @@ export default React.createClass({
   },
 
   render() {
-    let {current} = this.props;
     let video = this.props.video;
-    let title = video.snippet.title;
     let fragment = this.renderVideo(video);
 
     return this.renderFragment('video', fragment);

@@ -52,13 +52,13 @@ p{
   }
   .sidebar, .detail {
     position: absolute;
-    top: 0;
     bottom: 0;
   }
   .sidebar{
     .fade-in();
     min-width: 220px;
     flex: 0 220px;
+    top: 0;
   }
   .detail{
     flex-direction: row;
@@ -67,5 +67,6 @@ p{
     overflow: hidden;
     z-index: 999;
     left: 220px;
+    top: 45px;
   }
 }
