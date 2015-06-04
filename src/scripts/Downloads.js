@@ -17,9 +17,10 @@ export default React.createClass({
   mixins: [PureRenderMixin, RenderMixin],
 
   renderDownloadItems(group, downloads) {
+    let count = downloads.length;
     return (
       <div className="downloads-content">
-        <DownloadsHeader group={group} title={this.props.title} />
+        <DownloadsHeader group={group} count={count} title={this.props.title} />
         <DownloadsTable group={group} downloads={downloads} />
       </div>
     );

@@ -14,8 +14,8 @@ export default React.createClass({
     Actions.clear();
   },
 
-  renderClear(group) {
-    if(group === 'complete'){
+  renderClear(group, count) {
+    if(group === 'complete' && count > 0){
       return (
         <div className="downloads-clear">
           <a className="btn btn-sm btn-default" onClick={this.handleClear}>Clear all</a>
@@ -28,7 +28,7 @@ export default React.createClass({
     return (
       <div className="downloads-header">
         <h2 className="downloads-title">{this.props.title}</h2>
-        {this.renderClear(this.props.group)}
+        {this.renderClear(this.props.group, this.props.count)}
         <div className="downloads-switch">
           <div className="btn-group">
             <Link className="btn btn-sm btn-default" to="/downloads/active">
