@@ -19,7 +19,7 @@ export default React.createClass({
   renderDownloadItems(group, downloads) {
     return (
       <div className="downloads-content">
-        <DownloadsHeader title={this.props.title} />
+        <DownloadsHeader group={group} title={this.props.title} />
         <DownloadsTable group={group} downloads={downloads} />
       </div>
     );

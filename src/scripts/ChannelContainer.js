@@ -31,7 +31,7 @@ export default React.createClass({
 
   renderChannel(title, playlists, current) {
     return (
-        <Channel playlists={playlists} name={title} />
+        <Channel current={this.props.current} playlists={playlists} name={title} />
     );
   },
 

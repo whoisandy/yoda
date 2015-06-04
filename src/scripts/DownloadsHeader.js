@@ -1,13 +1,34 @@
 'use strict';
 
-import React from 'react';
+import React from 'react/addons';
 import {Link} from 'react-router';
+import Actions from './Actions';
+
+const PureRenderMixin = React.addons.PureRenderMixin;
 
 export default React.createClass({
+  mixins: [PureRenderMixin],
+
+  handleClear(e) {
+    e.preventDefault();
+    Actions.clear();
+  },
+
+  renderClear(group) {
+    if(group === 'complete'){
+      return (
+        <div className="downloads-clear">
+          <a className="btn btn-sm btn-default" onClick={this.handleClear}>Clear all</a>
+        </div>
+      );
+    }
+  },
+
   render() {
     return (
       <div className="downloads-header">
         <h2 className="downloads-title">{this.props.title}</h2>
+        {this.renderClear(this.props.group)}
         <div className="downloads-switch">
           <div className="btn-group">
             <Link className="btn btn-sm btn-default" to="/downloads/active">

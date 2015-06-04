@@ -80,6 +80,33 @@ class Actions {
     });
   }
 
+  prompt(item, filename) {
+    let self = this;
+    Ydm.prompt(item, filename).then(data => {
+      if(data){
+        self.actions.download(item, filename);
+      } else {
+        self.actions.cancel(item.id);
+      }
+    });
+  }
+
+  cancel(id) {
+    this.dispatch(id);
+  }
+
+  verify(id, filename) {
+    return Ydm.verify(id, filename);
+  }
+
+  duplicate(item) {
+    return Ydm.duplicate(item);
+  }
+
+  live(id) {
+    Ydm.live(id);
+  }
+
   download(video, filename) {
     let self = this;
     Ydm.download(video, filename).then(download => {
@@ -88,14 +115,16 @@ class Actions {
         title: download.title,
         path: download.path
       });
+
       self.actions.status();
+      self.actions.snapshot();
       self.actions.progress(download);
     });
   }
 
   progress(video){
     let self = this;
-    var dataSize = 0;
+    let dataSize = 0;
     video.stream.on('info', (info, format) => {
       let total = format.size;
       video.stream.on('data', data => {
@@ -128,12 +157,14 @@ class Actions {
     this.actions.notify();
   }
 
-  show(filepath) {
-    Ydm.show(filepath);
+  clear() {
+    this.dispatch();
+    Ydm.clear('downloads');
+    // this.actions.boot();
   }
 
-  live(id) {
-    Ydm.live(id);
+  show(filepath) {
+    Ydm.show(filepath);
   }
 
   notify() {

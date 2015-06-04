@@ -21,7 +21,7 @@ app.on('ready', function(){
     'show': false,
   });
 
-  // mainWindow.inspectElement(0, 0);
+  mainWindow.inspectElement(0, 0);
   mainWindow.loadUrl(path.normalize('file://' + path.join(__dirname, 'index.html')));
 
   app.on('activate-with-no-open-windows', function () {

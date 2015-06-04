@@ -23,7 +23,7 @@ class AppStore {
 
   handleLoadingChannels() {
     this.waitFor(ChannelStore);
-    let playlists = ChannelStore.getState().playlists;
+    let {playlists} = ChannelStore.getState();
     if(playlists.size > 0){
       this.loading = false;
     } else {
@@ -33,8 +33,8 @@ class AppStore {
 
   handleLoadingPlaylist() {
     this.waitFor(PlaylistStore);
-    let videos = PlaylistStore.getState().playlistVideos;
-    if(videos.size > 0){
+    let {playlistVideos} = PlaylistStore.getState();
+    if(playlistVideos.size > 0){
       this.loading = false;
     } else {
       this.loading = true;
@@ -43,7 +43,7 @@ class AppStore {
 
   handleLoadingResults() {
     this.waitFor(SearchStore);
-    let results = SearchStore.getState().results;
+    let {results} = SearchStore.getState();
     if(results.size > 0){
       this.loading = false;
     } else {
@@ -53,14 +53,15 @@ class AppStore {
 
   handleStatus() {
     this.waitFor(DownloadsStore);
-    let downloads = DownloadsStore.getState().downloads;
-    let isActive = downloads.toArray().every(item => {
-      return item.get('done') === true;
+    let {downloads} = DownloadsStore.getState();
+    let active = downloads.filter(item => {
+      return item.get('done') === false;
     });
-    this.count = downloads.count();
-    if(!isActive){
+    if(active.count()){
+      this.count = active.count();
       this.status = true;
     } else {
+      this.count = 0;
       this.status = false;
     }
   }

@@ -7,7 +7,7 @@
   "icon-size": 80,
 
   "contents": [
-    { "x": 380, "y": 240, "type": "link", "path": "/Applications" },
-    { "x": 120, "y": 240, "type": "file", "path": "./release/osx/Yoda.app" }
+    { "x": 120, "y": 240, "type": "file", "path": "./release/osx/Yoda.app" },
+    { "x": 380, "y": 240, "type": "link", "path": "/Applications" }
   ]
 }

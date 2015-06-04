@@ -1,6 +1,5 @@
 'use strict';
 
-import Remote from 'remote';
 import React from 'react';
 import {Navigation} from 'react-router';
 import Actions from './Actions';
@@ -11,9 +10,6 @@ import VideoTitle from './VideoTitle';
 import VideoMeta from './VideoMeta';
 import VideoDuration from './VideoDuration';
 
-const Dialog = Remote.require('dialog');
-const Shell = Remote.require('shell');
-
 export default React.createClass({
   mixins: [RenderMixin, Navigation],
 
@@ -23,28 +19,27 @@ export default React.createClass({
   },
 
   handleDownload(item){
-    Dialog.showSaveDialog({
-      defaultPath: Utils.home() + '/Desktop/' + item.snippet.title + '.mp4'
-    }, function(filename){
-      if(filename !== undefined && item){
-        Actions.download(item, filename);
-      } else {
-        console.log('Download cancelled');
-      }
-    });
+    let filename = Utils.home() + '/Desktop/' + item.snippet.title + '.mp4';
+    if(Actions.verify(item.id, filename)){
+      Actions.prompt(item, filename);
+    } else {
+      Actions.duplicate(item).then(group => {
+        this.transitionTo('downloads', {group: group});
+      });
+    }
   },
 
-  handleLive(id) {
+  handleLive(item) {
+    let id = item.id;
     Actions.live(id);
   },
 
   handleVideo(e) {
     e.preventDefault();
     let item = this.props.video;
-    console.log(item);
 
     if(this.isLiveVideo(item)){
-      this.handleLive(item.id);
+      this.handleLive(item);
     } else {
       this.handleDownload(item);
     }

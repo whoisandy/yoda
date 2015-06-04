@@ -3,6 +3,7 @@
 import React from 'react/addons';
 import Join from 'react/lib/joinClasses';
 import {RouteHandler, State} from 'react-router';
+import Actions from './Actions';
 import AppStore from './AppStore';
 import Titlebar from './Titlebar';
 import Sidebar from './Sidebar';
@@ -17,6 +18,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
+    Actions.boot();
     AppStore.listen(this.onDownload);
   },
 
@@ -40,7 +42,7 @@ export default React.createClass({
         <Titlebar />
         <div className="content">
           <Sidebar status={this.state.status} count={this.state.count} />
-          <RouteHandler key={name} loading={this.state.loading} />
+          <RouteHandler key={name} loading={this.state.loading} current={this.state.current} />
         </div>
       </div>
     );

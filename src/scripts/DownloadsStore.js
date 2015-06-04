@@ -20,29 +20,28 @@ class DownloadsStore {
     this.complete = List(Map({}));
 
     this.on('serialize', () => {
-      return {
-        complete: this.complete.toJS()
-      };
+      return this.downloads.toJS();
     });
 
     this.on('deserialize', (data) => {
-      data.complete.forEach(complete => {
-        let record = this.complete.find(item => {
-          return item.get('id') === complete.id;
+      data.forEach(download => {
+        let record = this.downloads.find(item => {
+          return item.get('id') === download.id;
         });
 
         if(!record){
-          this.complete = this.complete.push(Immutable.fromJS(complete));
+          this.downloads = this.downloads.push(Immutable.fromJS(download));
         }
       });
 
-      return this.complete;
+      return this.downloads;
     });
 
     this.bindListeners({
       handleDownload: Actions.download,
       handleProgress: Actions.progress,
-      handleFinish: Actions.finish
+      handleFinish: Actions.finish,
+      handleClear: Actions.clear
     });
   }
 
@@ -74,13 +73,10 @@ class DownloadsStore {
     this.downloads = this.downloads.update(idx, item => {
       return item.set('start', false).set('done', true);
     });
+  }
 
-    let item = this.downloads.find(item => {
-      return item.get('id') == id;
-    });
-
-    this.complete = this.complete.push(item);
-    this.downloads = this.downloads.delete(idx);
+  handleClear() {
+    this.downloads = List(Map({}));
   }
 }
 

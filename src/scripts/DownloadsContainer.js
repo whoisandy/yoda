@@ -3,7 +3,6 @@
 import React from 'react/addons';
 import Join from 'react/lib/joinClasses';
 import {RouteHandler} from 'react-router';
-import Actions from './Actions';
 import DownloadsStore from './DownloadsStore';
 import {RenderMixin} from './Mixins';
 import Downloads from './Downloads';
@@ -19,7 +18,6 @@ export default React.createClass({
 
   componentDidMount() {
     DownloadsStore.listen(this.onProgress);
-    Actions.boot();
   },
 
   componentWillUnmount() {
@@ -35,13 +33,19 @@ export default React.createClass({
   },
 
   render() {
-    let fragment;
+    let fragment, downloads;
     let page = Join('downloads-container');
     let group = this.props.params.group;
     if(group === 'active'){
-      fragment = this.renderDownloads(group, this.state.downloads.toArray());
+      downloads = this.state.downloads.filter(item => {
+        return item.get('done') === false;
+      });
+      fragment = this.renderDownloads(group, downloads.toArray());
     } else {
-      fragment = this.renderDownloads(group, this.state.complete.toArray());
+      downloads = this.state.downloads.filter(item => {
+        return item.get('done') === true;
+      });
+      fragment = this.renderDownloads(group, downloads.toArray());
     }
 
     return this.renderFragment(page, fragment);

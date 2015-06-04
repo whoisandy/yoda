@@ -10,7 +10,7 @@ export default React.createClass({
 
   renderVideos(video) {
     return (
-      <Video key={video.id} video={video} />
+      <Video current={this.props.current} key={video.id} video={video} />
     );
   },
 

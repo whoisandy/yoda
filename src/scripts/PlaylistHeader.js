@@ -1,10 +1,12 @@
 'use strict';
 
-import React from 'react';
+import React from 'react/addons';
 import {Navigation} from 'react-router';
 
+const PureRenderMixin = React.addons.PureRenderMixin;
+
 export default React.createClass({
-  mixins: [Navigation],
+  mixins: [PureRenderMixin, Navigation],
 
   propTypes: {
     title: React.PropTypes.string.isRequired,

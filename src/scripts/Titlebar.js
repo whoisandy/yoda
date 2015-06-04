@@ -2,6 +2,7 @@
 
 import Remote from 'remote';
 import React from 'react';
+import Join from 'react/lib/joinClasses';
 import {Navigation, State} from 'react-router';
 import TitlebarSearch from './TitlebarSearch';
 
@@ -39,8 +40,10 @@ export default React.createClass({
         </div>
         <div className="header">
           <div className="history">
-            <a onClick={this.handleGoBack}><span className="icon icon-left"></span></a>
-            <a onClick={this.handleGoForth}><span className="icon icon-right"></span></a>
+            <div className="btn-group">
+              <a className="btn btn-sm btn-default" onClick={this.handleGoBack}><span className="icon icon-left"></span></a>
+              <a className="btn btn-sm btn-default disabled" onClick={this.handleGoForth}><span className="icon icon-right"></span></a>
+            </div>
           </div>
           <TitlebarSearch />
         </div>

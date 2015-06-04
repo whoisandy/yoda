@@ -12,15 +12,24 @@
   flex-direction: row;
   min-height: 30px;
   flex: 0 30px;
-  .downloads-title, .downloads-switch{
+  .downloads-title, .downloads-clear, .downloads-switch{
     display: flex;
   }
   .downloads-title{
-    flex: 1 auto;
-  }
-  .downloads-switch{
     flex: 0 auto;
   }
+  .downloads-clear{
+    flex: 0 auto;
+  }
+  .downloads-switch{
+    flex: 1 auto;
+    justify-content: flex-end;
+  }
+}
+
+.downloads-clear{
+  margin-left: 10px;
+  align-items: center;
 }
 
 .downloads-switch{
