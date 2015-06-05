@@ -39,6 +39,14 @@ app.on('ready', function(){
     e.preventDefault();
   });
 
+  mainWindow.on('focus', function(){
+    mainWindow.webContents.send('yoda:focus');
+  });
+
+  mainWindow.on('blur', function(){
+    mainWindow.webContents.send('yoda:blur');
+  });
+
   mainWindow.webContents.on('did-finish-load', function() {
     mainWindow.setTitle('Yoda');
     mainWindow.show();
