@@ -2,6 +2,7 @@
 
 import ipc from 'ipc';
 import React from 'react';
+import Join from 'react/lib/joinClasses';
 import Utils from './Utils';
 import Router from './Router';
 
@@ -19,11 +20,20 @@ function bootstrap(){
   Utils.addLiveReload();
   Utils.disableGlobalBackspace();
 
+  let mountNode = document.body.children[0];
+
   ipc.on('yoda:quit', () => {
     localStorage.removeItem('channels');
   });
 
-  let mountNode = document.querySelector('.app-container');
+  ipc.on('yoda:focus', () => {
+    mountNode.className = 'app-container';
+  });
+
+  ipc.on('yoda:blur', () => {
+    mountNode.className += ' app-blur';
+  });
+
   Router.run((Root, state) => {
     var params = state.params;
     React.render(<Root params={params} />, mountNode);

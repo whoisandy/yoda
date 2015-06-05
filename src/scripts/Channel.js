@@ -13,7 +13,7 @@ export default React.createClass({
     return (
       <div key={playlist.get('id')} className="channel-playlist-item">
         <PlaylistHeader title={playlist.get('title')} playlist={playlist.get('id')} />
-        <PlaylistVideos current={this.props.current} videos={playlist.get('videos')} />
+        <PlaylistVideos videos={playlist.get('videos')} />
       </div>
     );
   },

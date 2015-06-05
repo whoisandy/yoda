@@ -3,16 +3,8 @@
 import {Alt, Api, Ydm} from './Core';
 
 class Actions {
-  loadingChannels() {
-    this.dispatch();
-  }
-
-  loadingPlaylist() {
-    this.dispatch();
-  }
-
-  loadingResults() {
-    this.dispatch();
+  loading(store){
+    this.dispatch(store);
   }
 
   fetchChannels() {
@@ -22,17 +14,17 @@ class Actions {
 
   receiveChannelPlaylists(response) {
     this.dispatch(response);
-    this.actions.loadingChannels();
+    this.actions.loading('channel');
   }
 
   failChannelPlaylists(err) {
     this.dispatch(err);
-    this.actions.loadingChannels();
+    this.actions.loading('channel');
   }
 
   fetchChannelPlaylists(channel) {
     this.dispatch();
-    this.actions.loadingChannels();
+    this.actions.loading('channel');
     Api.getChannelPlaylistVideos(channel).then(data => {
       this.actions.receiveChannelPlaylists(data);
     }).catch(err => {
@@ -40,19 +32,23 @@ class Actions {
     });
   }
 
-  receiveSearchResults(response){
+  receivePlaylist(response) {
     this.dispatch(response);
-    this.actions.loadingResults();
+    this.actions.loading('playlist');
   }
 
-  failSearchResults(err){
+  updatePlaylist(response) {
+    this.dispatch(response);
+  }
+
+  failPlaylist(err){
     this.dispatch(err);
-    this.actions.loadingResults();
+    this.actions.loading('playlist');
   }
 
   fetchPlaylist(playlist) {
     this.dispatch();
-    this.actions.loadingPlaylist();
+    this.actions.loading('playlist');
     Api.getPlaylistVideos(playlist).then(data => {
       this.actions.receivePlaylist(data);
     }).catch(err => {
@@ -60,19 +56,31 @@ class Actions {
     });
   }
 
-  receivePlaylist(response) {
-    this.dispatch(response);
-    this.actions.loadingPlaylist();
+  paginatePlaylistVideos(playlist, next) {
+    Api.paginatePlaylistVideos(playlist, next).then(data => {
+      this.actions.updatePlaylist(data);
+    }).catch(err => {
+      this.actions.failPlaylist(err);
+    });
   }
 
-  failPlaylist(err){
+  receiveSearchResults(response){
+    this.dispatch(response);
+    this.actions.loading('search');
+  }
+
+  updateSearchResults(response) {
+    this.dispatch(response);
+  }
+
+  failSearchResults(err){
     this.dispatch(err);
-    this.actions.loadingPlaylist();
+    this.actions.loading('search');
   }
 
   fetchSearchResults(query) {
     this.dispatch();
-    this.actions.loadingResults();
+    this.actions.loading('search');
     Api.getSearchResultVideos(query).then(data => {
       this.actions.receiveSearchResults(data);
     }).catch(err => {
@@ -80,13 +88,20 @@ class Actions {
     });
   }
 
+  paginateSearchResultVideos(query, next) {
+    Api.paginateSearchResultVideos(query, next).then(data => {
+      this.actions.updateSearchResults(data);
+    }).catch(err => {
+      this.actions.failSearchResults(err);
+    });
+  }
+
   prompt(item, filename) {
-    let self = this;
     Ydm.prompt(item, filename).then(data => {
       if(data){
-        self.actions.download(item, filename);
+        this.actions.download(item, filename);
       } else {
-        self.actions.cancel(item.id);
+        this.actions.cancel(item.id);
       }
     });
   }
@@ -160,7 +175,6 @@ class Actions {
   clear() {
     this.dispatch();
     Ydm.clear('downloads');
-    // this.actions.boot();
   }
 
   show(filepath) {

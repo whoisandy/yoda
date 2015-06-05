@@ -7,6 +7,7 @@ import Actions from './Actions';
 import PlaylistStore from './PlaylistStore';
 import {RenderMixin} from './Mixins';
 import Playlist from './Playlist';
+import Paginator from './Paginator';
 
 const PureRenderMixin = React.addons.PureRenderMixin;
 
@@ -18,29 +19,36 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    PlaylistStore.listen(this.onChange);
+    PlaylistStore.listen(this._change);
     Actions.fetchPlaylist(this.getParams().playlist);
   },
 
   componentWillUnmount() {
-    PlaylistStore.unlisten(this.onChange);
+    PlaylistStore.unlisten(this._change);
   },
 
-  onChange() {
+  handleLoadMore(playlist) {
+    let id = playlist[0].get('id');
+    let next = playlist !== undefined ? playlist[0].get('next') : '';
+    Actions.paginatePlaylistVideos(id, next);
+  },
+
+  _change() {
     this.setState(PlaylistStore.getState());
   },
 
   renderPlaylist(playlist) {
     return (
-      <div className="playlist-container">
+      <div className="playlist">
         <Playlist playlist={playlist} />
+        <Paginator handler={this.handleLoadMore.bind(null, playlist)} />
       </div>
     );
   },
 
   render() {
     let fragment;
-    let page = Join('playlist');
+    let page = Join('playlist-container');
 
     if(this.props.loading){
       fragment = this.renderLoader({message: 'Loading playlist videos...'});

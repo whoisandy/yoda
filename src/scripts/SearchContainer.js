@@ -7,6 +7,7 @@ import Actions from './Actions';
 import SearchStore from './SearchStore';
 import {RenderMixin} from './Mixins';
 import Search from './Search';
+import Paginator from './Paginator';
 
 const PureRenderMixin = React.addons.PureRenderMixin;
 
@@ -19,39 +20,36 @@ export default React.createClass({
 
   componentDidMount() {
     var query = this.getParams().query;
-    SearchStore.listen(this.onSearch);
-    this.fetchResults(query);
-  },
-
-  componentWillUpdate(nextProps) {
-    if(this.props.params.query !== nextProps.params.query){
-      this.fetchResults(nextProps.params.query);
-    }
+    SearchStore.listen(this._search);
+    Actions.fetchSearchResults(query);
   },
 
   componentWillUnmount() {
-    SearchStore.unlisten(this.onSearch);
+    SearchStore.unlisten(this._search);
   },
 
-  onSearch() {
+  handleLoadMore(results) {
+    let query = this.getParams().query;
+    let token = results[0].get('next');
+    Actions.paginateSearchResultVideos(query, token);
+  },
+
+  _search() {
     this.setState(SearchStore.getState());
-  },
-
-  fetchResults(query) {
-    Actions.fetchSearchResults(query);
   },
 
   renderResults(query, results) {
     return (
-      <div className="search-results-container">
-        <Search results={results} query={query}/>
+      <div className="search">
+        <Search more={this.handleLoadMore} results={results}/>
+        <Paginator handler={this.handleLoadMore.bind(null, results)} />
       </div>
     );
   },
 
   render() {
     var fragment;
-    var page = Join('search');
+    var page = Join('search-container');
 
     if(this.props.loading){
       fragment = this.renderLoader({message: 'Loading search results...'});

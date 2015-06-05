@@ -24,7 +24,7 @@ export default React.createClass({
       height: this.props.height,
       backgroundColor: this.props.color,
       width: completed + '%',
-      transition: 'width 400ms ease-in-out'
+      transition: 'width 200ms ease'
     };
 
     return (

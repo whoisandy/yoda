@@ -37,26 +37,6 @@ export default {
     return Youtube.request('playlists', payload);
   },
 
-  _playlistItems(id, opts) {
-    let params = {
-      fields: 'items',
-      part: 'snippet, contentDetails',
-      playlistId: id
-    };
-    let payload = assign({}, params, opts);
-    return Youtube.request('playlistItems', payload);
-  },
-
-  _videos(ids, opts) {
-    let params = {
-      fields: 'items',
-      part: 'snippet, contentDetails, statistics',
-      id: ids.join(',')
-    };
-    let payload = assign({}, params, opts);
-    return Youtube.request('videos', payload);
-  },
-
   _playlist(playlistId, opts) {
     let params = {
       fields: 'items',
@@ -67,14 +47,34 @@ export default {
     return Youtube.request('playlists', payload);
   },
 
+  _playlistItems(id, opts) {
+    let params = {
+      fields: 'etag, items, prevPageToken, nextPageToken',
+      part: 'snippet, contentDetails',
+      playlistId: id
+    };
+    let payload = assign({}, params, opts);
+    return Youtube.request('playlistItems', payload);
+  },
+
   _search(query, opts){
     let params = {
-      fields: 'items',
+      fields: 'etag, items, prevPageToken, nextPageToken',
       part: 'snippet',
       q: query
     };
     let payload = assign({}, params, opts);
     return Youtube.request('search', payload);
+  },
+
+  _videos(ids, opts) {
+    let params = {
+      fields: 'items',
+      part: 'snippet, contentDetails, statistics',
+      id: ids.join(',')
+    };
+    let payload = assign({}, params, opts);
+    return Youtube.request('videos', payload);
   },
 
   getChannels() {
@@ -96,6 +96,7 @@ export default {
         return pids;
       }).catch(err => {
         console.log(err);
+        return err;
       });
     });
 
@@ -110,6 +111,7 @@ export default {
       return playlists;
     }).catch(err => {
       console.log(err);
+      return err;
     });
   },
 
@@ -157,8 +159,9 @@ export default {
     });
   },
 
-  getPlaylistVideos(playlistId) {
+  getPlaylistVideos(playlistId, page) {
     let self = this;
+    let pageToken = page || '';
     return this._playlist(playlistId).then(res => {
       let playlist = res.data.items.map(item => {
         return {
@@ -167,7 +170,9 @@ export default {
         };
       }).pop();
 
-      return self._playlistItems(playlist.id, {maxResults: 24}).then(res => {
+      return self._playlistItems(playlist.id, {maxResults: 24, pageToken: pageToken}).then(res => {
+        let etag = res.data.etag;
+        let next = res.data.nextPageToken;
         let videoIds = res.data.items.map(item => {
           return item.contentDetails.videoId;
         });
@@ -175,24 +180,42 @@ export default {
         return self._videos(videoIds).then(res => {
           return {
             id: playlist.id,
+            etag: etag,
             title: playlist.title,
-            videos: res.data.items
+            videos: res.data.items,
+            next: next
           }
         });
       });
     });
   },
 
-  getSearchResultVideos(query) {
+  paginatePlaylistVideos(playlistId, page) {
+    return this.getPlaylistVideos(playlistId, page);
+  },
+
+  getSearchResultVideos(query, page) {
     let self = this;
-    return this._search(query, {maxResults: 24}).then(res => {
+    let pageToken = page || '';
+    return this._search(query, {maxResults: 24, pageToken: pageToken}).then(res => {
+      let etag = res.data.etag;
+      let next = res.data.nextPageToken;
       let results = res.data.items.map(item => {
         return item.id.videoId;
       });
 
       return self._videos(results).then(res => {
-        return res.data.items;
+        return {
+          etag: etag,
+          query: query,
+          videos: res.data.items,
+          next: next
+        };
       });
     });
+  },
+
+  paginateSearchResultVideos(query, next) {
+    return this.getSearchResultVideos(query, next);
   }
 };

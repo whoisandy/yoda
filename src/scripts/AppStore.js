@@ -7,6 +7,23 @@ import PlaylistStore from './PlaylistStore';
 import SearchStore from './SearchStore';
 import DownloadsStore from './DownloadsStore';
 
+const Stores = {
+  channel: {
+    name: ChannelStore,
+    data: 'playlists'
+  },
+
+  playlist: {
+    name: PlaylistStore,
+    data: 'playlistVideos'
+  },
+
+  search: {
+    name: SearchStore,
+    data: 'results'
+  }
+};
+
 class AppStore {
   constructor() {
     this.loading = true;
@@ -14,37 +31,15 @@ class AppStore {
     this.count = 0;
 
     this.bindListeners({
-      handleLoadingChannels: Actions.loadingChannels,
-      handleLoadingPlaylist: Actions.loadingPlaylist,
-      handleLoadingResults: Actions.loadingResults,
+      handleLoading: Actions.loading,
       handleStatus: Actions.status
     });
   }
 
-  handleLoadingChannels() {
-    this.waitFor(ChannelStore);
-    let {playlists} = ChannelStore.getState();
-    if(playlists.size > 0){
-      this.loading = false;
-    } else {
-      this.loading = true;
-    }
-  }
-
-  handleLoadingPlaylist() {
-    this.waitFor(PlaylistStore);
-    let {playlistVideos} = PlaylistStore.getState();
-    if(playlistVideos.size > 0){
-      this.loading = false;
-    } else {
-      this.loading = true;
-    }
-  }
-
-  handleLoadingResults() {
-    this.waitFor(SearchStore);
-    let {results} = SearchStore.getState();
-    if(results.size > 0){
+  handleLoading(store) {
+    this.waitFor(Stores[store].name.dispatchToken);
+    let data = Stores[store].name.getState()[Stores[store].data];
+    if(data.count() > 0){
       this.loading = false;
     } else {
       this.loading = true;
