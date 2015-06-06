@@ -18,7 +18,9 @@ export default React.createClass({
     if(group === 'complete' && count > 0){
       return (
         <div className="downloads-clear">
-          <a className="btn btn-sm btn-default" onClick={this.handleClear}>Clear all</a>
+          <a className="btn btn-sm btn-default" onClick={this.handleClear}>
+            <span className="icon icon-clear"></span>Clear all
+          </a>
         </div>
       );
     }
