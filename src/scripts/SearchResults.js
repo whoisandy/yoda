@@ -10,7 +10,7 @@ export default React.createClass({
 
   renderResult(result) {
     return (
-      <Video key={result.id} video={result} />
+      <Video key={Math.random()} video={result} />
     );
   },
 

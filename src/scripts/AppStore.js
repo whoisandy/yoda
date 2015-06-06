@@ -28,11 +28,13 @@ class AppStore {
   constructor() {
     this.loading = true;
     this.status = false;
+    this.more = false;
     this.count = 0;
 
     this.bindListeners({
       handleLoading: Actions.loading,
-      handleStatus: Actions.status
+      handleStatus: Actions.status,
+      handleMore: Actions.more
     });
   }
 
@@ -59,6 +61,10 @@ class AppStore {
       this.count = 0;
       this.status = false;
     }
+  }
+
+  handleMore(store) {
+    this.more = !this.more;
   }
 }
 

@@ -1,26 +1,32 @@
 'use strict';
 
-import fs from 'fs';
-import path from 'path';
-import sfx from 'sfx';
-import ytdl from 'ytdl-core';
-import remote from 'remote';
+import Remote from 'remote';
+import Immutable from 'immutable';
 
-const dialog = remote.require('dialog');
-const shell = remote.require('shell');
+import ytdl from 'ytdl-core';
+import sfx from 'sfx';
+import path from 'path';
+import fs from 'fs';
+
+const Dialog = Remote.require('dialog');
+const Shell = Remote.require('shell');
 
 export default {
   parse(obj) {
-    return JSON.parse(obj);
+    let parsed = JSON.parse(obj);
+    if(parsed !== null){
+      return Immutable.fromJS(parsed).get('DownloadsStore');
+    }
+    return null;
   },
 
   verify(id, filename) {
     let downloads = this.parse(localStorage.getItem('downloads'));
     if(downloads !== null){
-      let videos = downloads.DownloadsStore.map(download => {
-        return download.id;
+      let videos = downloads.map(download => {
+        return download.get('id');
       });
-      if(videos.indexOf(id) > -1 || fs.existsSync(filename)){
+      if(videos.toArray().indexOf(id) > -1){
         return false;
       }
     }
@@ -29,7 +35,7 @@ export default {
 
   prompt(item, filepath) {
     return new Promise(resolve => {
-      dialog.showSaveDialog({
+      Dialog.showSaveDialog({
         title: 'Download video',
         defaultPath: filepath
       }, function(filename){
@@ -66,20 +72,21 @@ export default {
 
   duplicate(item) {
     let downloads = this.parse(localStorage.getItem('downloads'));
-    let video = downloads.DownloadsStore.filter(download => {
-      return item.id === download.id;
-    }).shift();
-    let message = (video.done ? 'The video has already been downloaded.' : 'The video is currently being downloaded.');
+    let video = downloads.find(download => {
+      return download.get('id') === item.id;
+    });
+    console.log(video.get('done'));
+    let message = (video.get('done') ? 'The video has already been downloaded.' : 'The video is currently being downloaded.');
 
     return new Promise(resolve => {
-      dialog.showMessageBox({
+      Dialog.showMessageBox({
         type: 'info',
         buttons: ['Go to downloads', 'Cancel'],
         message: message
       }, function(res){
         if(res === 0){
-          if(!video.done){
-            resolve('active')
+          if(!video.get('done')){
+            resolve('active');
           }
           resolve('complete');
         }
@@ -88,28 +95,28 @@ export default {
   },
 
   live(id) {
-    dialog.showMessageBox({
+    Dialog.showMessageBox({
       type: 'warning',
       buttons: ['Watch on youtube', 'Cancel'],
       title: 'Live broadcast content',
       message: 'Live or Upcoming videos cannot be downloaded.'
     }, function(res){
       if(res === 0){
-        shell.openExternal('http://youtube.com/watch?v=' + id);
+        Shell.openExternal('http://youtube.com/watch?v=' + id);
       }
     });
   },
 
   show(filepath) {
     if(!fs.existsSync(filepath)){
-      dialog.showMessageBox({
+      Dialog.showMessageBox({
         type: 'warning',
         buttons: ['Ok'],
         title: 'Video not found',
         message: 'The video must have been moved or deleted.'
       });
     } else {
-      shell.showItemInFolder(filepath);
+      Shell.showItemInFolder(filepath);
     }
   },
 
@@ -121,8 +128,11 @@ export default {
     return localStorage.getItem(store);
   },
 
-  clear(store) {
-    localStorage.removeItem(store);
+  clear() {
+    let downloads = this.parse(localStorage.getItem('downloads'));
+    let ids = downloads.filter(download => download.get('done') === true)
+                        .map(download => download.get('id'))
+    return Promise.resolve(ids);
   },
 
   notify() {

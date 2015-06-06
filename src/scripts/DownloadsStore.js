@@ -17,7 +17,6 @@ const Download = new Record({
 class DownloadsStore {
   constructor() {
     this.downloads = List(Map({}));
-    this.complete = List(Map({}));
 
     this.on('serialize', () => {
       return this.downloads.toJS();
@@ -75,8 +74,11 @@ class DownloadsStore {
     });
   }
 
-  handleClear() {
-    this.downloads = List(Map({}));
+  handleClear(data) {
+    data.forEach(index => {
+      let idx = this.downloads.findIndex(item => item.get('id') === index);
+      this.downloads = this.downloads.delete(idx);
+    });
   }
 }
 

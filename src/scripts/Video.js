@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React from 'react/addons';
 import {Navigation} from 'react-router';
 import Actions from './Actions';
 import Utils from './Utils';
@@ -10,8 +10,10 @@ import VideoTitle from './VideoTitle';
 import VideoMeta from './VideoMeta';
 import VideoDuration from './VideoDuration';
 
+const PureRenderMixin = React.addons.PureRenderMixin;
+
 export default React.createClass({
-  mixins: [RenderMixin, Navigation],
+  mixins: [PureRenderMixin, RenderMixin, Navigation],
 
   isLiveVideo(item){
     let broadcastContent = item.snippet.liveBroadcastContent;

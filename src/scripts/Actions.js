@@ -3,8 +3,12 @@
 import {Alt, Api, Ydm} from './Core';
 
 class Actions {
-  loading(store){
+  loading(store) {
     this.dispatch(store);
+  }
+
+  more() {
+    this.dispatch();
   }
 
   fetchChannels() {
@@ -39,6 +43,7 @@ class Actions {
 
   updatePlaylist(response) {
     this.dispatch(response);
+    this.actions.more();
   }
 
   failPlaylist(err){
@@ -57,6 +62,7 @@ class Actions {
   }
 
   paginatePlaylistVideos(playlist, next) {
+    this.actions.more();
     Api.paginatePlaylistVideos(playlist, next).then(data => {
       this.actions.updatePlaylist(data);
     }).catch(err => {
@@ -71,6 +77,7 @@ class Actions {
 
   updateSearchResults(response) {
     this.dispatch(response);
+    this.actions.more();
   }
 
   failSearchResults(err){
@@ -89,6 +96,7 @@ class Actions {
   }
 
   paginateSearchResultVideos(query, next) {
+    this.actions.more();
     Api.paginateSearchResultVideos(query, next).then(data => {
       this.actions.updateSearchResults(data);
     }).catch(err => {
@@ -123,29 +131,27 @@ class Actions {
   }
 
   download(video, filename) {
-    let self = this;
     Ydm.download(video, filename).then(download => {
-      self.dispatch({
+      this.dispatch({
         id: download.id,
         title: download.title,
         path: download.path
       });
 
-      self.actions.status();
-      self.actions.snapshot();
-      self.actions.progress(download);
+      this.actions.status();
+      this.actions.snapshot();
+      this.actions.progress(download);
     });
   }
 
   progress(video){
-    let self = this;
     let dataSize = 0;
     video.stream.on('info', (info, format) => {
       let total = format.size;
       video.stream.on('data', data => {
         dataSize = dataSize + data.length;
         let percent = parseInt(Math.ceil((dataSize / total) * 100));
-        self.dispatch({
+        this.dispatch({
           id: video.id,
           total: total,
           progress: percent,
@@ -156,7 +162,7 @@ class Actions {
 
     video.stream.on('end', () => {
       setTimeout(() => {
-        self.actions.finish(video.id);
+        this.actions.finish(video.id);
       }, 600);
     });
   }
@@ -173,8 +179,10 @@ class Actions {
   }
 
   clear() {
-    this.dispatch();
-    Ydm.clear('downloads');
+    Ydm.clear().then(ids => {
+      this.dispatch(ids);
+      this.actions.snapshot();
+    });
   }
 
   show(filepath) {

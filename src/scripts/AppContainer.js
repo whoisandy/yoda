@@ -42,7 +42,9 @@ export default React.createClass({
         <Titlebar />
         <div className="content">
           <Sidebar status={this.state.status} count={this.state.count} />
-          <RouteHandler key={name} loading={this.state.loading} current={this.state.current} />
+          <RouteHandler key={name}
+              loading={this.state.loading}
+              more={this.state.more} />
         </div>
       </div>
     );

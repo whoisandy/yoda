@@ -41,7 +41,7 @@ export default React.createClass({
     return (
       <div className="playlist">
         <Playlist playlist={playlist} />
-        <Paginator handler={this.handleLoadMore.bind(null, playlist)} />
+        <Paginator loading={this.props.more} handler={this.handleLoadMore.bind(null, playlist)} />
       </div>
     );
   },
@@ -49,7 +49,6 @@ export default React.createClass({
   render() {
     let fragment;
     let page = Join('playlist-container');
-
     if(this.props.loading){
       fragment = this.renderLoader({message: 'Loading playlist videos...'});
     } else {

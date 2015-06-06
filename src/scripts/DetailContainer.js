@@ -14,7 +14,9 @@ export default React.createClass({
       <div className="detail">
         <div className="detail-container">
           <div className="detail-content">
-            <RouteHandler key={name} loading={this.props.loading} current={this.props.current} />
+            <RouteHandler key={name}
+              loading={this.props.loading}
+              more={this.props.more} />
           </div>
         </div>
       </div>

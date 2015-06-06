@@ -32,7 +32,7 @@ class ChannelStore {
 
   handleReceiveChannelPlaylists(playlists){
     this.errMessage = null;
-    playlists.forEach(playlist =>{
+    playlists.forEach(playlist => {
       this.playlists = this.playlists.push(new Channel({
         id: playlist.id,
         title: playlist.title,

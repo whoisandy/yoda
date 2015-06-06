@@ -3,6 +3,7 @@
 import React from 'react/addons';
 import Join from 'react/lib/joinClasses';
 import {RouteHandler} from 'react-router';
+import Actions from './Actions';
 import DownloadsStore from './DownloadsStore';
 import {RenderMixin} from './Mixins';
 import Downloads from './Downloads';

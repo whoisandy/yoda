@@ -42,7 +42,7 @@ export default React.createClass({
     return (
       <div className="search">
         <Search more={this.handleLoadMore} results={results}/>
-        <Paginator handler={this.handleLoadMore.bind(null, results)} />
+        <Paginator loading={this.props.more} handler={this.handleLoadMore.bind(null, results)} />
       </div>
     );
   },
