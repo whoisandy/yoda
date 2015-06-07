@@ -14,6 +14,12 @@ export default {
     return this.home() + '/Desktop/' + filename + '.mp4';
   },
 
+  inspect() {
+    if(process.env.NODE_ENV === 'development') {
+      remote.getCurrentWindow().inspectElement(0,0);
+    }
+  },
+
   addLiveReload() {
     if (process.env.NODE_ENV === 'development') {
       var head = document.getElementsByTagName('head')[0];

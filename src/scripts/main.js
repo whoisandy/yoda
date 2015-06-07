@@ -16,6 +16,7 @@ let AppMenuTemplate = Menu.buildFromTemplate(MenuTemplate);
 Menu.setApplicationMenu(AppMenuTemplate);
 
 function bootstrap(){
+  Utils.inspect();
   Utils.addLiveReload();
   Utils.disableGlobalBackspace();
   Menu.setApplicationMenu(AppMenuTemplate);
