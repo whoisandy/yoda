@@ -1,26 +1,29 @@
 'use strict';
 
 import ipc from 'ipc';
+import remote from 'remote';
+
 import React from 'react';
 import Join from 'react/lib/joinClasses';
+import Router from 'react-router';
+import RouterContainer from './Router';
 import Utils from './Utils';
-import Router from './Router';
+import routes from './AppRoutes';
 
-/**
- * Setup application menu here
- */
-// let Menu = Remote.require('menu');
-// let MenuTemplate = Utils.menuTemplate();
-// let AppMenuTemplate = Menu.buildFromTemplate(MenuTemplate);
-// Menu.setApplicationMenu(AppMenuTemplate);
+let Menu = remote.require('menu');
+let MenuTemplate = Utils.menu();
+let AppMenuTemplate = Menu.buildFromTemplate(MenuTemplate);
+Menu.setApplicationMenu(AppMenuTemplate);
 
-// Run after all promises satisfied
 function bootstrap(){
-  // Debugging purpose
   Utils.addLiveReload();
   Utils.disableGlobalBackspace();
+  Menu.setApplicationMenu(AppMenuTemplate);
 
   let mountNode = document.body.children[0];
+  let AppRouter = Router.create({
+    routes: routes
+  });
 
   ipc.on('yoda:quit', () => {
     localStorage.removeItem('channels');
@@ -34,10 +37,11 @@ function bootstrap(){
     mountNode.className += ' app-blur';
   });
 
-  Router.run((Root, state) => {
+  AppRouter.run((Root, state) => {
     var params = state.params;
     React.render(<Root params={params} />, mountNode);
   });
+  RouterContainer.set(AppRouter);
 }
 
 Promise.all([

@@ -83,7 +83,7 @@ export default {
 
     playlistPromises = Object.keys(channels).map(k => {
       let pids = [];
-      return Youtube.scrape(channels[k]).then(res => {
+      return Youtube.scrape(channels[k]).catch(err => {return err}).then(res => {
         let $ = cheerio.load(res.data);
         let playlistIdHref = $('h2.branded-page-module-title > a');
         let ids = playlistIdHref.map((idx, el) => {
@@ -94,9 +94,6 @@ export default {
         });
 
         return pids;
-      }).catch(err => {
-        console.log(err);
-        return err;
       });
     });
 

@@ -1,27 +1,13 @@
 'use strict';
 
-import React from 'react';
-import Router, {Route, DefaultRoute} from 'react-router';
-import App from './AppContainer';
-import Setup from './SetupContainer';
-import Search from './SearchContainer';
-import Detail from './DetailContainer';
-import Channel from './ChannelContainer';
-import Playlist from './PlaylistContainer';
-import Downloads from './DownloadsContainer';
+export default {
+  _router: null,
 
-const routes = (
-  <Route name="app" path="/" handler={App}>
-    <Route ignoreScrollBehavior={true} name="detail" handler={Detail}>
-      <Route name="channels" path="/channels/:channel" handler={Channel} />
-      <Route name="playlist" path="/playlist/:playlist" handler={Playlist} />
-      <Route name="search" path="/search/:query" handler={Search} />
-      <Route name="downloads" path="/downloads/:group" handler={Downloads} />
-    </Route>
-    <DefaultRoute name="setup" handler={Setup} />
-  </Route>
-);
+  get() {
+    return this._router;
+  },
 
-export default Router.create({
-  routes: routes
-});
+  set(router) {
+    this._router = router;
+  }
+};

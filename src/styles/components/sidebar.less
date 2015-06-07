@@ -41,9 +41,14 @@
     &:first-child, &:last-child{
       border-radius: 0px;
     }
-    &:hover{
+    &:hover, &:focus{
       background: none;
+    }
+    &:hover{
       color: #ffffff;
+    }
+    &:focus{
+      color: @sidebar-link-color;
     }
     &.active{
       background: darken(#E33E32, 12%);

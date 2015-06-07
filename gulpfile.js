@@ -105,7 +105,8 @@ gulp.task('scripts', function(){
       this.emit('end');
   }))
   .pipe($.if(options.dev, $.changed(paths.BUILD)))
-  .pipe($.babel({ blacklist: ['regenerator']}))
+  .pipe($.babel({ blacklist: ['regenerator'] }))
+  .pipe($.if(!options.dev, $.uglify({ mangle: false })))
   .pipe(gulp.dest(options.dev ? paths.BUILD : paths.TMP))
   .pipe($.if(options.dev, $.livereload()));
 });
@@ -116,12 +117,12 @@ gulp.task('build', function(){
     'rm -rf ./release',
     'mkdir -p <%= release %>',
     'cp -R <%= electron_app %> <%= release_app %>',
-    'mv <%= release_electron %> <%= release_youdown %>',
+    'mv <%= release_electron %> <%= release_yoda %>',
     'mkdir -p <%= release_build %> <%= release_build %>/build <%= release_modules %>',
     'cp package.json <%= release_build %>/',
     'cp -R .tmp/** <%= release_build %>/build/',
-    'cp <%= release_youdown_icon %> <%= release_electron_icon %>',
-    'cp <%= release_youdown_plist %> <%= release_plist %>',
+    'cp <%= release_yoda_icon %> <%= release_electron_icon %>',
+    'cp <%= release_yoda_plist %> <%= release_plist %>',
 
     '/usr/libexec/PlistBuddy -c "Set :CFBundleVersion <%= release_version %>" <%= release_plist %>',
     '/usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName <%= release_name %>" <%= release_plist %>',
@@ -136,11 +137,11 @@ gulp.task('build', function(){
       release_build: './release/osx/' + options.app + '/Contents/Resources/app',
       release_modules: './release/osx/' + options.app + '/Contents/Resources/app/node_modules',
       release_electron: './release/osx/' + options.app + '/Contents/MacOS/Electron',
-      release_youdown: './release/osx/' + options.app + '/Contents/MacOS/' + options.name,
-      release_youdown_icon: options.icon,
+      release_yoda: './release/osx/' + options.app + '/Contents/MacOS/' + options.name,
+      release_yoda_icon: options.icon,
       release_electron_icon: './release/osx/' + options.app + '/Contents/Resources/atom.icns',
       release_plist: './release/osx/' + options.app + '/Contents/Info.plist',
-      release_youdown_plist: options.plist,
+      release_yoda_plist: options.plist,
       release_name: options.name,
       release_bundle: options.bundle,
       release_version: packageJson.version
