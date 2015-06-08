@@ -11,7 +11,7 @@ Built using [ReactJS](https://facebook.github.io/react) & [Electron](http://elec
 The latest version of yoda can be downloaded from the [releases](https://github.com/whoisandie/yoda/releases) page.
 Please note that currently only supports osx.
 
-## Dev Instructions
+## Developers
 Requires gulp to be installed on your machine.
 Clone the repository, install dependencies and run `gulp`
 
@@ -27,6 +27,10 @@ gulp
 
 To build a disk image, run `gulp release`, which will run the necessary tasks
 and create the disk image in a `dist` directory.
+
+## Contribution
+
+Want to make a contribution ? Fork the repo, tweak, add your changes, submit a pull request :) And yes any type of contributions (ideas, bug fixes, fixing typos, etc.) will be appreciated !
 
 ## License
 
