@@ -1,10 +1,11 @@
 # Ignore .DS_Store files on mac
 .DS_Store
 
-# Ignore electron, build, dist
+# Ignore electron, build, dist, identity
 cache
 build
 dist
+identity
 
 # Dependency directory
 # Commenting this out is preferred by some people, see

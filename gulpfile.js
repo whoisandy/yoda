@@ -1,8 +1,14 @@
+/**
+ * Gulpfile to automate build and release task
+ * Most of it borrowed from Kitematic (https://github.com/kitematic/kitematic/blob/master/gulpfile.js)
+ */
+
 'use strict'
 
 var packageJson = require('./package.json');
 var sequence = require('run-sequence');
 var gulp = require('gulp');
+var fs = require('fs');
 var del = require('del');
 var $ = require('gulp-load-plugins')({
   rename: {
@@ -161,9 +167,31 @@ gulp.task('build', function(){
   return s;
 });
 
+// Sign task
+gulp.task('sign', function(){
+  var signing_identity = fs.readFileSync('./identity', 'utf8').trim();
+  var s = gulp.src('').pipe($.shell([
+     'codesign --deep --force --verbose --sign <%= release_identity %> <%= release_app %>/Contents/Frameworks/Electron\\ Framework.framework',
+      'codesign --deep --force --verbose --sign <%= release_identity %> <%= release_app %>/Contents/Frameworks/Electron\\ Helper\\ EH.app',
+      'codesign --deep --force --verbose --sign <%= release_identity %> <%= release_app %>/Contents/Frameworks/Electron\\ Helper\\ NP.app',
+      'codesign --deep --force --verbose --sign <%= release_identity %> <%= release_app %>/Contents/Frameworks/Electron\\ Helper.app',
+      'codesign --deep --force --verbose --sign <%= release_identity %> <%= release_app %>/Contents/Frameworks/ReactiveCocoa.framework',
+      'codesign --deep --force --verbose --sign <%= release_identity %> <%= release_app %>/Contents/Frameworks/Squirrel.framework',
+      'codesign --deep --force --verbose --sign <%= release_identity %> <%= release_app %>/Contents/Frameworks/Mantle.framework',
+      'codesign --force --verbose --sign <%= release_identity %> <%= release_app %>',
+  ], {
+    templateData: {
+      release_app: './release/osx/' + options.app,
+      release_identity: '\"' + signing_identity + '\"'
+    }
+  }));
+
+  return s;
+});
+
 // Release task
 gulp.task('release', function(cb){
-  sequence('compile', 'build', 'dmg', 'clean:release', cb);
+  sequence('compile', 'build', 'sign', 'dmg', 'clean:release', cb);
 });
 
 // Build a disk image file
