@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Router, {Route, DefaultRoute} from 'react-router';
+import {Route, DefaultRoute} from 'react-router';
 import App from './AppContainer';
 import Setup from './SetupContainer';
 import Search from './SearchContainer';
