@@ -106,8 +106,8 @@ class Actions {
 
   prompt(item, filename) {
     Ydm.prompt(item, filename).then(data => {
-      if(data){
-        this.actions.download(item, filename);
+      if(data.ok){
+        this.actions.download(item, data.filename);
       } else {
         this.actions.cancel(item.id);
       }
@@ -118,8 +118,8 @@ class Actions {
     this.dispatch(id);
   }
 
-  verify(id, filename) {
-    return Ydm.verify(id, filename);
+  verify(id) {
+    return Ydm.verify(id);
   }
 
   duplicate(item) {

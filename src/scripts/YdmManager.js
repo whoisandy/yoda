@@ -20,7 +20,15 @@ export default {
     return null;
   },
 
-  verify(id, filename) {
+  home() {
+    return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
+  },
+
+  filepath(filename) {
+    return this.home() + '/Desktop/' + filename + '.mp4';
+  },
+
+  verify(id) {
     let downloads = this.parse(localStorage.getItem('downloads'));
     if(downloads !== null){
       let videos = downloads.map(download => {
@@ -33,16 +41,18 @@ export default {
     return true;
   },
 
-  prompt(item, filepath) {
+  prompt(item) {
+    let self = this;
     return new Promise(resolve => {
       Dialog.showSaveDialog({
         title: 'Download video',
-        defaultPath: filepath
+        defaultPath: self.filepath(item.snippet.title)
       }, function(filename){
+          console.log(filename);
           if(filename !== undefined && item){
-            resolve(true);
+            resolve({ok: true, filename: filename});
           } else {
-            resolve(false);
+            resolve({ok: false, filename: null});
           }
         });
       });

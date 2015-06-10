@@ -6,14 +6,6 @@ import router from './Router';
 const app = remote.require('app');
 
 export default {
-  home() {
-    return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
-  },
-
-  filepath(filename) {
-    return this.home() + '/Desktop/' + filename + '.mp4';
-  },
-
   inspect() {
     if(process.env.NODE_ENV === 'development') {
       remote.getCurrentWindow().inspectElement(0,0);

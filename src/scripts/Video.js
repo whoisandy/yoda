@@ -3,7 +3,6 @@
 import React from 'react/addons';
 import {Navigation} from 'react-router';
 import Actions from './Actions';
-import Utils from './Utils';
 import {RenderMixin} from './Mixins';
 import VideoImage from './VideoImage';
 import VideoTitle from './VideoTitle';
@@ -21,9 +20,8 @@ export default React.createClass({
   },
 
   handleDownload(item){
-    let filename = Utils.home() + '/Desktop/' + item.snippet.title + '.mp4';
-    if(Actions.verify(item.id, filename)){
-      Actions.prompt(item, filename);
+    if(Actions.verify(item.id)){
+      Actions.prompt(item);
     } else {
       Actions.duplicate(item).then(group => {
         this.transitionTo('downloads', {group: group});
