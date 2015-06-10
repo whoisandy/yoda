@@ -38,7 +38,7 @@ var paths = {
   JS_FILES: ['src/scripts/*.js'],
   CSS_FILES: ['src/styles/**/*.less', 'src/styles/*.less'],
   BUILD: './build',
-  TMP: './.tmp',
+  TMP: './tmp',
   RELEASE: './release'
 };
 
@@ -125,7 +125,7 @@ gulp.task('build', function(){
     'mv <%= release_electron %> <%= release_yoda %>',
     'mkdir -p <%= release_build %> <%= release_build %>/build <%= release_modules %>',
     'cp package.json <%= release_build %>/',
-    'cp -R .tmp/** <%= release_build %>/build/',
+    'cp -R ./tmp/** <%= release_build %>/build/',
     'cp <%= release_yoda_icon %> <%= release_electron_icon %>',
     'cp <%= release_yoda_plist %> <%= release_plist %>',
 
@@ -228,7 +228,6 @@ gulp.task('watch', ['compile'], function(){
     env: env
   }));
 });
-
 
 // Default task
 gulp.task('default', ['watch']);
