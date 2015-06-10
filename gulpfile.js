@@ -102,7 +102,6 @@ gulp.task('styles', function(){
   .pipe($.if(options.dev, $.livereload()));
 });
 
-// Later use webpack to compile scripts
 // Scripts task
 gulp.task('scripts', function(){
   return gulp.src(paths.JS_FILES)
