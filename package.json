@@ -1,6 +1,6 @@
 {
   "name": "yoda",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "whoisandie",
   "description": "A simple mac app to download youtube videos",
   "main": "./build/browser.js",

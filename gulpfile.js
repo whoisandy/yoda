@@ -24,7 +24,7 @@ var options = {
   dev: process.argv.indexOf('release') === -1,
   name: 'Yoda',
   app: 'Yoda.app',
-  dmg: 'yoda-installer-1.0.0.dmg',
+  dmg: 'yoda-installer-1.0.1.dmg',
   icon: './src/resources/utils/yoda.icns',
   plist: './src/resources/utils/Info.plist',
   bundle: 'com.whoisandie.yoda'
