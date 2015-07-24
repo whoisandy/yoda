@@ -19,9 +19,12 @@ var $ = require('gulp-load-plugins')({
 // Application dependencies
 var dependencies = Object.keys(packageJson.dependencies);
 
+// Check the environment
+var devEnv = (process.env.NODE_ENV === 'production') ? false : true;
+
 // App options
 var options = {
-  dev: process.argv.indexOf('release') === -1,
+  dev: devEnv,
   name: 'Yoda',
   app: 'Yoda.app',
   dmg: 'yoda-installer-1.0.1.dmg',
@@ -117,7 +120,7 @@ gulp.task('scripts', function(){
 });
 
 // Build task
-gulp.task('build', function(){
+gulp.task('build', ['compile'], function(){
   var s = gulp.src('').pipe($.shell([
     'rm -rf ./release',
     'mkdir -p <%= release %>',
@@ -133,7 +136,9 @@ gulp.task('build', function(){
     '/usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName <%= release_name %>" <%= release_plist %>',
     '/usr/libexec/PlistBuddy -c "Set :CFBundleName <%= release_name %>" <%= release_plist %>',
     '/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier <%= release_bundle %>" <%= release_plist %>',
-    '/usr/libexec/PlistBuddy -c "Set :CFBundleExecutable <%= release_name %>" <%= release_plist %>'
+    '/usr/libexec/PlistBuddy -c "Set :CFBundleExecutable <%= release_name %>" <%= release_plist %>',
+
+    'rm -rf ./tmp'
   ], {
     templateData: {
       electron_app: './cache/Electron.app',
@@ -196,7 +201,7 @@ gulp.task('sign', function(){
 
 // Release task
 gulp.task('release', function(cb){
-  sequence('compile', 'build', 'sign', 'dmg', 'clean:release', cb);
+  sequence('build', 'sign', 'dmg', 'clean:release', cb);
 });
 
 // Build a disk image file

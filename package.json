@@ -11,7 +11,8 @@
   "bugs": "https://github.com/whoisandie/yoda/issues",
   "scripts": {
     "start": "gulp",
-    "release": "gulp release",
+    "build": "NODE_ENV='production' gulp build",
+    "release": "NODE_ENV='production' gulp release",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
