@@ -1,11 +1,9 @@
-![Yoda Title](https://s3-us-west-2.amazonaws.com/github.whoisandie.com/yoda-title.png)
+# Yoda
 
 Yoda is a nifty osx application which enables you to browse and download videos from YouTube.
 Built using [ReactJS](https://facebook.github.io/react) & [Electron](http://electron.atom.io)
 
 [Download latest version](https://github.com/whoisandie/yoda/releases/tag/v1.0.0) of Yoda
-
-![Yoda Screenshot](https://s3-us-west-2.amazonaws.com/github.whoisandie.com/yoda-screen.png)
 
 ## Downloads
 The latest version of yoda can be downloaded from the [releases](https://github.com/whoisandie/yoda/releases) page.
