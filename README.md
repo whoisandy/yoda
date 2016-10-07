@@ -1,13 +1,13 @@
-# Yoda
+# Yoda V2
 
-Yoda is a nifty osx application which enables you to browse and download videos from YouTube.
+Yoda is a nifty macOS application which enables you to browse and download videos from YouTube.
 Built using [ReactJS](https://facebook.github.io/react) & [Electron](http://electron.atom.io)
 
-[Download latest version](https://github.com/whoisandie/yoda/releases/tag/v1.0.0) of Yoda
+**NOTE: Still under active development.**
 
 ## Downloads
-The latest version of yoda can be downloaded from the [releases](https://github.com/whoisandie/yoda/releases) page.
-Please note that currently only supports osx.
+Yoda v1 can be downloaded [here](https://github.com/whoisandie/yoda/releases/tag/v1.0.0).
+Please note that currently only supports macOS.
 
 ## Developers
 Requires gulp to be installed on your machine.
@@ -20,15 +20,8 @@ git clone https://github.com/whoisandie/yoda.git
 cd yoda && npm install
 
 # Run gulp to start
-gulp
+npm start
 ```
-
-To build a disk image, run `gulp release`, which will run the necessary tasks
-and create the disk image in a `dist` directory.
-
-## Contribution
-
-Want to make a contribution ? Fork the repo, tweak, add your changes, submit a pull request :) And yes any type of contributions (ideas, bug fixes, fixing typos, etc.) will be appreciated !
 
 ## License
 

@@ -1,54 +1,26 @@
 {
   "name": "yoda",
-  "version": "1.0.1",
-  "author": "whoisandie",
-  "description": "A simple mac app to download youtube videos",
-  "main": "./build/browser.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/whoisandie/yoda.git"
-  },
-  "bugs": "https://github.com/whoisandie/yoda/issues",
-  "scripts": {
-    "start": "gulp",
-    "build": "NODE_ENV='production' gulp build",
-    "release": "NODE_ENV='production' gulp release",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "license": "MIT",
-  "electron-version": "0.27.2",
+  "private": true,
   "devDependencies": {
-    "appdmg": "^0.3.1",
-    "babel": "^5.1.11",
-    "bootstrap": "^3.3.4",
-    "del": "^1.1.1",
-    "gulp": "^3.8.11",
-    "gulp-babel": "^5.1.0",
-    "gulp-changed": "^1.2.1",
-    "gulp-concat": "^2.5.2",
-    "gulp-cssmin": "^0.1.6",
-    "gulp-download-electron": "0.0.5",
-    "gulp-if": "^1.2.5",
-    "gulp-less": "^3.0.3",
-    "gulp-livereload": "^3.8.0",
-    "gulp-load-plugins": "^0.10.0",
-    "gulp-plumber": "^1.0.0",
-    "gulp-shell": "^0.4.1",
-    "gulp-uglify": "^1.2.0",
-    "gulp-util": "^3.0.4",
-    "react-tools": "^0.13.2",
-    "run-sequence": "^1.1.0"
+    "react-scripts": "0.6.1"
   },
   "dependencies": {
-    "alt": "^0.15.6",
-    "axios": "^0.5.4",
-    "cheerio": "^0.19.0",
-    "immutable": "^3.7.2",
-    "moment": "^2.10.3",
-    "object-assign": "^2.0.0",
-    "react": "^0.13.1",
-    "react-router": "^0.13.2",
-    "sfx": "^0.1.1",
-    "ytdl-core": "^0.5.1"
+    "axios": "^0.14.0",
+    "moment": "^2.15.1",
+    "node-uuid": "^1.4.7",
+    "react": "^15.3.2",
+    "react-addons-shallow-compare": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^4.0.0-alpha.4",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.7.0",
+    "reflexbox": "^2.2.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }
