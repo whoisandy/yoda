@@ -1,14 +1,14 @@
 'use strict';
 
-import remote from 'remote'
+import electron from 'electron'
 import router from './Router';
 
-const app = remote.require('app');
+const app = electron.remote.app;
 
 export default {
   inspect() {
     if(process.env.NODE_ENV === 'development') {
-      remote.getCurrentWindow().inspectElement(0,0);
+      electron.remote.getCurrentWindow().inspectElement(0,0);
     }
   },
 
@@ -152,7 +152,7 @@ export default {
             label: 'Close',
             accelerator: 'Cmd+W',
             click: function () {
-              remote.getCurrentWindow().hide();
+              electron.remote.getCurrentWindow().hide();
             }
           },
           {
@@ -170,7 +170,7 @@ export default {
           {
             label: 'Report Issue or Suggest Feedback',
             click: function () {
-              remote.require('shell').openExternal('https://github.com/whoisandie/yoda/issues/new');
+              electron.remote.require('shell').openExternal('https://github.com/whoisandie/yoda/issues/new');
             }
           }
         ]

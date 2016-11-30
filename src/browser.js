@@ -1,12 +1,14 @@
 'use strict';
 
-var app = require('app');
-var BrowserWindow = require('browser-window');
+var electron = require('electron');
+var app = electron.app;
+var BrowserWindow = electron.BrowserWindow;
+
 var fs = require('fs');
-var ipc = require('ipc');
+var ipc = electron.ipcMain;
 var path = require('path');
 
-require('crash-reporter').start();
+//require('crash-reporter').start();
 
 app.on('ready', function(){
   var mainWindow = new BrowserWindow({
@@ -20,7 +22,7 @@ app.on('ready', function(){
     'frame': false,
     'show': false,
   });
-  mainWindow.loadUrl(path.normalize('file://' + path.join(__dirname, 'index.html')));
+  mainWindow.loadURL(path.normalize('file://' + path.join(__dirname, 'index.html')));
 
   app.on('activate-with-no-open-windows', function () {
     if (mainWindow) {

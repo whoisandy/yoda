@@ -1,6 +1,6 @@
 'use strict';
 
-import Remote from 'remote';
+import electron from 'electron';
 import Immutable from 'immutable';
 
 import ytdl from 'ytdl-core';
@@ -8,8 +8,8 @@ import sfx from 'sfx';
 import path from 'path';
 import fs from 'fs';
 
-const Dialog = Remote.require('dialog');
-const Shell = Remote.require('shell');
+const Dialog = electron.remote.dialog;
+const Shell = electron.remote.shell;
 
 export default {
   parse(obj) {
