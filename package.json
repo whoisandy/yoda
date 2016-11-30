@@ -16,7 +16,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
-  "electron-version": "0.27.2",
+  "electron-version": "1.4.10",
   "devDependencies": {
     "appdmg": "^0.3.1",
     "babel": "^5.1.11",

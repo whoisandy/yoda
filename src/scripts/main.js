@@ -1,8 +1,6 @@
 'use strict';
 
-import ipc from 'ipc';
-import remote from 'remote';
-
+import electron from 'electron';
 import React from 'react';
 import Join from 'react/lib/joinClasses';
 import Router from 'react-router';
@@ -10,7 +8,9 @@ import RouterContainer from './Router';
 import Utils from './Utils';
 import routes from './AppRoutes';
 
-let Menu = remote.require('menu');
+var ipc = electron.ipcRenderer;
+var remote = electron.remote;
+let Menu = remote.Menu;
 let MenuTemplate = Utils.menu();
 let AppMenuTemplate = Menu.buildFromTemplate(MenuTemplate);
 Menu.setApplicationMenu(AppMenuTemplate);
@@ -26,15 +26,15 @@ function bootstrap(){
     routes: routes
   });
 
-  ipc.on('yoda:quit', () => {
+  ipc.on('yoda:quit', (event, data) => {
     localStorage.removeItem('channels');
   });
 
-  ipc.on('yoda:focus', () => {
+  ipc.on('yoda:focus', (event, data) => {
     mountNode.className = 'app-container';
   });
 
-  ipc.on('yoda:blur', () => {
+  ipc.on('yoda:blur', (event, data) => {
     mountNode.className += ' app-blur';
   });
 

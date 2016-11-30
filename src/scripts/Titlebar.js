@@ -1,11 +1,12 @@
 'use strict';
 
-import Remote from 'remote';
+import electron from 'electron';
 import React from 'react';
 import Join from 'react/lib/joinClasses';
 import {Navigation, State} from 'react-router';
 import TitlebarSearch from './TitlebarSearch';
 
+var Remote = electron.remote;
 export default React.createClass({
   mixins: [Navigation, State],
 
